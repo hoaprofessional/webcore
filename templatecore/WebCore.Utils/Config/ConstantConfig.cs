@@ -21,6 +21,8 @@ namespace WebCore.Utils.Config
             public const string LanguagePage_DeleteLanguage = "LanguagePage.DeleteLanguage";
             public const string UserManagement = "UserManagement";
             public const string UserManagement_BlockUser = "UserManagement.BlockUser";
+            public const string UserManagement_BlockUser_Claim1 = "UserManagement.BlockUser.Claim1";
+            public const string UserManagement_NewNew = "UserManagement.NewNew";
             public const string UserManagement_AssignPermission = "UserManagement.AssignPermission";
 
         }
