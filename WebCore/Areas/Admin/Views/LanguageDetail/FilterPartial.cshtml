@@ -1,0 +1,30 @@
+﻿@model WebCore.Services.Share.Admins.LanguageDetails.Dto.LanguageDetailFilterInput
+<div class="col-md-12">
+    <div class="card">
+        <div class="card-header card-header-primary">
+            <h4 class="card-title">@Html.Lang("LBL_FILTER")</h4>
+        </div>
+        <div class="card-body">
+            <form id="filter" asp-action="FilterPartial">
+                <input asp-for="LangCode" hidden />
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group bmd-form-group">
+                            <label class="bmd-label-floating">@(Html.LangFor<LanguageDetail>(x => x.LanguageKey))</label>
+                            <input asp-for="LanguageKey" type="text" class="form-control">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group bmd-form-group">
+                            <label class="bmd-label-floating">@(Html.LangFor<LanguageDetail>(x => x.LanguageValue))</label>
+                            <input asp-for="LanguageValue" type="text" class="form-control">
+                        </div>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary pull-right"><i class="material-icons">search</i>@Html.Lang("LBL_FILTER_BUTTON")</button>
+                <button type="button" class="btn btn-primary pull-right reset-button"><i class="material-icons">refresh</i>@Html.Lang("LBL_FILTER_RESET")</button>
+            </form>
+        </div>
+    </div>
+</div>
+

@@ -1,0 +1,43 @@
+﻿<script>
+    // open update popup
+    function openUpdateModal(id) {
+        $.get('/Admin/LanguageDetail/InputPartial', { Id: id }).done(function (response) {
+            $('#input-area').html(response);
+            $('#saveInputForm').bootstrapMaterialDesign();
+            $('#input-area').modal();
+        });
+    }
+
+    // resetAllFilter
+
+    $('#filter .reset-button').click(function () {
+        $('#filter input:not(:hidden)').val('');
+        $('#filter').submit();
+    });
+
+    // reload table
+
+    function reloadMainList() {
+        $('#mainList').load('/Admin/LanguageDetail/MainListPartial');
+    }
+
+    // on update success
+    function onInputSubmitDone(response) {
+        switch (response.result) {
+            case @ConstantConfig.WebApiStatusCode.Success:
+                showSuccessNotification(response.message);
+                break;
+            case @ConstantConfig.WebApiStatusCode.Warning:
+                showWarningMessage(response.message);
+                break;
+            case @ConstantConfig.WebApiStatusCode.Error:
+                showErrorNotification(response.message);
+                break;
+        }
+        $('#input-area').modal('hide');
+        reloadMainList();
+    }
+    function onInputSubmitFail(response) {
+        console.log(response.responseText);
+    }
+</script>

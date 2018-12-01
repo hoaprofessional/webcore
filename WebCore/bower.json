@@ -1,0 +1,11 @@
+{
+  "name": "asp.net",
+  "private": true,
+  "dependencies": {
+    "select2": "4.0.5",
+    "bootstrap-material-datetimepicker": "2.7.1"
+  },
+  "resolutions": {
+    "jquery": ">= 1.7.2"
+  }
+}

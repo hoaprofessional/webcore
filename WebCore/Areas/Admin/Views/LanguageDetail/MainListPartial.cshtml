@@ -1,0 +1,56 @@
+﻿@model PagingResultDto<WebCore.Services.Share.Admins.LanguageDetails.Dto.LanguageDetailDto>
+<div class="table-responsive">
+    <table class="table">
+        <thead class=" text-primary">
+            <tr>
+                <th>
+                    @Html.Lang("LBL_ACTION")
+                </th>
+                <th>
+                    @(Html.LangFor<LanguageDetail>(x => x.LanguageKey))
+                </th>
+                <th>
+                    @(Html.LangFor<LanguageDetail>(x => x.LanguageValue))
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Items)
+            {
+                <tr>
+                    <td class="nav-item dropdown">
+                        <div class="dropdown">
+                            <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="material-icons">settings</i>
+                                <p class="d-lg-none d-md-block">
+                                    @Html.Lang("LBL_ACTION")
+                                </p>
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                <div onclick="openUpdateModal(@item.Id)" class="dropdown-item">
+                                    <i class="material-icons">create</i>
+                                    <p>
+                                        @Html.Lang("LBL_UPDATE")
+                                    </p>
+                                </div>
+                                <div class="dropdown-item">
+                                    <i class="material-icons">delete_forever</i>
+                                    <p>
+                                        @Html.Lang("LBL_DELETE")
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                    <td>
+                        @item.LanguageKey
+                    </td>
+                    <td>
+                        @item.LanguageValue
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <custompager pager-model="@Model" pager-link="/Admin/LanguageDetail?langCode=@ViewData["langCode"]" />
+</div>

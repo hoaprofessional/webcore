@@ -1,0 +1,8 @@
+﻿@using WebCore.Services.Share.Permissions.Dto
+@model PermissionDto
+<div class="checkbox checkbox-info">
+    <input data-checked="@Model.Checked" data-roles="@Model.RolesDisplay" value="@Model.Key" id="chk-@Model.Key" type="checkbox">
+    <label for="chk-@Model.Key">
+        @Html.Lang(Model.Name)
+    </label>
+</div>

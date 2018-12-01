@@ -1,0 +1,100 @@
+﻿@model PagingResultDto<WebCore.Services.Share.Admins.Users.Dto.UserDto>
+<div class="table-responsive">
+    <table class="table">
+        <thead class=" text-primary">
+            <tr>
+                <th>
+                    @Html.Lang("LBL_ACTION")
+                </th>
+                <th>
+                    @(Html.LangFor<WebCoreUser>(x => x.UserName, "WebUser"))
+                </th>
+                <th>
+                    @(Html.LangFor<WebCoreUser>(x => x.FirstName, "WebUser"))
+                </th>
+                <th>
+                    @(Html.LangFor<WebCoreUser>(x => x.LastName, "WebUser"))
+                </th>
+                <th>
+                    @(Html.LangFor<WebCoreUser>(x => x.Carrer, "WebUser"))
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Items)
+            {
+                <tr>
+
+                    @if (item.RecordStatus != ConstantConfig.UserRecordStatus.InActive)
+                    {
+                        <td class="nav-item dropdown">
+                            <div class="dropdown">
+                                <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <i class="material-icons">settings</i>
+                                    <p class="d-lg-none d-md-block">
+                                        @Html.Lang("LBL_ACTION")
+                                    </p>
+                                </button>
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                    <div onclick="openUpdateModal('@item.Id')" class="dropdown-item">
+                                        <i class="material-icons">create</i>
+                                        <p>
+                                            @Html.Lang("LBL_WEBUSER_UPDATE_INFO")
+                                        </p>
+                                    </div>
+                                    <div onclick="openResetPasswordModal('@item.Id')" class="dropdown-item">
+                                        <i class="material-icons">refresh</i>
+                                        <p>
+                                            @Html.Lang("LBL_WEBUSER_RESET_PASSWORD")
+                                        </p>
+                                    </div>
+                                    <div onclick="openAssignPermissionModal('@item.Id')" class="dropdown-item">
+                                        <i class="material-icons">create</i>
+                                        <p>
+                                            @Html.Lang("LBL_WEBROLE_ASSIGN_PERMISSION")
+                                        </p>
+                                    </div>
+                                    @if (Html.HasPermission(ConstantConfig.Claims.UserManagement_BlockUser))
+                                    {
+                                        <div onclick="lockUser('@item.Id')" class="dropdown-item">
+                                            <i class="material-icons">lock</i>
+                                            <p>
+                                                @Html.Lang("LBL_WEBUSER_INACTIVE")
+                                            </p>
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+                        </td>
+                    }
+                    else
+                    {
+                        <td>
+                            @if (Html.HasPermission(ConstantConfig.Claims.UserManagement_BlockUser))
+                            {
+                                <button onclick="unlockUser('@item.Id')" type="button" class="btn btn-danger">
+                                    <i class="material-icons">lock_open</i>
+                                    @Html.Lang("LBL_WEBUSER_ACTIVE")
+                                </button>
+                            }
+                        </td>
+                    }
+                    <td>
+                        @item.UserName
+                    </td>
+                    <td>
+                        @item.FirstName
+                    </td>
+                    <td>
+                        @item.LastName
+                    </td>
+                    <td>
+                        @item.Carrer
+                    </td>
+                </tr>
+            }
+
+        </tbody>
+    </table>
+    <custompager pager-model="@Model" />
+</div>

@@ -1,0 +1,113 @@
+﻿@model WebCore.Areas.Admin.Models.Languages.LanguageViewModel
+<div class="main-panel">
+    <div class="content">
+        <div class="container-fluid">
+            <div class="row">
+
+                <partial name="FilterPartial" model="@Model.LanguageFilterInput" />
+
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-header card-header-primary">
+                            <h4 class="card-title ">@Html.Lang("ADMIN_LANGUAGE_PAGE")</h4>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table">
+                                    <thead class=" text-primary">
+                                        <tr>
+                                            <th>
+                                                @Html.Lang("LBL_ACTION")
+                                            </th>
+                                            <th>
+                                                @(Html.LangFor<Language>(x => x.LangCode, "Language"))
+                                            <th>
+                                                @(Html.LangFor<Language>(x => x.LangName, "Language"))
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var item in Model.PagingResult.Items)
+                                        {
+                                            <tr>
+                                                <td class="nav-item dropdown">
+                                                    <div class="dropdown">
+                                                        <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                            <i class="material-icons">settings</i>
+                                                            <p class="d-lg-none d-md-block">
+                                                                @Html.Lang("LBL_ACTION")
+                                                            </p>
+                                                        </button>
+                                                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                                            <a class="dropdown-item" asp-action="Index" asp-controller="LanguageDetail" asp-route-langcode="@item.LangCode">
+                                                                <i class="material-icons">info</i>
+                                                                <p>
+                                                                    @Html.Lang("LBL_DETAIL")
+                                                                </p>
+                                                            </a>
+                                                            <div class="dropdown-item">
+                                                                <i class="material-icons">create</i>
+                                                                <p>
+                                                                    @Html.Lang("LBL_UPDATE")
+                                                                </p>
+                                                            </div>
+                                                            <div class="dropdown-item">
+                                                                <i class="material-icons">delete_forever</i>
+                                                                <p>
+                                                                    @Html.Lang("LBL_DELETE")
+                                                                </p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                </td>
+                                                <td>
+                                                    @item.LangCode
+                                                </td>
+                                                <td>
+                                                    @item.LangName
+                                                </td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                                <custompager pager-model="@Model.PagingResult" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Modal -->
+<div class="modal fade bd-example-modal-sm" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                ...
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts{ 
+    <script>
+        $('#filter .reset-button').click(function () {
+            $('#filter input:not(:hidden)').val('');
+            $('#filter').submit();
+        });
+    </script>
+}

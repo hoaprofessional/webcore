@@ -1,0 +1,46 @@
+﻿@model WebCore.Services.Share.Admins.LanguageDetails.Dto.LanguageDetailInput
+<div class="modal-dialog" role="document">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLongTitle">@Html.Lang("LBL_LANGUAGE_DETAIL")</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+
+        <div class="card-body">
+            <form data-noreload="true" 
+                  data-on-submit-done="onInputSubmitDone" 
+                  data-on-submit-fail="onInputSubmitFail" 
+                  method="post" 
+                  asp-action="InputPartial"
+                  id="saveInputForm">
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group bmd-form-group">
+                            <input asp-for="Id" type="hidden" class="form-control">
+                            <input asp-for="UpdateToken" type="hidden" class="form-control">
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="form-group bmd-form-group">
+                            <label class="bmd-label-floating" asp-for="LanguageValue">@(Html.LangFor<LanguageDetail>(x=>x.LanguageValue))</label>
+                            <input language-support="true" class="form-control" asp-for="LanguageValue" required type="text" />
+                            <span asp-validation-for="LanguageValue"></span>
+                        </div>
+                    </div>
+                </div>
+                <button type="submit" hidden></button>
+            </form>
+        </div>
+
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">@Html.Lang("LBL_CLOSE")</button>
+            <button type="button" onclick="$('#saveInputForm').submit()" class="btn btn-primary">@Html.Lang("LBL_SAVE")</button>
+        </div>
+    </div>
+</div>
+<partial name="_ValidationScriptsPartial" />
+<script>
+</script>

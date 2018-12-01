@@ -1,0 +1,115 @@
+﻿<script>
+
+    // get all permission checked
+    function getAllPermissionsChecked() {
+        return $.map($('#permission-area .checkbox-info:not(.role-permission) input[type=checkbox]:checked'), function (x){
+            return $(x).val().trim();
+        });
+    }
+    // get all roles checked
+    function getAllRolesChecked() {
+        return $.map($('#role-area input[type=checkbox]:checked'), function (x) { return $(x).val().trim(); });
+    }
+
+    function getAllRoleChecked() {
+
+    }
+
+    // open update popup
+    function openUpdateModal(id) {
+        $.get('/Admin/User/InputInfoPartial', { Id: id }).done(function (response) {
+            $('#input-area').html(response);
+            $('#saveInputForm').bootstrapMaterialDesign();
+            $('#input-area').modal();
+        });
+    }
+
+    // resetAllFilter
+    $('#filter .reset-button').click(function () {
+        $('#filter input:not(:hidden)').val('');
+        $('#filter').submit();
+    });
+
+    // reload table
+    function reloadMainList() {
+        $('#mainList').load('/Admin/User/MainListPartial');
+    }
+
+    // reset password modal
+    function openResetPasswordModal(id) {
+        $.get('/Admin/User/ResetPasswordPartial', { Id: id }).done(function (response) {
+            $('#input-area').html(response);
+            $('#saveInputForm').bootstrapMaterialDesign();
+            $('#input-area').modal();
+        });
+    }
+
+    // lockuser
+    function lockUser(userId) {
+        $.post('/Admin/User/InActiveUser', { Id : userId}).done(function () {
+            showSuccessNotification('Thanh cong');
+            reloadMainList();
+        });
+    }
+
+    // unlockuser
+    function unlockUser(userId) {
+        $.post('/Admin/User/ActiveUser', { Id : userId}).done(function () {
+            showSuccessNotification('Thanh cong');
+            reloadMainList();
+        });
+    }
+
+    // save permission
+    function savePermission(userId) {
+        var allPermissionsChecked = getAllPermissionsChecked();
+        var allRolesChecked = getAllRolesChecked();
+        $.post('/Admin/User/AssignPermissionPartial', { UserId: userId, Permissions: allPermissionsChecked, Roles: allRolesChecked }).done(function (response) {
+            switch (response.result) {
+                case @ConstantConfig.WebApiStatusCode.Success:
+                    showSuccessNotification(response.message);
+                    $('#input-area').modal('hide');
+                    break;
+                case @ConstantConfig.WebApiStatusCode.Warning:
+                    showWarningMessage(response.message);
+                    break;
+                case @ConstantConfig.WebApiStatusCode.Error:
+                    showErrorNotification(response.message);
+                    break;
+            }
+        }).fail(function (response) {
+            console.log(response.responseText);
+        })
+    }
+
+    // open assign permission popup
+    function openAssignPermissionModal(id) {
+        $.get('/Admin/User/AssignPermissionPartial', { Id: id }).done(function (response) {
+            $('#input-area').html(response);
+            $('#saveInputForm').bootstrapMaterialDesign();
+            $('#input-area').modal();
+            createPermissionCheck($('#input-area'));
+            createRoleCheck($('#role-area'), $('#permission-area'));
+        });
+    }
+
+    // on update success
+    function onInputSubmitDone(response) {
+        $('#input-area').modal('hide');
+        switch (response.result) {
+            case @ConstantConfig.WebApiStatusCode.Success:
+                showSuccessNotification(response.message);
+                break;
+            case @ConstantConfig.WebApiStatusCode.Warning:
+                showWarningMessage(response.message);
+                break;
+            case @ConstantConfig.WebApiStatusCode.Error:
+                showErrorNotification(response.message);
+                break;
+        }
+        reloadMainList();
+    }
+    function onInputSubmitFail(response) {
+        console.log(response.responseText);
+    }
+</script>

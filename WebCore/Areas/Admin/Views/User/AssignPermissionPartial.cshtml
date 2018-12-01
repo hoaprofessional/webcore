@@ -1,0 +1,55 @@
+﻿@using WebCore.Services.Share.Permissions.Dto
+@model WebCore.Areas.Admin.Models.Users.UserAssignPermissionViewModel
+@{
+    Model.TreeViewPermission.Name = "LBL_PERMISSION_CHECKALL";
+}
+
+<div class="modal-dialog" role="document">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLongTitle">@Html.Lang("LBL_ASSIGN_PERMISSION")</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-header card-header-primary">
+                            <h4 class="card-title">@Html.Lang("LBL_ROLE")</h4>
+                        </div>
+                        <div class="card-body">
+                            <div id="role-area" class="roles">
+                                @foreach (var item in Model.AllRoles)
+                                {
+                                    <div class="checkbox checkbox-info">
+                                        <input id="cbk-@item.RoleName" type="checkbox" value="@item.RoleName" checked="@item.IsChecked" />
+                                        <label for="cbk-@item.RoleName">
+                                            @Html.Lang(@item.RoleName)
+                                        </label>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-header card-header-primary">
+                            <h4 class="card-title">@Html.Lang("LBL_PERMISSION")</h4>
+                        </div>
+                        <div class="card-body">
+                            <treeview id="permission-area" model="Model.TreeViewPermission" partialview-child="~/Areas/Admin/Views/User/PermissionTreeItemPartial.cshtml"></treeview>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">@Html.Lang("LBL_CLOSE")</button>
+            <button type="button" onclick="savePermission('@ViewBag.UserId')" class="btn btn-primary">@Html.Lang("LBL_SAVE")</button>
+        </div>
+    </div>
+</div>
