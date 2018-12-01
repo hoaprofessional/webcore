@@ -33,6 +33,11 @@ namespace WebCore.TagHelpers
         [HtmlAttributeName("pager-link")]
         public string ActionLink { get; set; }
 
+        [HtmlAttributeName("pager-ul-class")]
+        public string UlClass { get; set; }
+        [HtmlAttributeName("pager-li-class")]
+        public string LiClass { get; set; }
+
         public override void Process(TagHelperContext context, TagHelperOutput output)
         {
             if (Model == null)
@@ -85,7 +90,7 @@ namespace WebCore.TagHelpers
             int finishIndex = Math.Min(Model.CurrentPage + 5, Model.PageCount);
 
             output.TagName = "";
-            output.Content.AppendHtml("<ul class=\"pagination\">");
+            output.Content.AppendHtml($"<ul class=\"pagination {UlClass}\">");
             AddPageLink(output, string.Format(urlTemplate, 1), "&laquo;");
 
             for (int i = startIndex; i <= finishIndex; i++)
@@ -106,7 +111,7 @@ namespace WebCore.TagHelpers
 
         private void AddPageLink(TagHelperOutput output, string url, string text)
         {
-            output.Content.AppendHtml("<li><a href=\"");
+            output.Content.AppendHtml($"<li class=\"{LiClass}\"><a href=\"");
             output.Content.AppendHtml(url);
             output.Content.AppendHtml("\">");
             output.Content.AppendHtml(text);
@@ -116,7 +121,7 @@ namespace WebCore.TagHelpers
 
         private void AddCurrentPageLink(TagHelperOutput output, int page)
         {
-            output.Content.AppendHtml("<li class=\"active\">");
+            output.Content.AppendHtml($"<li class=\"active {LiClass}\">");
             output.Content.AppendHtml("<span>");
             output.Content.AppendHtml(page.ToString());
             output.Content.AppendHtml("</span>");

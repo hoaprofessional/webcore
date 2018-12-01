@@ -1,0 +1,5 @@
+﻿
+li.active.page-numbers > span {
+    background: black !important;
+    border-color: black;
+}

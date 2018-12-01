@@ -23,12 +23,14 @@ using WebCore.Services.Impl.Admins.LanguageDetails;
 using WebCore.Services.Impl.Admins.Languages;
 using WebCore.Services.Impl.Admins.Users;
 using WebCore.Services.Impl.AppMenus;
+using WebCore.Services.Impl.Blogs;
 using WebCore.Services.Impl.Languages;
 using WebCore.Services.Impl.SystemConfigs;
 using WebCore.Services.Share.Admins.LanguageDetails;
 using WebCore.Services.Share.Admins.Languages;
 using WebCore.Services.Share.Admins.Users;
 using WebCore.Services.Share.AppMenus;
+using WebCore.Services.Share.Blogs;
 using WebCore.Services.Share.Helper;
 using WebCore.Services.Share.Languages;
 using WebCore.Services.Share.SystemConfigs;
@@ -89,6 +91,8 @@ namespace WebCore
             services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.TryAddSingleton<IActionContextAccessor, ActionContextAccessor>();
             services.TryAddSingleton<IUrlHelperFactory, UrlHelperFactory>();
+
+            services.AddScoped<IBlogService, BlogService>();
 
 
             MapperConfiguration mapperConfig = new MapperConfiguration(mc =>

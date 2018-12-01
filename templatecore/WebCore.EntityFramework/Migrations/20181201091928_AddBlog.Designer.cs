@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WebCore.EntityFramework.Data;
 
 namespace WebCore.EntityFramework.Migrations
 {
     [DbContext(typeof(WebCoreDbContext))]
-    partial class WebCoreDbContextModelSnapshot : ModelSnapshot
+    [Migration("20181201091928_AddBlog")]
+    partial class AddBlog
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

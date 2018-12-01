@@ -39,6 +39,7 @@ namespace WebCore.Services.Share.Helper
             CreateMap<LanguageDetail, WebCore.Services.Share.Admins.LanguageDetails.Dto.LanguageDetailInput>();
             CreateMap<WebCore.Services.Share.Admins.LanguageDetails.Dto.LanguageDetailInput, LanguageDetail>();
 
+            CreateMap<Blog, WebCore.Services.Share.Blogs.Dto.BlogDto>();
 
         }
     }

@@ -1,0 +1,323 @@
+﻿@model WebCore.Models.Blogs.BlogViewModel
+ <!-- START MAIN CONTENT DESIGN AREA -->
+<section id="main-content" class="main-content-area">
+    <div class="container">
+        <div class="row">
+            <div class="content-area">
+                <div class="row">
+                    <!-- START POST CONTENT DESIGN AREA -->
+                    <div class="col-md-8 post-content-area">
+
+                        @foreach (var blog in Model.Blogs.Items)
+                        {
+                            <div class="row">
+                                <!-- START SINGLE POST CONTENT DESIGN AREA -->
+                                <div class="col-md-12">
+                                    <div class="single-blog-content">
+                                        <div class="single-post-titel text-center">
+                                            <h3><a href="single-blog.html">@blog.Title</a></h3>
+                                            <h4><a href="#">Recipes</a> / Admin</h4>
+                                        </div>
+                                        <div class="blog-post-image">
+                                            <figure>
+                                                <img src="@blog.Image" height="400" alt="Post">
+                                            </figure>
+                                        </div>
+
+                                        <div class="post-meta-block">
+                                            <div class="post-meta-area">
+                                                <div class="post-user"><i class="fa fa-user-secret"></i> <a href="#" title="">@blog.AuthorName</a></div>
+                                                <div class="post-date"><a href="#"><i class="fa fa-calendar"></i> April 12, 2017 </a></div>
+                                                <div class="post-comment"><a href="#"><i class="fa fa-comment"></i> 2</a></div>
+                                            </div>
+                                        </div>
+
+                                        <div class="blog-post-content text-center">
+                                            <p class="blog-post-desc">@Html.Raw(blog.ShortDescription)</p>
+                                            <a href="single-blog.html">read more</a>
+                                        </div>
+                                        <div class="blog-social-sharing-area">
+                                            <div class="social-sharing-icon text-center">
+                                                <ul>
+                                                    <li><a href="#"><i class="fa fa-facebook"></i></a></li>
+                                                    <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+                                                    <li><a href="#"><i class="fa fa-google-plus"></i></a></li>
+                                                    <li><a href="#"><i class="fa fa-instagram"></i></a></li>
+                                                    <li><a href="#"><i class="fa fa-pinterest"></i></a></li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- / END SINGLE POST CONTENT DESIGN AREA -->
+                            </div>
+                        }
+
+                        <!-- START PAGINATION -->
+
+                        <custompager class="pagination-area" pager-ul-class="pagination-nav" pager-li-class="page-numbers" pager-model="Model.Blogs" pager-link="/Blog" />
+
+                        @*<div class="pagination-area">
+                                <ul class="pagination-nav">
+                                    <li><a class="prev page-numbers" href="#"><i class="fa fa-chevron-left"></i></a></li>
+                                    <li><a class="page-numbers current" href="#">1</a></li>
+                                    <li><a class="page-numbers" href="#">2</a></li>
+                                    <li><a class="page-numbers" href="#">3</a></li>
+                                    <li><span class="page-numbers dots">…</span></li>
+                                    <li><a class="page-numbers" href="#">5</a></li>
+                                    <li><a class="next page-numbers" href="#"><i class="fa fa-chevron-right"></i></a></li>
+                                </ul>
+
+                                <div class="pre-next-area" style="display: none;">
+                                    <a class="new-post" href="#">Newer Posts</a>
+                                    <a class="old-post" href="#">Older Posts</a>
+                                </div>
+                            </div>*@
+                        <!-- / END PAGINATION -->
+                    </div>
+                    <!-- / END POST CONTENT DESIGN AREA -->
+                    <!-- START SIDEBAR CONTENT DESIGN AREA -->
+                    <div class="col-md-4 sidebar-area">
+                        <div class="sidebar">
+                            <!-- START SEARCH BOX DESIGN AREA -->
+                            <div class="search single-sidebar">
+                                <input type="text" class="form-control" placeholder="Search...">
+                            </div>
+                            <!-- / END SEARCH BOX DESIGN AREA -->
+                            <!-- START ABOUT ME DESIGN AREA -->
+                            <div class="right-sidebar sidebar-about-me-area text-center">
+                                <div class="sidebar-about-me-area-content">
+                                    <div class="widget-title">
+                                        <h4>ABOUT ME</h4>
+                                    </div>
+                                    <div class="widget-about-thumb">
+                                        <figure>
+                                            <a href="#"><img src="/blogasset/images/about/about.jpg" alt="img" class="img-responsive"></a>
+                                        </figure>
+                                    </div>
+                                    <div class="widget-about-content">
+                                        <h4><a href="about.html">Scott Stainly</a></h4>
+                                        <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text.</p>
+                                        <a href="about.html" class="read-more">read more</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- / END ABOUT ME DESIGN AREA -->
+                            <!-- START RECENT POSTS DESIGN AREA -->
+                            <div class="right-sidebar recent-post-area">
+                                <div class="widget-title">
+                                    <h4>RECENT POST</h4>
+                                </div>
+                                <ul>
+                                    <li>
+                                        <div class="sidebar-post-thumb">
+                                            <figure>
+                                                <a href="#"><img src="/blogasset/images/recent-post/1.jpg" alt="image"></a>
+                                            </figure>
+                                        </div>
+                                        <div class="widget-content">
+                                            <h6><a href="#">This is a post title here</a></h6>
+                                            <span>
+                                                <i class="fa fa-calendar"></i> 18 April, 2017  | <i class="fa fa-comment"></i>
+                                                2
+                                            </span>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="sidebar-post-thumb">
+                                            <figure>
+                                                <a href="#"><img src="/blogasset/images/recent-post/2.jpg" alt="image"></a>
+                                            </figure>
+                                        </div>
+                                        <div class="widget-content">
+                                            <h6><a href="#">This is a post title here</a></h6>
+                                            <span>
+                                                <i class="fa fa-calendar"></i> 17 April, 2017  | <i class="fa fa-comment"></i>
+                                                2
+                                            </span>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="sidebar-post-thumb">
+                                            <figure>
+                                                <a href="#"><img src="/blogasset/images/recent-post/3.jpg" alt="image"></a>
+                                            </figure>
+                                        </div>
+                                        <div class="widget-content">
+                                            <h6><a href="#">This is a post title here</a></h6>
+                                            <span>
+                                                <i class="fa fa-calendar"></i> 16 April, 2017  | <i class="fa fa-comment"></i>
+                                                2
+                                            </span>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="sidebar-post-thumb">
+                                            <figure>
+                                                <a href="#"><img src="/blogasset/images/recent-post/4.jpg" alt="image"></a>
+                                            </figure>
+                                        </div>
+                                        <div class="widget-content">
+                                            <h6><a href="#">This is a post title here</a></h6>
+                                            <span>
+                                                <i class="fa fa-calendar"></i> 15 April, 2017  | <i class="fa fa-comment"></i>
+                                                2
+                                            </span>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="sidebar-post-thumb">
+                                            <figure>
+                                                <a href="#"><img src="/blogasset/images/recent-post/5.jpg" alt="image"></a>
+                                            </figure>
+                                        </div>
+                                        <div class="widget-content">
+                                            <h6><a href="#">This is a post title here</a></h6>
+                                            <span>
+                                                <i class="fa fa-calendar"></i> 14 April, 2017  | <i class="fa fa-comment"></i>
+                                                2
+                                            </span>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                            <!-- / END RECENT POSTS DESIGN AREA -->
+                            <!-- START NEWSLETTER DESIGN AREA -->
+                            <div class="right-sidebar sidebar-search">
+                                <div class="widget-title">
+                                    <h4>NEWSLETTER</h4>
+                                </div>
+                                <form class="news-letter-form" novalidate>
+                                    <div class="sidebar-search-form">
+                                        <input required="" name="your_email" placeholder="Enter Your Email" type="text">
+                                        <input value="GO" class="search-btn" type="submit">
+                                        <p class="newsletter-success"></p>
+                                        <p class="newsletter-error"></p>
+                                    </div>
+                                </form>
+                            </div>
+                            <!-- / END NEWSLETTER DESIGN AREA -->
+                            <!-- START INSTAGRAM DESIGN AREA -->
+                            <div class="right-sidebar widget-instagram-area">
+                                <div class="widget-title">
+                                    <h4>INSTAGRAM</h4>
+                                </div>
+                                <ul class="sidebar-tags-list">
+                                    <li><figure><a href="#"><img src="/blogasset/images/instagram/1.jpg" height="80" width="80" alt="img" class="img-responsive"></a></figure></li>
+                                    <li><figure><a href="#"><img src="/blogasset/images/instagram/2.jpg" height="80" width="80" alt="img" class="img-responsive"></a></figure></li>
+                                    <li><figure><a href="#"><img src="/blogasset/images/instagram/3.jpg" height="80" width="80" alt="img" class="img-responsive"></a></figure></li>
+                                    <li><figure><a href="#"><img src="/blogasset/images/instagram/4.jpg" height="80" width="80" alt="img" class="img-responsive"></a></figure></li>
+                                    <li><figure><a href="#"><img src="/blogasset/images/instagram/5.jpg" height="80" width="80" alt="img" class="img-responsive"></a></figure></li>
+                                    <li><figure><a href="#"><img src="/blogasset/images/instagram/6.jpg" height="80" width="80" alt="img" class="img-responsive"></a></figure></li>
+                                </ul>
+                            </div>
+                            <!-- / END INSTAGRAM DESIGN AREA -->
+                            <!-- START CATEGORY DESIGN AREA -->
+                            <div class="right-sidebar sidebar-categories-area">
+                                <div class="widget-title">
+                                    <h4>POST CATEGORIES</h4>
+                                </div>
+                                <ul>
+                                    <li class="cat-item"><a href="#">Motivational <span>(10)</span></a></li>
+                                    <li class="cat-item"><a href="#">Sports <span>(18)</span></a></li>
+                                    <li class="cat-item"><a href="#">Travel <span>(14)</span></a></li>
+                                    <li class="cat-item"><a href="#">Lifestyle <span>(9)</span></a></li>
+                                    <li class="cat-item"><a href="#">Recipesal <span>(15)</span></a></li>
+                                    <li class="cat-item"><a href="#">Hobby <span>(7)</span></a></li>
+                                </ul>
+                            </div>
+                            <!-- / END CATEGORY DESIGN AREA -->
+                            <!-- START TAG DESIGN AREA -->
+                            <div class="right-sidebar sidebar-tags-area last">
+                                <div class="widget-title">
+                                    <h4>TAG CLOUD</h4>
+                                </div>
+                                <ul class="sidebar-tags-list">
+                                    <li><a href="#">Recipesal</a></li>
+                                    <li><a href="#">Hobby</a></li>
+                                    <li><a href="#">Travel</a></li>
+                                    <li><a href="#">Life Style</a></li>
+                                    <li><a href="#">Insider</a></li>
+                                    <li><a href="#">Outsider</a></li>
+                                </ul>
+                            </div>
+                            <!-- / END TAG DESIGN AREA -->
+                        </div>
+                    </div>
+                    <!-- / END SIDEBAR CONTENT DESIGN AREA -->
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- / END MAIN CONTENT DESIGN AREA -->
+<!-- START PHOTO GALLERY DESIGN AREA -->
+<section id="photo-gallery" class="photo-gallery-area section-padding" data-stellar-background-ratio="0.6">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="col-md-4"></div>
+                <div class="col-md-4 section-title">
+                    <h2>Photo Gallery</h2>
+                </div>
+                <div class="col-md-4"></div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="photo-gallery-list wow fadeInUp">
+                <!-- START PHOTO GALLERY PHOTO DESIGN AREA -->
+                <div class="photo-gallery-photo text-center">
+                    <div class="item">
+                        <figure><img src="/blogasset/images/photo-gallery/1.jpg" alt=""></figure>
+                    </div>
+                </div>
+                <!-- / END PHOTO GALLERY PHOTO DESIGN AREA -->
+                <!-- START PHOTO GALLERY PHOTO DESIGN AREA -->
+                <div class="photo-gallery-photo text-center">
+                    <figure><img src="/blogasset/images/photo-gallery/2.jpg" alt=""></figure>
+                </div>
+                <!-- / END PHOTO GALLERY PHOTO DESIGN AREA -->
+                <!-- START PHOTO GALLERY PHOTO DESIGN AREA -->
+                <div class="photo-gallery-photo text-center">
+                    <figure><img src="/blogasset/images/photo-gallery/3.jpg" alt=""></figure>
+                </div>
+                <!-- / END PHOTO GALLERY PHOTO DESIGN AREA -->
+                <!-- START PHOTO GALLERY PHOTO DESIGN AREA -->
+                <div class="photo-gallery-photo text-center">
+                    <div class="item">
+                        <figure><img src="/blogasset/images/photo-gallery/4.jpg" alt=""></figure>
+                    </div>
+                </div>
+                <!-- / END PHOTO GALLERY PHOTO DESIGN AREA -->
+                <!-- START PHOTO GALLERY PHOTO DESIGN AREA -->
+                <div class="photo-gallery-photo text-center">
+                    <figure><img src="/blogasset/images/photo-gallery/5.jpg" alt=""></figure>
+                </div>
+                <!-- / END PHOTO GALLERY PHOTO DESIGN AREA -->
+                <!-- START PHOTO GALLERY PHOTO DESIGN AREA -->
+                <div class="photo-gallery-photo text-center">
+                    <figure><img src="/blogasset/images/photo-gallery/6.jpg" alt=""></figure>
+                </div>
+                <!-- / END PHOTO GALLERY PHOTO DESIGN AREA -->
+                <!-- START PHOTO GALLERY PHOTO DESIGN AREA -->
+                <div class="photo-gallery-photo text-center">
+                    <div class="item">
+                        <figure><img src="/blogasset/images/photo-gallery/7.jpg" alt=""></figure>
+                    </div>
+                </div>
+                <!-- / END PHOTO GALLERY PHOTO DESIGN AREA -->
+                <!-- START PHOTO GALLERY PHOTO DESIGN AREA -->
+                <div class="photo-gallery-photo text-center">
+                    <figure><img src="/blogasset/images/photo-gallery/8.jpg" alt=""></figure>
+                </div>
+                <!-- / END PHOTO GALLERY PHOTO DESIGN AREA -->
+                <!-- START PHOTO GALLERY PHOTO DESIGN AREA -->
+                <div class="photo-gallery-photo text-center">
+                    <figure><img src="/blogasset/images/photo-gallery/9.jpg" alt=""></figure>
+                </div>
+                <!-- / END PHOTO GALLERY PHOTO DESIGN AREA -->
+            </div>
+        </div>
+    </div>
+</section>
+<!-- / END PHOTO GALLERY DESIGN AREA -->

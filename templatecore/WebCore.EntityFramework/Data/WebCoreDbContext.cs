@@ -34,6 +34,7 @@ namespace WebCore.EntityFramework.Data
         public DbSet<Language> Languages { get; set; }
         public DbSet<LanguageDetail> LanguageDetails { get; set; }
         public DbSet<AppMenu> AppMenus { get; set; }
+        public DbSet<Blog> Blogs { get; set; }
         #endregion
     }
 }
