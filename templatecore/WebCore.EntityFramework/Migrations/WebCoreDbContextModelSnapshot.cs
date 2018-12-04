@@ -64,6 +64,8 @@ namespace WebCore.EntityFramework.Migrations
 
                     b.Property<string>("AuthorName");
 
+                    b.Property<string>("Content");
+
                     b.Property<string>("CreatedBy")
                         .HasMaxLength(256);
 
@@ -91,6 +93,25 @@ namespace WebCore.EntityFramework.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Blogs");
+                });
+
+            modelBuilder.Entity("WebCore.Entities.BlogImage", b =>
+                {
+                    b.Property<int>("ImageId")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("BlogRefId");
+
+                    b.Property<byte[]>("ImageFile");
+
+                    b.Property<string>("ImagePath");
+
+                    b.HasKey("ImageId");
+
+                    b.HasIndex("BlogRefId");
+
+                    b.ToTable("BlogImage");
                 });
 
             modelBuilder.Entity("WebCore.Entities.Language", b =>
@@ -503,6 +524,14 @@ namespace WebCore.EntityFramework.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens");
+                });
+
+            modelBuilder.Entity("WebCore.Entities.BlogImage", b =>
+                {
+                    b.HasOne("WebCore.Entities.Blog", "Blog")
+                        .WithMany("BlogImages")
+                        .HasForeignKey("BlogRefId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("WebCore.Entities.WebCoreRoleClaim", b =>
