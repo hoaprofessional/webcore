@@ -8,15 +8,16 @@ namespace WebCore.Controllers
     public class BlogController : Controller
     {
         private IBlogService blogService;
-
+        public BlogViewModel blogViewModel;
         public BlogController(IBlogService blogService)
         {
             this.blogService = blogService;
+            if(blogViewModel == null)
+                blogViewModel = new BlogViewModel();
         }
 
         public IActionResult Index(int page = 1)
         {
-            BlogViewModel blogViewModel = new BlogViewModel();
             BlogFilterInput blogFilterInput = new BlogFilterInput
             {
                 PageSize = 3,
@@ -24,6 +25,12 @@ namespace WebCore.Controllers
             };
             blogViewModel.Blogs = blogService.GetAllBlogs(blogFilterInput);
             return View(blogViewModel);
+        }
+        [ActionName("blogdetail")]
+        public IActionResult GetBlogDetail(int id)
+        {
+            blogViewModel.BlogDto = blogService.GetBlogById(id);
+            return View("BlogDetail", blogViewModel);
         }
     }
 }

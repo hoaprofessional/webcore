@@ -11,5 +11,6 @@ namespace WebCore.Models.Blogs
     {
         public PagingResultDto<BlogDto> Blogs { get; set; }
         public BlogFilterInput BlogFilter { get; set; }
+        public BlogDto BlogDto { get; set; }
     }
 }

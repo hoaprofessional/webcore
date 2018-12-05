@@ -31,5 +31,10 @@ namespace WebCore.Services.Impl.Blogs
             return query.PagedQuery(blogFilterDto);
             
         }
+        BlogDto IBlogService.GetBlogById(int id)
+        {
+            var blogItem = blogRepository.GetById(id);
+            return mapper.Map<BlogDto>(blogItem);
+        }
     }
 }

@@ -14,5 +14,6 @@ namespace WebCore.Services.Share.Blogs.Dto
         public string ShortDescription { get; set; }
         public string Image { get; set; }
         public string AuthorName { get; set; }
+        public string Content { get; set; }
     }
 }

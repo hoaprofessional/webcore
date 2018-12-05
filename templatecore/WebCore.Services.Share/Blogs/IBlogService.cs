@@ -9,5 +9,6 @@ namespace WebCore.Services.Share.Blogs
     public interface IBlogService
     {
         PagingResultDto<BlogDto> GetAllBlogs(BlogFilterInput blogFilterDto);
+        BlogDto GetBlogById(int id);
     }
 }
