@@ -21,9 +21,8 @@ namespace WebCore.Helper
         }
         public static string LangFor<TSource>(this IHtmlHelper helper, Expression<Func<TSource, object>> selector, string groupName = "")
         {
-            var memberExpression = (MemberExpression)selector.Body;
-            var name = memberExpression.Member.Name;
-            if(String.IsNullOrWhiteSpace(groupName))
+            var name = GetCorrectPropertyName(selector);
+            if (String.IsNullOrWhiteSpace(groupName))
             {
                 groupName = typeof(TSource).Name;
             }
@@ -50,6 +49,30 @@ namespace WebCore.Helper
             IHttpContextAccessor httpContextAccessor = helper.ViewContext.HttpContext.RequestServices.GetRequiredService<IHttpContextAccessor>();
             var name = httpContextAccessor.HttpContext.User?.Identity?.Name;
             return name != null;
+        }
+
+        public static string DisplayFromSelectList(this IHtmlHelper helper, SelectList selectList, string key)
+        {
+            var value = selectList.Where(x => x.Value == key).FirstOrDefault();
+            if(value==null)
+            {
+                return "";
+            }
+            return value.Text;
+        }
+
+
+        private static string GetCorrectPropertyName<T>(Expression<Func<T, Object>> expression)
+        {
+            if (expression.Body is MemberExpression)
+            {
+                return ((MemberExpression)expression.Body).Member.Name;
+            }
+            else
+            {
+                var op = ((UnaryExpression)expression.Body).Operand;
+                return ((MemberExpression)op).Member.Name;
+            }
         }
     }
 }

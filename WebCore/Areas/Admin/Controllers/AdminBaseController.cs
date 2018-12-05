@@ -7,9 +7,11 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using WebCore.Areas.Admin.Models;
+using WebCore.Services.Share.AdminMenus;
 using WebCore.Services.Share.Admins.Languages;
 using WebCore.Services.Share.Admins.Languages.Dto;
 using WebCore.Services.Share.Languages;
+using WebCore.Services.Share.RecordStatuss;
 using WebCore.Utils.Config;
 using WebCore.Utils.ModelHelper;
 
@@ -20,20 +22,27 @@ namespace WebCore.Areas.Admin.Controllers
         protected IServiceProvider serviceProvider;
         private readonly ILanguageProviderService languageProvider;
         private readonly ILanguageAdminService languageAdminService;
+        private readonly IRecordStatusHelper recordStatusHelper;
+        private readonly IAdminMenuProvider adminMenuProvider;
 
         public AdminBaseController(IServiceProvider serviceProvider)
         {
             this.serviceProvider = serviceProvider;
             languageProvider = (ILanguageProviderService)serviceProvider.GetService(typeof(ILanguageProviderService));
             languageAdminService = (ILanguageAdminService)serviceProvider.GetService(typeof(ILanguageAdminService));
+            recordStatusHelper = (IRecordStatusHelper)serviceProvider.GetService(typeof(IRecordStatusHelper));
+            adminMenuProvider = (IAdminMenuProvider)serviceProvider.GetService(typeof(IAdminMenuProvider));
         }
 
         protected void InitAdminBaseViewModel(AdminBaseViewModel adminBaseViewModel)
         {
+            var permissions = GetAllPermissions();
             adminBaseViewModel.CurrentLanguage = CultureInfo.CurrentCulture.Name;
-            var languages = languageAdminService.GetAllLanguages();
+            List<LanguageDto> languages = languageAdminService.GetAllLanguages();
             SelectList languagesSelectList = new SelectList(languages, nameof(LanguageDto.LangCode), nameof(LanguageDto.LangName));
             ViewBag.Languages = languagesSelectList;
+            ViewBag.RecordStatusCombobox = recordStatusHelper.GetRecordStatusCombobox();
+            adminBaseViewModel.Menus = adminMenuProvider.GetAdminMenuTreeView(permissions);
         }
 
         protected string[] GetAllPermissions()
@@ -53,7 +62,6 @@ namespace WebCore.Areas.Admin.Controllers
                 if (filter == null)
                 {
                     TFilter filterModel = new TFilter();
-
                     return filterModel;
                 }
                 else

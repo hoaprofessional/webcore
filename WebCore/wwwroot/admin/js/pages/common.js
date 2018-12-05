@@ -104,9 +104,58 @@ $('body').delegate('form[data-noreload="true"]', 'submit', function (e) {
             }
         });
     }
-})
+});
 
-$('.select2-with-search').select2();
+var confimation = function (title, content, confirmButtonText, cancelButtonText, onConfirm, onCancel) {
+    var confirmArea = $('#confirmModal');
+    if (confirmArea.length === 0) {
+        var tag = '<div id="confirmModal"></div>';
+        confirmArea = $(tag);
+        $('body').append(confirmArea);
+
+    }
+    var html = `<div class="modal fade" tabindex="-1" role="dialog">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title">${title}</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <p>${content}</p>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" data-dismiss="modal" class="btn btn-primary confirm">${confirmButtonText}</button>
+                                    <button type="button" class="btn btn-secondary cancel" data-dismiss="modal">${cancelButtonText}</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    `;
+    confirmArea.html(html);
+    if (onConfirm) {
+        confirmArea.find('>.modal .confirm').click(function (e) {
+            onConfirm(e);
+        });
+    }
+    if (onCancel) {
+        confirmArea.find('>.modal .cancel').click(function (e) {
+            onCancel(e);
+        });
+    }
+    confirmArea.find('>.modal').modal();
+};
+
+
+
+function resetSelect2(parent) {
+    $(parent).find('.select2-with-search').select2({ width: "100%" });
+    $(parent).find('.select2').select2({ width: "100%" });
+}
+resetSelect2($('body'));
+
 
 function changeLanguage(langCode) {
     $.get('/Resource/ChangeLanguage?langCode=' + langCode).done(function () {

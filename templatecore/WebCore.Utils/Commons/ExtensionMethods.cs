@@ -1,8 +1,10 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
+using WebCore.Utils.ModelHelper;
 
 namespace WebCore.Utils.Commons
 {
@@ -18,6 +20,11 @@ namespace WebCore.Utils.Commons
                 stream.Position = 0;
                 return (T)formatter.Deserialize(stream);
             }
+        }
+
+        public static SelectList ToSelectList<TKey, TValue>(this List<ComboboxResult<TKey, TValue>> comboboxResult)
+        {
+            return new SelectList(comboboxResult, nameof(ComboboxResult<TKey, TValue>.Value), nameof(ComboboxResult<TKey, TValue>.Display));
         }
     }
 }

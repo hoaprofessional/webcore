@@ -1,0 +1,33 @@
+﻿@model WebCore.Services.Share.Admins.MasterLists.Dto.MasterListFilterInput
+@{
+    SelectList recordStatuss = ViewBag.RecordStatusCombobox;
+}
+<div class="col-md-12">
+    <div class="card">
+        <div class="card-header card-header-primary">
+            <h4 class="card-title">@Html.Lang("LBL_FILTER")</h4>
+        </div>
+        <div class="card-body">
+            <form id="filter" method="get" asp-action="@nameof(MasterListController.FilterPartial)">
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-group bmd-form-group">
+                            <label class="bmd-label-floating">@(Html.LangFor<MasterList>(x => x.Group))</label>
+                            <input asp-for="Group" type="text" class="form-control">
+                            <span asp-validation-for="Group"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group bmd-form-group">
+                            <select asp-for="RecordStatus" class="select2" asp-items="recordStatuss">
+                                <option value="">@Html.Lang("LBL_RECORDSTATUS_SELECT")</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary pull-right">@Html.Lang("LBL_FILTER_BUTTON")</button>
+                <button type="button" class="btn btn-primary pull-right reset-button">@Html.Lang("LBL_FILTER_RESET")</button>
+            </form>
+        </div>
+    </div>
+</div>

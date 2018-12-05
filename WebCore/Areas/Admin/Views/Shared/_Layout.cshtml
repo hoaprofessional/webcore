@@ -22,6 +22,7 @@
         <link href="/admin/css/material-dashboard.css?v=2.1.0" rel="stylesheet" />
         <link href="~/lib/select2/dist/css/select2.css" rel="stylesheet" />
         <link href="~/lib/bootstrap-checkbox/bootstrap-checkbox.css" rel="stylesheet" />
+        <link href="~/lib/bootstrap-material-datetimepicker/css/bootstrap-material-datetimepicker.css" rel="stylesheet" />
     </environment>
     <environment exclude="Development">
         <link href="~/admin/css/material-dashboard.min.css" rel="stylesheet" />
@@ -32,15 +33,23 @@
     <div class="wrapper ">
         <div class="sidebar" data-color="purple" data-background-color="white" data-image="/admin/img/sidebar-1.jpg">
             <!--
-                Tip 1: You can change the color of the sidebar using: data-color="purple | azure | green | orange | danger"
+        Tip 1: You can change the color of the sidebar using: data-color="purple | azure | green | orange | danger"
 
-                Tip 2: you can also add an image using data-image tag
-            -->
+        Tip 2: you can also add an image using data-image tag
+    -->
             <div class="logo">
                 <a href="http://www.creative-tim.com" class="simple-text logo-normal">
                     Admin panel
                 </a>
             </div>
+            <treeview class="sidebar-wrapper"
+                      treeview-model="Model.Menus"
+                      treeview-rootulclass="nav"
+                      treeview-ulclass="collapse show"
+                      treeview-liclass="nav-item"
+                      treeview-isrenderrootnode="false"
+                      treeview-partialview-child="~/Areas/Admin/Views/Shared/MenuTreeViewItemPartial.cshtml">
+            </treeview>
             <div class="sidebar-wrapper">
                 <ul class="nav">
                     <li class="nav-item active  ">
@@ -62,10 +71,28 @@
                         </a>
                     </li>
                     <li class="nav-item ">
-                        <a class="nav-link" href="./typography.html">
+                        <a class="nav-link" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
                             <i class="material-icons">library_books</i>
                             <p>Typography</p>
+                            <span class="open-icon">
+                                <i class="material-icons open-nav">expand_less</i>
+                                <i class="material-icons close-nav">expand_more</i>
+                            </span>
                         </a>
+                        <ul class="collapse" id="collapseExample">
+                            <li class="nav-item ">
+                                <a class="nav-link" href="./icons.html">
+                                    <i class="material-icons">bubble_chart</i>
+                                    <p>Icons</p>
+                                </a>
+                            </li>
+                            <li class="nav-item ">
+                                <a class="nav-link" href="./map.html">
+                                    <i class="material-icons">location_ons</i>
+                                    <p>Maps</p>
+                                </a>
+                            </li>
+                        </ul>
                     </li>
                     <li class="nav-item ">
                         <a class="nav-link" href="./icons.html">
@@ -86,11 +113,11 @@
                         </a>
                     </li>
                     <!-- <li class="nav-item active-pro ">
-                          <a class="nav-link" href="./upgrade.html">
-                              <i class="material-icons">unarchive</i>
-                              <p>Upgrade to PRO</p>
-                          </a>
-                      </li> -->
+                <a class="nav-link" href="./upgrade.html">
+                    <i class="material-icons">unarchive</i>
+                    <p>Upgrade to PRO</p>
+                </a>
+            </li> -->
                 </ul>
             </div>
         </div>
@@ -119,6 +146,8 @@
         <script src="/admin/js/material-dashboard.min.js?v=2.1.0" type="text/javascript"></script>
         <script src="~/lib/select2/dist/js/select2.js"></script>
         <script src="~/admin/js/pages/common.js"></script>
+        <script src="~/lib/momentjs/min/moment.min.js"></script>
+        <script src="~/lib/bootstrap-material-datetimepicker/js/bootstrap-material-datetimepicker.js"></script>
         <script>
             $(document).ready(function () {
                 // Javascript method's body can be found in assets/js/demos.js

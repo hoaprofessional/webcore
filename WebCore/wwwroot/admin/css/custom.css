@@ -104,3 +104,71 @@ treeview ul {
 .checkbox:not(.role-permission) label {
     color: #9b33b2 !important;
 }
+
+ul {
+    list-style: none;
+}
+
+
+a.nav-link {
+    position: relative;
+}
+
+span.open-icon {
+    position: absolute;
+    right: 0;
+    top: 10px;
+}
+
+a.nav-link[aria-expanded="true"] .open-icon > .close-nav {
+    display:none;
+}
+
+a.nav-link[aria-expanded="false"] .open-icon > .open-nav {
+    display: none;
+}
+
+.action-area {
+    width: 100%;
+    padding: 10px 10px;
+    margin-left: 15px;
+    margin-right: 15px;
+}
+
+.default-align {
+    display: flex !important;
+    padding-left: 20px !important;
+    padding-right: 20px !important;
+}
+
+    .default-align > * {
+        margin-top: auto !important;
+        margin-bottom: auto !important;
+    }
+
+.select2-container--default .select2-selection--single {
+    border-radius: 0px !important;
+    border: none !important;
+    border-bottom: solid 1px #d2d2d2 !important;
+    padding-bottom: 6px !important;
+    box-sizing: content-box !important;
+}
+
+    .select2-container--default .select2-selection--single .select2-selection__arrow > b {
+        margin-left: 6px !important;
+    }
+
+span.field-validation-error {
+    color: red;
+    box-sizing: content-box !important;
+}
+
+@media (min-width: 1500px) {
+    div#confirmModal .modal-dialog {
+        width: 500px !important;
+    }
+}
+
+treeview {
+    display: block;
+}

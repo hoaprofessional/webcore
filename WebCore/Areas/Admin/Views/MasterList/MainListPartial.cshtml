@@ -1,0 +1,105 @@
+﻿@model PagingResultDto<WebCore.Services.Share.Admins.MasterLists.Dto.MasterListDto>
+@{
+    SelectList adminMenuCombobox = ViewBag.MasterListCombobox;
+}
+<div class="table-responsive">
+    <table class="table">
+        <thead class=" text-primary">
+            <tr>
+                @if (Html.HasPermission(ConstantConfig.Claims.MasterListManagement_ActionButton) || Html.HasPermission(ConstantConfig.Claims.MasterListManagement_RestoreMenuManagement))
+                {
+                    <th>
+                        @Html.Lang("LBL_ACTION")
+                    </th>
+                }
+                <th>
+                    @(Html.LangFor<MasterList>(x => x.Group))
+                </th>
+                <th>
+                    @(Html.Lang("LBL_MASTERLIST_GROUP_DISPLAY"))
+                </th>
+                <th>
+                    @(Html.LangFor<MasterList>(x => x.Value))
+                </th>
+                <th>
+                    @(Html.Lang("LBL_MASTERLIST_VALUE_DISPLAY"))
+                </th>
+                <th>
+                    @(Html.LangFor<MasterList>(x => x.OrderNo))
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Items)
+            {
+                <tr>
+                    @if (item.RecordStatus == ConstantConfig.RecordStatusConfig.Active)
+                    {
+
+                        @if (Html.HasPermission(ConstantConfig.Claims.MasterListManagement_ActionButton))
+                        {
+                            <td class="nav-item dropdown">
+                                <div class="dropdown">
+                                    <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <i class="material-icons">settings</i>
+                                        <p class="d-lg-none d-md-block">
+                                            @Html.Lang("LBL_ACTION")
+                                        </p>
+                                    </button>
+                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                        @if (Html.HasPermission(ConstantConfig.Claims.MasterListManagement_ActionButton_UpdateMenuManagement))
+                                        {
+                                            <div onclick="openInputModal(@item.Id)" class="dropdown-item">
+                                                <i class="material-icons">create</i>
+                                                <p>
+                                                    @Html.Lang("LBL_UPDATE")
+                                                </p>
+                                            </div>
+                                        }
+                                        @if (Html.HasPermission(ConstantConfig.Claims.MasterListManagement_ActionButton_DeleteMenuManagement))
+                                        {
+                                            <div onclick="deleteItem(@item.Id,'@item.UpdateToken')" class="dropdown-item">
+                                                <i class="material-icons">delete_forever</i>
+                                                <p>
+                                                    @Html.Lang("LBL_DELETE")
+                                                </p>
+                                            </div>
+                                        }
+                                    </div>
+                                </div>
+                            </td>
+                        }
+                    }
+                    else
+                    {
+                        if (Html.HasPermission(ConstantConfig.Claims.MasterListManagement_RestoreMenuManagement))
+                        {
+                            <td>
+                                <button onclick="restoreItem('@item.Id','@item.UpdateToken')" type="button" class="btn btn-danger">
+                                    <i class="material-icons">lock_open</i>
+                                    @Html.Lang("LBL_RESTORE")
+                                </button>
+                            </td>
+                        }
+                    }
+                    <td>
+                        @item.Group
+                    </td>
+                    <td>
+                        @Html.Lang($"LBL_MASTERLISTGROUP_{item.Group}")
+                    </td>
+                    <td>
+                        @item.Value
+                    </td>
+                    <td>
+                        @Html.Lang($"LBL_MASTERLISTVALUE_{item.Value}")
+                    </td>
+                    <td>
+                        @item.OrderNo
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <custompager pager-model="@Model" pager-link="/Admin/MasterList" />
+</div>

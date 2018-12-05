@@ -1,0 +1,22 @@
+﻿@model WebCore.Services.Share.AdminMenus.Dto.AdminMenuTreeViewDto
+@{ 
+    var itemIcon = String.IsNullOrEmpty(Model.Icon) ? "library_books" : Model.Icon;
+}
+@if (Model.Childs.Count == 0)
+{
+    <a class="nav-link" href="@Model.Link">
+        <i class="material-icons">@itemIcon</i>
+        <p>@Html.Lang($"LBL_ADMINMENUITEM_{Model.Name}")</p>
+    </a>
+}
+else
+{
+    <a class="nav-link" data-toggle="collapse" href="#treeview-childs-@Model.Key" role="button" aria-expanded="true" aria-controls="treeview-childs-@Model.Key">
+        <i class="material-icons">@itemIcon</i>
+        <p>@Html.Lang($"LBL_ADMINMENUITEM_{Model.Name}")</p>
+        <span class="open-icon">
+            <i class="material-icons open-nav">expand_less</i>
+            <i class="material-icons close-nav">expand_more</i>
+        </span>
+    </a>
+}

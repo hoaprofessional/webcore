@@ -1,13 +1,17 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 using WebCore.Entities;
 using WebCore.EntityFramework.Repositories;
+using WebCore.Services.Share.Languages;
 using WebCore.Services.Share.Permissions;
 using WebCore.Services.Share.Permissions.Dto;
+using WebCore.Utils.Commons;
 using WebCore.Utils.Config;
+using WebCore.Utils.ModelHelper;
 using WebCore.Utils.TreeViewHelper;
 
 namespace WebCore.Services.Impl.Permissions
@@ -16,11 +20,13 @@ namespace WebCore.Services.Impl.Permissions
     {
         private readonly IRepository<WebCoreRole, string> roleRepository;
         private readonly RoleManager<WebCoreRole> roleManager;
+        private readonly ILanguageProviderService languageProviderService;
 
-        public PermissionService(IRepository<WebCoreRole, string> roleRepository, RoleManager<WebCoreRole> roleManager)
+        public PermissionService(IRepository<WebCoreRole, string> roleRepository, ILanguageProviderService languageProviderService, RoleManager<WebCoreRole> roleManager)
         {
             this.roleRepository = roleRepository;
             this.roleManager = roleManager;
+            this.languageProviderService = languageProviderService;
         }
 
         public HashSet<string> GetAllPermissions()
@@ -32,7 +38,29 @@ namespace WebCore.Services.Impl.Permissions
             return allPermissionStaticMembers.Select(x => x.GetValue(null).ToString()).ToHashSet();
         }
 
+        public async Task<SelectList> GetPermissionCombobox()
+        {
+            List<PermissionDto> permissions = await GetAllPermissionDto();
+            List<ComboboxResult<string, string>> allPermissions = permissions.Select(x => new ComboboxResult<string, string>()
+            {
+                Value = x.Key.ToString(),
+                Display = languageProviderService.GetlangByKey(x.Name)
+            }).ToList();
+            return allPermissions.ToSelectList();
+        }
+
         public async Task<PermissionDto> GetPermissionTreeViewAsync(string[] checkedPermissions)
+        {
+            List<PermissionDto> permissions = await GetAllPermissionDto();
+            foreach (PermissionDto permission in permissions)
+            {
+                permission.Checked = checkedPermissions.Contains(permission.Key);
+            }
+            PermissionDto rootNode = permissions.ToTreeView("rootkey");
+            return rootNode;
+        }
+
+        private async Task<List<PermissionDto>> GetAllPermissionDto()
         {
             IQueryable<WebCoreRole> roles = roleRepository.GetAll();
 
@@ -44,10 +72,9 @@ namespace WebCore.Services.Impl.Permissions
             List<PermissionDto> permissions = allPermissionStaticMembers.Select(x => new PermissionDto()
             {
                 Key = x.GetValue(null),
-                Name = x.Name,
-                Checked = checkedPermissions.Contains(x.GetValue(null))
+                Name = x.Name
             }).ToList();
-            
+
             foreach (PermissionDto permission in permissions)
             {
                 string permissionString = (string)permission.Key;
@@ -63,22 +90,21 @@ namespace WebCore.Services.Impl.Permissions
                 permission.Roles = new List<string>();
             }
 
-            foreach (var role in roles)
+            foreach (WebCoreRole role in roles)
             {
-                var permissionsOfRole = await GetAllPermissionsAsync(role);
+                string[] permissionsOfRole = await GetAllPermissionsAsync(role);
 
                 foreach (PermissionDto permission in permissions)
                 {
-                    if(permissionsOfRole.Contains(permission.Key))
+                    if (permissionsOfRole.Contains(permission.Key))
                     {
                         permission.Roles.Add(role.Name);
                     }
                 }
             }
-
-            PermissionDto rootNode = permissions.ToTreeView("rootkey");
-            return rootNode;
+            return permissions;
         }
+
         private async Task<string[]> GetAllPermissionsAsync(WebCoreRole role)
         {
             return (await roleManager.GetClaimsAsync(role)).Select(x => x.Value).ToArray();

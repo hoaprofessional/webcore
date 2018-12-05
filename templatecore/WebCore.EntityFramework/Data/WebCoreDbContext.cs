@@ -1,16 +1,17 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using WebCore.Entities;
+using WebCore.EntityFramework.Configurations;
 
 namespace WebCore.EntityFramework.Data
 {
-    public class WebCoreDbContext : IdentityDbContext<WebCoreUser, 
+    public class WebCoreDbContext : IdentityDbContext<WebCoreUser,
         WebCoreRole,
-        string, 
+        string,
         WebCoreUserClaim,
-        WebCoreUserRole, 
+        WebCoreUserRole,
         WebCoreUserLogin,
-        WebCoreRoleClaim, 
+        WebCoreRoleClaim,
         WebCoreUserToken>
     {
         public WebCoreDbContext(DbContextOptions<WebCoreDbContext> options)
@@ -27,6 +28,8 @@ namespace WebCore.EntityFramework.Data
             modelBuilder.Entity<WebCoreUserClaim>().ToTable("WebCoreUserClaims");
             modelBuilder.Entity<WebCoreRoleClaim>().ToTable("WebCoreRoleClaims");
             modelBuilder.Entity<WebCoreRole>().ToTable("WebCoreRoles");
+
+            modelBuilder.ApplyConfiguration(new MasterListConfiguration());
         }
 
         #region Db Register
@@ -34,6 +37,8 @@ namespace WebCore.EntityFramework.Data
         public DbSet<Language> Languages { get; set; }
         public DbSet<LanguageDetail> LanguageDetails { get; set; }
         public DbSet<AppMenu> AppMenus { get; set; }
+        public DbSet<AdminMenu> AdminMenus { get; set; }
+        public DbSet<MasterList> MasterLists { get; set; }
         #endregion
     }
 }

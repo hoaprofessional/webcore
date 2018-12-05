@@ -1,0 +1,111 @@
+﻿@model PagingResultDto<WebCore.Services.Share.Admins.AdminMenus.Dto.AdminMenuDto>
+@{
+    SelectList adminMenuCombobox = ViewBag.AdminMenuCombobox;
+}
+<div class="table-responsive">
+    <table class="table">
+        <thead class=" text-primary">
+            <tr>
+                @if (Html.HasPermission(ConstantConfig.Claims.AdminMenuManagement_ActionButton) || Html.HasPermission(ConstantConfig.Claims.AdminMenuManagement_RestoreMenuManagement))
+                {
+                    <th>
+                        @Html.Lang("LBL_ACTION")
+                    </th>
+                }
+                <th>
+                    @(Html.LangFor<AdminMenu>(x => x.Name))
+                </th>
+                <th>
+                    @(Html.Lang("LBL_ADMINMENU_NAME_DISPLAY"))
+                </th>
+                <th>
+                    @(Html.LangFor<AdminMenu>(x => x.ParentMenuId))
+                </th>
+                <th>
+                    @(Html.LangFor<AdminMenu>(x => x.OrderNo))
+                </th>
+                <th>
+                    @(Html.LangFor<AdminMenu>(x => x.Icon))
+                </th>
+                <th>
+                    @(Html.LangFor<AdminMenu>(x => x.Link))
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Items)
+            {
+                <tr>
+                    @if (item.RecordStatus == ConstantConfig.RecordStatusConfig.Active)
+                    {
+
+                        @if (Html.HasPermission(ConstantConfig.Claims.AdminMenuManagement_ActionButton))
+                        {
+                            <td class="nav-item dropdown">
+                                <div class="dropdown">
+                                    <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <i class="material-icons">settings</i>
+                                        <p class="d-lg-none d-md-block">
+                                            @Html.Lang("LBL_ACTION")
+                                        </p>
+                                    </button>
+                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                        @if (Html.HasPermission(ConstantConfig.Claims.AdminMenuManagement_ActionButton_UpdateMenuManagement))
+                                        {
+                                            <div onclick="openInputModal(@item.Id)" class="dropdown-item">
+                                                <i class="material-icons">create</i>
+                                                <p>
+                                                    @Html.Lang("LBL_UPDATE")
+                                                </p>
+                                            </div>
+                                        }
+                                        @if (Html.HasPermission(ConstantConfig.Claims.AdminMenuManagement_ActionButton_DeleteMenuManagement))
+                                        {
+                                            <div onclick="deleteItem(@item.Id,'@item.UpdateToken')" class="dropdown-item">
+                                                <i class="material-icons">delete_forever</i>
+                                                <p>
+                                                    @Html.Lang("LBL_DELETE")
+                                                </p>
+                                            </div>
+                                        }
+                                    </div>
+                                </div>
+                            </td>
+                        }
+                    }
+                    else
+                    {
+                        if (Html.HasPermission(ConstantConfig.Claims.AdminMenuManagement_RestoreMenuManagement))
+                        {
+                            <td>
+                                <button onclick="restoreItem('@item.Id','@item.UpdateToken')" type="button" class="btn btn-danger">
+                                    <i class="material-icons">lock_open</i>
+                                    @Html.Lang("LBL_RESTORE")
+                                </button>
+                            </td>
+                        }
+                    }
+                    <td>
+                        @item.Name
+                    </td>
+                    <td>
+                        @Html.Lang($"LBL_ADMINMENUITEM_{item.Name}")
+                    </td>
+                    <td>
+                        @Html.DisplayFromSelectList(adminMenuCombobox, item.ParentMenuId.ToString())
+                    </td>
+                    <td>
+                        @item.OrderNo
+                    </td>
+                    <td>
+                        @item.Icon
+                    </td>
+                    <td>
+                        @item.Link
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <custompager pager-model="@Model" pager-link="/Admin/AdminMenu" />
+</div>

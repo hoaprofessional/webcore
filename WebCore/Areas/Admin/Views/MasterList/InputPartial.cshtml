@@ -1,0 +1,61 @@
+﻿@model WebCore.Services.Share.Admins.MasterLists.Dto.MasterListInput
+@{
+    SelectList adminMenusCombobox = ViewBag.MasterListCombobox;
+    SelectList permissionCombobox = ViewBag.PermissionCombobox;
+}
+<div class="modal-dialog" role="document">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLongTitle">@Html.Lang("LBL_ADMIN_MENU_DETAIL")</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+
+        <div class="card-body">
+            <form data-noreload="true"
+                  data-on-submit-done="onInputSubmitDone"
+                  data-on-submit-fail="onInputSubmitFail"
+                  method="post"
+                  asp-action="@nameof(MasterListController.InputPartial)"
+                  id="saveInputForm">
+                <input asp-for="Id" type="hidden" class="form-control">
+                <input asp-for="UpdateToken" type="hidden" class="form-control">
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group bmd-form-group">
+                            <select asp-for="Group" class="select2" asp-items="adminMenusCombobox">
+                                <option value="0">@Html.Lang("LBL_ADMIN_MENU_PARENT_SELECT")</option>
+                            </select>
+                            <span asp-validation-for="Group"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group bmd-form-group">
+                            <label class="bmd-label-floating">@(Html.LangFor<MasterList>(x => x.Value))</label>
+                            <input language-support="true" asp-for="Value" type="text" class="form-control">
+                            <span asp-validation-for="Value"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group bmd-form-group">
+                            <label class="bmd-label-floating">@(Html.LangFor<MasterList>(x => x.OrderNo))</label>
+                            <input language-support="true" asp-for="OrderNo" type="text" class="form-control">
+                            <span asp-validation-for="OrderNo"></span>
+                        </div>
+                    </div>
+                </div>
+                <button type="submit" hidden></button>
+            </form>
+        </div>
+
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">@Html.Lang("LBL_CLOSE")</button>
+            <button type="button" onclick="$('#saveInputForm').submit()" class="btn btn-primary">@Html.Lang("LBL_SAVE")</button>
+        </div>
+    </div>
+</div>
+<partial name="_ValidationScriptsPartial" />
+<script>
+</script>

@@ -40,7 +40,10 @@
                             <h4 class="card-title">@Html.Lang("LBL_PERMISSION")</h4>
                         </div>
                         <div class="card-body">
-                            <treeview id="permission-area" model="Model.TreeViewPermission" partialview-child="~/Areas/Admin/Views/User/PermissionTreeItemPartial.cshtml"></treeview>
+                            <treeview id="permission-area" 
+                                        treeview-model="Model.TreeViewPermission" 
+                                        treeview-isrenderrootnode="true"
+                                        treeview-partialview-child="~/Areas/Admin/Views/User/PermissionTreeItemPartial.cshtml"></treeview>
                         </div>
                     </div>
                 </div>

@@ -105,7 +105,6 @@ namespace WebCore.Areas.Admin.Controllers
         }
 
         [HttpGet]
-        [ClaimRequirement(ConstantConfig.Claims.UserManagement_AssignPermission)]
         public IActionResult InputInfoPartial(EntityId<string> idModel = null)
         {
             UserInfoInput input = null;

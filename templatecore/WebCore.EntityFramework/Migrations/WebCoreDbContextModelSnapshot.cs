@@ -19,6 +19,47 @@ namespace WebCore.EntityFramework.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+            modelBuilder.Entity("WebCore.Entities.AdminMenu", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("CreatedBy")
+                        .HasMaxLength(256);
+
+                    b.Property<DateTime?>("CreatedDate");
+
+                    b.Property<string>("DeletedBy");
+
+                    b.Property<DateTime?>("DeletedDate");
+
+                    b.Property<string>("Icon");
+
+                    b.Property<string>("Link");
+
+                    b.Property<string>("ModifiedBy")
+                        .HasMaxLength(256);
+
+                    b.Property<DateTime?>("ModifiedDate");
+
+                    b.Property<string>("Name");
+
+                    b.Property<int?>("OrderNo");
+
+                    b.Property<int?>("ParentMenuId");
+
+                    b.Property<string>("Permission");
+
+                    b.Property<long?>("RecordStatus");
+
+                    b.Property<Guid?>("UpdateToken");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("AdminMenus");
+                });
+
             modelBuilder.Entity("WebCore.Entities.AppMenu", b =>
                 {
                     b.Property<int>("Id")
@@ -124,6 +165,45 @@ namespace WebCore.EntityFramework.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("LanguageDetails");
+                });
+
+            modelBuilder.Entity("WebCore.Entities.MasterList", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("CreatedBy")
+                        .HasMaxLength(256);
+
+                    b.Property<DateTime?>("CreatedDate");
+
+                    b.Property<string>("DeletedBy");
+
+                    b.Property<DateTime?>("DeletedDate");
+
+                    b.Property<string>("Group")
+                        .HasMaxLength(450);
+
+                    b.Property<string>("ModifiedBy")
+                        .HasMaxLength(256);
+
+                    b.Property<DateTime?>("ModifiedDate");
+
+                    b.Property<int?>("OrderNo");
+
+                    b.Property<long?>("RecordStatus");
+
+                    b.Property<Guid?>("UpdateToken");
+
+                    b.Property<string>("Value")
+                        .HasMaxLength(450);
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Group");
+
+                    b.ToTable("MasterLists");
                 });
 
             modelBuilder.Entity("WebCore.Entities.SystemConfig", b =>

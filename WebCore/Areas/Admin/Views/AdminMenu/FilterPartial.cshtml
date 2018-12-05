@@ -1,0 +1,46 @@
+﻿@model WebCore.Services.Share.Admins.AdminMenus.Dto.AdminMenuFilterInput
+@{
+    SelectList adminMenusCombobox = ViewBag.AdminMenuCombobox;
+    SelectList recordStatuss = ViewBag.RecordStatusCombobox;
+}
+<div class="col-md-12">
+    <div class="card">
+        <div class="card-header card-header-primary">
+            <h4 class="card-title">@Html.Lang("LBL_FILTER")</h4>
+        </div>
+        <div class="card-body">
+            <form id="filter" method="get" asp-action="@nameof(AdminMenuController.FilterPartial)">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group bmd-form-group">
+                            <label class="bmd-label-floating">@(Html.LangFor<AdminMenu>(x => x.Name))</label>
+                            <input asp-for="Name" type="text" class="form-control">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group bmd-form-group">
+                            <label class="bmd-label-floating">@(Html.LangFor<AdminMenu>(x => x.Link))</label>
+                            <input asp-for="Link" type="text" class="form-control">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group bmd-form-group">
+                            <select asp-for="ParentMenuId" class="select2" asp-items="adminMenusCombobox">
+                                <option value="">@Html.Lang("LBL_ADMIN_MENU_PARENT_SELECT")</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group bmd-form-group">
+                            <select asp-for="RecordStatus" class="select2" asp-items="recordStatuss">
+                                <option value="">@Html.Lang("LBL_RECORDSTATUS_SELECT")</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary pull-right">@Html.Lang("LBL_FILTER_BUTTON")</button>
+                <button type="button" class="btn btn-primary pull-right reset-button">@Html.Lang("LBL_FILTER_RESET")</button>
+            </form>
+        </div>
+    </div>
+</div>

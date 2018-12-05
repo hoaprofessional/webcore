@@ -1,5 +1,9 @@
-﻿function checkCheckedParent(currentChecked) {
-    var parentCheckbox = $(currentChecked).parent().closest('ul').closest('li').find('>.checkbox.checkbox-info>input[type=checkbox]');
+﻿/**
+ * check quyền cha khi check vào checkbox của quyền con
+ * @param {any} currentChecked: checkbox của quyền con
+ */
+function checkCheckedParent(currentChecked) {
+    var parentCheckbox = $(currentChecked).parent().closest('ul').closest('li').find('>.checkbox.checkbox-info>input[type=checkbox]:not(#chk-rootkey)');
 
     if (parentCheckbox.length === 0) {
         return;
@@ -15,6 +19,7 @@
     checkCheckedParent(parentCheckbox);
 }
 
+/** @returns {any}: lấy ra array các quyền được check */
 function getAllPermissionChecked() {
     return $.map($('.checkbox.checkbox-info>input[type=checkbox]:not(#chk-rootkey):checked'), function (x) { return $(x).val().trim(); });
 }
@@ -38,7 +43,11 @@ function createPermissionCheck(element) {
     });
 }
 
-
+/**
+ * tạo checkbox cho quyền và nhóm quyền
+ * @param {any} roleElement: element cha chứa các element nhóm quyền
+ * @param {any} permissionElement: element chả chứa các element quyền
+ */
 function createRoleCheck(roleElement, permissionElement) {
     $(roleElement).find('>div>input[type=checkbox]:checked').each(function () {
         checkRole(this, permissionElement);
@@ -57,6 +66,11 @@ function createRoleCheck(roleElement, permissionElement) {
     });
 }
 
+/**
+ * Xử lý khi check vào 1 nhóm quyền
+ * @param {any} checkRoleElement: element nhóm quyền được check
+ * @param {any} permissionElement: element cha của những elent quyền được check
+ */
 function checkRole(checkRoleElement, permissionElement) {
     $(permissionElement).find('input[type=checkbox]').each(function () {
         var roles = $(this).attr('data-roles').split(',');
@@ -67,6 +81,11 @@ function checkRole(checkRoleElement, permissionElement) {
     });
 }
 
+/**
+ * Xử lý khi uncheck vào 1 nhóm quyền
+ * @param {any} checkRoleElement: element nhóm quyền được check
+ * @param {any} permissionElement: element cha của những elent quyền được check
+ */
 function unCheckRole(checkRoleElement, permissionElement) {
     $(permissionElement).find('input[type=checkbox]').each(function () {
         var roles = $(this).attr('data-roles').split(',');

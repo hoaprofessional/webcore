@@ -1,0 +1,83 @@
+﻿@model WebCore.Services.Share.Admins.AdminMenus.Dto.AdminMenuInput
+@{
+    SelectList adminMenusCombobox = ViewBag.AdminMenuCombobox;
+    SelectList permissionCombobox = ViewBag.PermissionCombobox;
+}
+<div class="modal-dialog" role="document">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLongTitle">@Html.Lang("LBL_ADMIN_MENU_DETAIL")</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+
+        <div class="card-body">
+            <form data-noreload="true"
+                  data-on-submit-done="onInputSubmitDone"
+                  data-on-submit-fail="onInputSubmitFail"
+                  method="post"
+                  asp-action="@nameof(AdminMenuController.InputPartial)"
+                  id="saveInputForm">
+                <input asp-for="Id" type="hidden" class="form-control">
+                <input asp-for="UpdateToken" type="hidden" class="form-control">
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group bmd-form-group">
+                            <label class="bmd-label-floating">@(Html.LangFor<AdminMenu>(x => x.Name))</label>
+                            <input language-support="true" asp-for="Name" type="text" class="form-control">
+                            <span asp-validation-for="Name"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group bmd-form-group">
+                            <label class="bmd-label-floating">@(Html.LangFor<AdminMenu>(x => x.Icon))</label>
+                            <input language-support="true" asp-for="Icon" type="text" class="form-control">
+                            <span asp-validation-for="Icon"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group bmd-form-group">
+                            <label class="bmd-label-floating">@(Html.LangFor<AdminMenu>(x => x.Link))</label>
+                            <input language-support="true" asp-for="Link" type="text" class="form-control">
+                            <span asp-validation-for="Link"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group bmd-form-group">
+                            <label class="bmd-label-floating">@(Html.LangFor<AdminMenu>(x => x.OrderNo))</label>
+                            <input language-support="true" asp-for="OrderNo" type="text" class="form-control">
+                            <span asp-validation-for="OrderNo"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group bmd-form-group">
+                            <select asp-for="Permission" class="select2" asp-items="permissionCombobox">
+                                <option value="">@Html.Lang("LBL_PERMISSION_SELECT")</option>
+                            </select>
+                            <span asp-validation-for="Permission"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group bmd-form-group">
+                            <select asp-for="ParentMenuId" class="select2" asp-items="adminMenusCombobox">
+                                <option value="0">@Html.Lang("LBL_ADMIN_MENU_PARENT_SELECT")</option>
+                            </select>
+                            <span asp-validation-for="ParentMenuId"></span>
+                        </div>
+                    </div>
+                </div>
+                <button type="submit" hidden></button>
+            </form>
+        </div>
+
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">@Html.Lang("LBL_CLOSE")</button>
+            <button type="button" onclick="$('#saveInputForm').submit()" class="btn btn-primary">@Html.Lang("LBL_SAVE")</button>
+        </div>
+    </div>
+</div>
+<partial name="_ValidationScriptsPartial" />
+<script>
+</script>

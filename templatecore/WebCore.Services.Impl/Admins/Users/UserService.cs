@@ -73,7 +73,6 @@ namespace WebCore.Services.Impl.Admins.Users
             WebCoreUser entity = userRepository.GetById(entityId.Id);
 
             entity.RecordStatus = recordStatus;
-
             entity.ModifiedBy = GetCurrentUserLogin();
             entity.ModifiedDate = DateTime.Now;
             entity.UpdateToken = Guid.NewGuid();

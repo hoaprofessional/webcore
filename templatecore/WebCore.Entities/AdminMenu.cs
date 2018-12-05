@@ -10,6 +10,9 @@ namespace WebCore.Entities
     {
         public string Name { get; set; }
         public string Permission { get; set; }
+        public string Icon { get; set; }
+        public int? ParentMenuId { get; set; }
         public string Link { get; set; }
+        public int? OrderNo { get; set; }
     }
 }

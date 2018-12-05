@@ -10,11 +10,23 @@ namespace WebCore.TagHelpers
     [HtmlTargetElement("treeview")]
     public class TreeViewTagHelper : TagHelper
     {
-        [HtmlAttributeName("model")]
+        [HtmlAttributeName("treeview-model")]
         public ITreeViewModel Model { get; set; }
 
-        [HtmlAttributeName("partialview-child")]
+        [HtmlAttributeName("treeview-partialview-child")]
         public string ViewChild { get; set; }
+
+        [HtmlAttributeName("treeview-isrenderrootnode")]
+        public bool IsRenderRootNode { get; set; }
+
+        [HtmlAttributeName("treeview-ulclass")]
+        public string UlClass { get; set; }
+
+        [HtmlAttributeName("treeview-rootulclass")]
+        public string RootUlClass { get; set; }
+
+        [HtmlAttributeName("treeview-liclass")]
+        public string LiClass { get; set; }
 
         [ViewContext]
         [HtmlAttributeNotBound]
@@ -25,15 +37,32 @@ namespace WebCore.TagHelpers
         public TreeViewTagHelper(IHtmlHelper htmlHelper)
         {
             this.htmlHelper = htmlHelper;
+            UlClass = "";
+            LiClass = "";
         }
-
 
         public override async void Process(TagHelperContext context, TagHelperOutput output)
         {
+            if (Model == null)
+            {
+                return;
+            }
             (htmlHelper as IViewContextAware).Contextualize(ViewContext);
             TagBuilder rootNode = new TagBuilder("ul");
-            TagBuilder tagContent = await CreateTreeViewTagAsync(Model);
-            rootNode.InnerHtml.AppendHtml(tagContent);
+            rootNode.AddCssClass(RootUlClass);
+            if (IsRenderRootNode)
+            {
+                TagBuilder tagContent = await CreateTreeViewTagAsync(Model);
+                rootNode.InnerHtml.AppendHtml(tagContent);
+            }
+            else
+            {
+                foreach(var child in Model.Childs)
+                {
+                    TagBuilder tagContent = await CreateTreeViewTagAsync(child);
+                    rootNode.InnerHtml.AppendHtml(tagContent);
+                }
+            }
             output.Content.AppendHtml(rootNode);
         }
 
@@ -41,6 +70,7 @@ namespace WebCore.TagHelpers
         {
             TagBuilder tagBuilder = new TagBuilder("li");
             tagBuilder.AddCssClass("treeview-item");
+            tagBuilder.AddCssClass(LiClass);
 
             IHtmlContent innerContentWithModel = await htmlHelper.PartialAsync(ViewChild, model);
 
@@ -51,6 +81,8 @@ namespace WebCore.TagHelpers
                 tagBuilder.AddCssClass("has-children");
 
                 TagBuilder ul = new TagBuilder("ul");
+                ul.AddCssClass(UlClass);
+                ul.Attributes.Add("id", "treeview-childs-" + model.Key);
                 foreach (ITreeViewModel child in model.Childs)
                 {
                     TagBuilder childLi = await CreateTreeViewTagAsync(child);

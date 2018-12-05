@@ -39,6 +39,16 @@ namespace WebCore.Services.Share.Helper
             CreateMap<LanguageDetail, WebCore.Services.Share.Admins.LanguageDetails.Dto.LanguageDetailInput>();
             CreateMap<WebCore.Services.Share.Admins.LanguageDetails.Dto.LanguageDetailInput, LanguageDetail>();
 
+            CreateMap<AdminMenu, Admins.AdminMenus.Dto.AdminMenuDto>();
+            CreateMap<AdminMenu, WebCore.Services.Share.Admins.AdminMenus.Dto.AdminMenuInput>();
+            CreateMap<WebCore.Services.Share.Admins.AdminMenus.Dto.AdminMenuInput, AdminMenu>();
+
+            CreateMap<MasterList, Admins.MasterLists.Dto.MasterListDto>();
+            CreateMap<MasterList, WebCore.Services.Share.Admins.MasterLists.Dto.MasterListInput>();
+            CreateMap<WebCore.Services.Share.Admins.MasterLists.Dto.MasterListInput, MasterList>();
+
+            CreateMap<AdminMenu, AdminMenus.Dto.AdminMenuTreeViewDto>();
+
 
         }
     }

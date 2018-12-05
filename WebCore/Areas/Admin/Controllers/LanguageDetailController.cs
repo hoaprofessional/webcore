@@ -1,6 +1,6 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Globalization;
 using WebCore.Areas.Admin.Models;
 using WebCore.EntityFramework.Helper;
 using WebCore.Services.Share.Admins.LanguageDetails;
@@ -27,11 +27,15 @@ namespace WebCore.Areas.Admin.Controllers
 
         public IActionResult Index(int page = 0, string langCode = "")
         {
+            if (string.IsNullOrEmpty(langCode))
+            {
+                langCode = CultureInfo.CurrentCulture.Name;
+            }
             LanguageDetailViewModel viewModel = new LanguageDetailViewModel();
             LanguageDetailFilterInput filterInput = GetFilterInSession<LanguageDetailFilterInput>(ConstantConfig.SessionName.LanguageDetailSession);
             filterInput.PageNumber = page;
             filterInput.LangCode = langCode;
-            
+
             viewModel.PagingResult = languageDetailService.GetAllByPaging(filterInput);
             viewModel.LangCode = langCode;
             viewModel.FilterInput = filterInput;
@@ -87,7 +91,7 @@ namespace WebCore.Areas.Admin.Controllers
         {
             LanguageDetailFilterInput filterInput = GetFilterInSession<LanguageDetailFilterInput>(ConstantConfig.SessionName.LanguageDetailSession);
             ViewData["langCode"] = filterInput.LangCode;
-            var pagingResult = languageDetailService.GetAllByPaging(filterInput);
+            PagingResultDto<LanguageDetailDto> pagingResult = languageDetailService.GetAllByPaging(filterInput);
             return PartialView(pagingResult);
         }
     }

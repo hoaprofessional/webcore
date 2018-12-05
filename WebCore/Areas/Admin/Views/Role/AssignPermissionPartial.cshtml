@@ -13,7 +13,9 @@
             </button>
         </div>
         <div class="card-body">
-            <treeview model="Model" partialview-child="~/Areas/Admin/Views/Role/PermissionTreeItemPartial.cshtml"></treeview>
+            <treeview treeview-model="Model" 
+                    treeview-isrenderrootnode="true"
+                    treeview-partialview-child="~/Areas/Admin/Views/Role/PermissionTreeItemPartial.cshtml"></treeview>
         </div>
 
         <div class="modal-footer">

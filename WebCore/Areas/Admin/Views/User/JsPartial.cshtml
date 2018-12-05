@@ -2,17 +2,13 @@
 
     // get all permission checked
     function getAllPermissionsChecked() {
-        return $.map($('#permission-area .checkbox-info:not(.role-permission) input[type=checkbox]:checked'), function (x){
+        return $.map($('#permission-area .checkbox-info:not(.role-permission) input[type=checkbox]:checked:not(#chk-rootkey)'), function (x){
             return $(x).val().trim();
         });
     }
     // get all roles checked
     function getAllRolesChecked() {
-        return $.map($('#role-area input[type=checkbox]:checked'), function (x) { return $(x).val().trim(); });
-    }
-
-    function getAllRoleChecked() {
-
+        return $.map($('#role-area input[type=checkbox]:checked:not(#chk-rootkey)'), function (x) { return $(x).val().trim(); });
     }
 
     // open update popup
