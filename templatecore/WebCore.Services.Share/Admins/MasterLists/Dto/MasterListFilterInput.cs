@@ -7,18 +7,20 @@ using WebCore.Utils.ModelHelper;
 namespace WebCore.Services.Share.Admins.MasterLists.Dto
 {
     // MasterList
-    public class MasterListFilterInput : IPagingFilterDto
+    public class MasterListFilterInput : IPagingAndSortingFilterDto
     {
         public MasterListFilterInput()
         {
             RecordStatus = ConstantConfig.RecordStatusConfig.Active;
         }
-        [Required(ErrorMessage = "LBL_ADMIN_MENU_GROUP_REQUIRED")]
+        [Filter(FilterComparison.Equal)]
         public string Group { get; set; }
-
+        [Filter(FilterComparison.Contains)]
+        public string Value { get; set; }
         [Filter(FilterComparison.Equal)]
         public long? RecordStatus { get; set; }
         public int PageNumber { get; set; }
         public int PageSize { get; set; }
+        public string Sorting { get; set; }
     }
 }

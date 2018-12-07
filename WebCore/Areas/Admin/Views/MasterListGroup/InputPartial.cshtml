@@ -1,12 +1,12 @@
-﻿@model WebCore.Services.Share.Admins.MasterLists.Dto.MasterListInput
+﻿@model WebCore.Services.Share.Admins.MasterListGroups.Dto.MasterListGroupInput
 @{
-    SelectList adminMenusCombobox = ViewBag.MasterListCombobox;
+    SelectList adminMenusCombobox = ViewBag.MasterListGroupCombobox;
     SelectList permissionCombobox = ViewBag.PermissionCombobox;
 }
 <div class="modal-dialog" role="document">
     <div class="modal-content">
         <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLongTitle">@Html.Lang($"LBL_MASTERLISTGROUP_{Model.Group}")</h5>
+            <h5 class="modal-title" id="exampleModalLongTitle">@Html.Lang("LBL_MASTERLISTGROUP")</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
             </button>
@@ -17,23 +17,22 @@
                   data-on-submit-done="onInputSubmitDone"
                   data-on-submit-fail="onInputSubmitFail"
                   method="post"
-                  asp-action="@nameof(MasterListController.InputPartial)"
+                  asp-action="@nameof(MasterListGroupController.InputPartial)"
                   id="saveInputForm">
                 <input asp-for="Id" type="hidden" class="form-control">
                 <input asp-for="UpdateToken" type="hidden" class="form-control">
-                <input asp-for="Group" type="hidden" class="form-control">
 
                 <div class="row">
                     <div class="col-md-6">
                         <div class="form-group bmd-form-group">
-                            <label class="bmd-label-floating">@(Html.LangFor<MasterList>(x => x.Value))</label>
+                            <label class="bmd-label-floating">@(Html.LangFor<MasterList>(x => x.Value, "MasterListGroup"))</label>
                             <input language-support="true" asp-for="Value" type="text" class="form-control">
                             <span asp-validation-for="Value"></span>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group bmd-form-group">
-                            <label class="bmd-label-floating">@(Html.LangFor<MasterList>(x => x.OrderNo))</label>
+                            <label class="bmd-label-floating">@(Html.LangFor<MasterList>(x => x.OrderNo, "MasterListGroup"))</label>
                             <input language-support="true" asp-for="OrderNo" type="text" class="form-control">
                             <span asp-validation-for="OrderNo"></span>
                         </div>

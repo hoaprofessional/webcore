@@ -9,13 +9,12 @@ namespace WebCore.Services.Share.Admins.MasterLists
 
     public interface IMasterListAdminService
     {
-        SelectList GetMasterListGroupCombobox();
-        PagingResultDto<MasterListDto> GetAllByPaging(MasterListFilterInput masterListFilterInput);
+        SortingAndPagingResultDto<MasterListDto> GetAllByPaging(MasterListFilterInput masterListFilterInput);
         MasterList GetById(EntityId<int> idModel);
         MasterListInput GetInputById(EntityId<int> idModel);
-        MasterListInput AddMasterList(MasterListInput inputModel);
-        bool UpdateAdminmenu(MasterListInput inputModel);
-        bool DeleteMasterList(EntityId<int> idModel);
-        bool RestoreMasterList(EntityId<int> idModel);
+        MasterListInput Add(MasterListInput inputModel);
+        bool Update(MasterListInput inputModel);
+        bool Delete(EntityId<int> idModel);
+        bool Restore(EntityId<int> idModel);
     }
 }

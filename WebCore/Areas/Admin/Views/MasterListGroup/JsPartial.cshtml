@@ -1,20 +1,17 @@
 ﻿@{
     string areaName = "Admin";
-    string controllerName = "MasterList";
+    string controllerName = "MasterListGroup";
 }
 
 <script>
-    @if (Html.HasPermission(ConstantConfig.Claims.MasterListManagement_ActionButton_UpdateMasterList)
+    @if (Html.HasPermission(ConstantConfig.Claims.MasterListManagement_ActionButton_UpdateMasterList) 
         || Html.HasPermission(ConstantConfig.Claims.MasterListManagement_AddMasterList))
     {
         <text>
 
     // open update popup
     function openInputModal(id) {
-        if(!id){
-            id=0;
-        }
-        $.get('/@areaName/@controllerName/@nameof(MasterListController.InputPartial)', "group=@ViewData["group"]&idModel.Id="+id).done(function (response) {
+        $.get('/@areaName/@controllerName/@nameof(MasterListGroupController.InputPartial)', { Id: id }).done(function (response) {
             $('#input-area').html(response);
             $('#saveInputForm').bootstrapMaterialDesign();
             resetSelect2($('#input-area'));
@@ -32,7 +29,7 @@
      // delete item
      function deleteItem(id, updateToken) {
                     confimation('@Html.Lang("LBL_COMFIRM_DELETE_TITLE")', '@Html.Lang("LBL_COMFIRM_DELETE")', '@Html.Lang("LBL_OK")', '@Html.Lang("LBL_CLOSE")', function() {
-            $.post('/@areaName/@controllerName/@nameof(MasterListController.DeleteModel)', { Id: id, UpdateToken: updateToken }).done(function(response) {
+            $.post('/@areaName/@controllerName/@nameof(MasterListGroupController.DeleteModel)', { Id: id, UpdateToken: updateToken }).done(function(response) {
                     switch (response.result) {
                         case @ConstantConfig.WebApiStatusCode.Success:
                             showSuccessNotification(response.message);
@@ -60,7 +57,7 @@
     // restore item
     function restoreItem(id, updateToken) {
                 confimation('@Html.Lang("LBL_COMFIRM_RESTORE_TITLE")', '@Html.Lang("LBL_COMFIRM_RESTORE")', '@Html.Lang("LBL_OK")', '@Html.Lang("LBL_CLOSE")', function () {
-            $.post('/@areaName/@controllerName/@nameof(MasterListController.RestoreModel)', { Id: id, UpdateToken: updateToken }).done(function (response) {
+            $.post('/@areaName/@controllerName/@nameof(MasterListGroupController.RestoreModel)', { Id: id, UpdateToken: updateToken }).done(function (response) {
                 switch (response.result) {
                     case @ConstantConfig.WebApiStatusCode.Success:
                         showSuccessNotification(response.message);
@@ -80,7 +77,7 @@
 
         </text>
     }
-
+    
     // resetAllFilter
     $('#filter .reset-button').click(function () {
         $('#filter input:not(:hidden),#filter select:not(:hidden)').val('');
@@ -89,16 +86,7 @@
 
     // reload table
     function reloadMainList() {
-        $('#mainList').load('/@areaName/@controllerName/@nameof(MasterListController.MainListPartial)?group=@ViewData["group"]');
-    }
-
-    // sorting
-    function onSorting(th, property) {
-        var action = "asc";
-        if( $(th).hasClass('sort-asc')){
-            action = "desc";
-        }
-        $('#mainList').load('/@areaName/@controllerName/@nameof(MasterListController.SaveSorting)?group=@ViewData["group"]&sorting=' + encodeURIComponent(property + " " + action));
+        $('#mainList').load('/@areaName/@controllerName/@nameof(MasterListGroupController.MainListPartial)');
     }
 
     // on input submit finish

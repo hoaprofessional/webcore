@@ -121,7 +121,7 @@ span.open-icon {
 }
 
 a.nav-link[aria-expanded="true"] .open-icon > .close-nav {
-    display:none;
+    display: none;
 }
 
 a.nav-link[aria-expanded="false"] .open-icon > .open-nav {
@@ -171,4 +171,34 @@ span.field-validation-error {
 
 treeview {
     display: block;
+}
+
+th.sortable {
+    position: relative;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+    th.sortable:after {
+        background: url(../img/sort_both.png);
+        background-repeat: no-repeat;
+        background-size: 100%;
+        background-position: right;
+        content: '';
+        position: absolute;
+        right: 20px;
+        width: 8px;
+        height: 23px;
+    }
+
+    th.sortable:hover {
+        background-color: #fefcff;
+    }
+
+th.sort-asc:after {
+    background-image: url(../img/sort_asc.png);
+}
+
+th.sort-desc:after {
+    background-image: url(../img/sort_desc.png);
 }

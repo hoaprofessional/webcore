@@ -3,13 +3,12 @@ using System.Collections.Generic;
 using System.Text;
 using WebCore.Utils.ModelHelper;
 
-namespace WebCore.Services.Share.Admins.MasterLists.Dto
+namespace WebCore.Services.Share.Admins.MasterListGroups.Dto
 {
     // MasterList
-    public class MasterListDto : UpdateTokenModel<int>
+    public class MasterListGroupDto : UpdateTokenModel<int>
     {
         public string Value { get; set; }
-        public string Group { get; set; }
         public int? OrderNo { get; set; }
         public long? RecordStatus { get; set; }
     }

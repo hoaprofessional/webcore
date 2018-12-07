@@ -43,6 +43,10 @@ namespace WebCore.Services.Share.Helper
             CreateMap<AdminMenu, WebCore.Services.Share.Admins.AdminMenus.Dto.AdminMenuInput>();
             CreateMap<WebCore.Services.Share.Admins.AdminMenus.Dto.AdminMenuInput, AdminMenu>();
 
+            CreateMap<MasterList, Admins.MasterListGroups.Dto.MasterListGroupDto>();
+            CreateMap<MasterList, WebCore.Services.Share.Admins.MasterListGroups.Dto.MasterListGroupInput>();
+            CreateMap<WebCore.Services.Share.Admins.MasterListGroups.Dto.MasterListGroupInput, MasterList>();
+
             CreateMap<MasterList, Admins.MasterLists.Dto.MasterListDto>();
             CreateMap<MasterList, WebCore.Services.Share.Admins.MasterLists.Dto.MasterListInput>();
             CreateMap<WebCore.Services.Share.Admins.MasterLists.Dto.MasterListInput, MasterList>();

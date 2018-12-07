@@ -1,7 +1,6 @@
-﻿@using  WebCore.Services.Share.Admins.MasterLists.Dto
-@model SortingAndPagingResultDto<MasterListDto>
+﻿@model PagingResultDto<WebCore.Services.Share.Admins.MasterListGroups.Dto.MasterListGroupDto>
 @{
-    SelectList adminMenuCombobox = ViewBag.MasterListCombobox;
+    SelectList adminMenuCombobox = ViewBag.MasterListGroupCombobox;
 }
 <div class="table-responsive">
     <table class="table">
@@ -14,19 +13,13 @@
                     </th>
                 }
                 <th>
-                    @(Html.LangFor<MasterList>(x => x.Group))
+                    @(Html.LangFor<MasterList>(x => x.Value, "MasterListGroup"))
                 </th>
                 <th>
                     @(Html.Lang("LBL_MASTERLIST_GROUP_DISPLAY"))
                 </th>
-                <th @(Html.SortingFor<MasterListDto>(Model, x => x.Value)) onclick="onSorting(this,dataset.property)">
-                    @(Html.LangFor<MasterList>(x => x.Value))
-                </th>
                 <th>
-                    @(Html.Lang("LBL_MASTERLIST_VALUE_DISPLAY"))
-                </th>
-                <th @(Html.SortingFor<MasterListDto>(Model, x => x.OrderNo)) onclick="onSorting(this,dataset.property)">
-                    @(Html.LangFor<MasterList>(x => x.OrderNo))
+                    @(Html.LangFor<MasterList>(x => x.OrderNo, "MasterListGroup"))
                 </th>
             </tr>
         </thead>
@@ -48,6 +41,12 @@
                                         </p>
                                     </button>
                                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                        <a class="dropdown-item" asp-action="Index" asp-controller="MasterList" asp-route-group="@item.Value">
+                                            <i class="material-icons">info</i>
+                                            <p>
+                                                @Html.Lang("LBL_DETAIL")
+                                            </p>
+                                        </a>
                                         @if (Html.HasPermission(ConstantConfig.Claims.MasterListManagement_ActionButton_UpdateMasterList))
                                         {
                                             <div onclick="openInputModal(@item.Id)" class="dropdown-item">
@@ -84,16 +83,10 @@
                         }
                     }
                     <td>
-                        @item.Group
-                    </td>
-                    <td>
-                        @Html.Lang($"LBL_MASTERLISTGROUP_{item.Group}")
-                    </td>
-                    <td>
                         @item.Value
                     </td>
                     <td>
-                        @Html.Lang($"LBL_MASTERLISTVALUE_{item.Value}")
+                        @Html.Lang($"LBL_MASTERLISTGROUP_{item.Value}")
                     </td>
                     <td>
                         @item.OrderNo
@@ -101,7 +94,6 @@
                 </tr>
             }
         </tbody>
-
     </table>
-    <custompager pager-model="@Model" pager-link="/Admin/MasterList?group=@ViewData["group"]" />
+    <custompager pager-model="@Model" pager-link="/Admin/MasterListGroup" />
 </div>

@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace WebCore.Utils.Config
+﻿namespace WebCore.Utils.Config
 {
     public static class ConstantConfig
     {
@@ -31,11 +27,11 @@ namespace WebCore.Utils.Config
             public const string AdminMenuManagement_ActionButton_DeleteMenuManagement = "AdminMenuManagement.ActionButton.DeleteMenuManagement";
 
             public const string MasterListManagement = "MasterListManagement";
-            public const string MasterListManagement_AddMenuManagement = "MasterListManagement.AddMenuManagement";
-            public const string MasterListManagement_RestoreMenuManagement = "MasterListManagement.RestoreMenuManagement";
+            public const string MasterListManagement_AddMasterList = "MasterListManagement.AddMasterList";
+            public const string MasterListManagement_RestoreMasterList = "MasterListManagement.RestoreMasterList";
             public const string MasterListManagement_ActionButton = "MasterListManagement.ActionButton";
-            public const string MasterListManagement_ActionButton_UpdateMenuManagement = "MasterListManagement.ActionButton.UpdateMenuManagement";
-            public const string MasterListManagement_ActionButton_DeleteMenuManagement = "MasterListManagement.ActionButton.DeleteMenuManagement";
+            public const string MasterListManagement_ActionButton_UpdateMasterList = "MasterListManagement.ActionButton.UpdateMasterList";
+            public const string MasterListManagement_ActionButton_DeleteMasterList = "MasterListManagement.ActionButton.DeleteMasterList";
         }
         public static class WebApiStatusCode
         {
@@ -87,6 +83,8 @@ namespace WebCore.Utils.Config
             public const string LanguageDetailSession = "LanguageDetailSession";
             public const string AdminMenuSession = "AdminMenuSession";
             public const string MasterListSession = "MasterListSession";
+            public const string MasterListGroupSession = "MasterListGroupSession";
         }
+        public const string MasterListMasterGroup = "Master";
     }
 }

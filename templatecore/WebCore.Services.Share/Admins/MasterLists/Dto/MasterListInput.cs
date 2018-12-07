@@ -9,10 +9,10 @@ namespace WebCore.Services.Share.Admins.MasterLists.Dto
     // MasterList
     public class MasterListInput : UpdateTokenModel<int>
     {
-        [Required(ErrorMessage = "LBL_ADMIN_MENU_GROUP_REQUIRED")]
         public string Group { get; set; }
-        [Required(ErrorMessage = "LBL_ADMIN_MENU_VALUE_REQUIRED")]
+        [Required(ErrorMessage = "LBL_MASTERLIST_VALUE_REQUIRED")]
         public string Value { get; set; }
+        [Required(ErrorMessage = "LBL_MASTERLIST_ORDER_NO_REQUIRED")]
         public int? OrderNo { get; set; }
     }
 }

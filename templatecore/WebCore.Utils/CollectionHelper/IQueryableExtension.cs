@@ -18,6 +18,22 @@ namespace WebCore.Utils.CollectionHelper
             };
         }
 
+        private static void InitPagedModel<TModel>(this IQueryable<TModel> query, IPagingFilterDto pagingFilterDto, PagingResultDto<TModel> pagingModel)
+        {
+            pagingModel.RowCount = query.Count();
+            pagingModel.PageSize = pagingFilterDto.PageSize;
+            pagingModel.CurrentPage = pagingFilterDto.PageNumber;
+
+            var pageCount = (double)pagingModel.RowCount / pagingModel.PageSize;
+            pagingModel.PageCount = (int)Math.Ceiling(pageCount);
+
+            IQueryable<TModel> queryResultPage = query
+                  .Skip((pagingFilterDto.PageNumber - 1) * pagingFilterDto.PageSize)
+                  .Take(pagingFilterDto.PageSize);
+
+            pagingModel.Items = queryResultPage.ToList();
+        }
+
         public static PagingResultDto<TModel> PagedQuery<TModel>(this IQueryable<TModel> query, IPagingFilterDto pagingFilterDto)
         {
             if (pagingFilterDto.PageNumber <= 0)
@@ -25,19 +41,19 @@ namespace WebCore.Utils.CollectionHelper
                 pagingFilterDto.PageNumber = 1;
             }
             var result = new PagingResultDto<TModel>();
-            result.RowCount = query.Count();
-            result.PageSize = pagingFilterDto.PageSize;
-            result.CurrentPage = pagingFilterDto.PageNumber;
+            InitPagedModel(query, pagingFilterDto, result);
+            return result;
+        }
 
-            var pageCount = (double)result.RowCount / result.PageSize;
-            result.PageCount = (int)Math.Ceiling(pageCount);
-
-            IQueryable<TModel> queryResultPage = query
-                  .Skip((pagingFilterDto.PageNumber - 1) * pagingFilterDto.PageSize)
-                  .Take(pagingFilterDto.PageSize);
-
-            result.Items = queryResultPage.ToList();
-
+        public static SortingAndPagingResultDto<TModel> PagedAndSortingQuery<TModel>(this IQueryable<TModel> query, IPagingAndSortingFilterDto pagingFilterDto)
+        {
+            if (pagingFilterDto.PageNumber <= 0)
+            {
+                pagingFilterDto.PageNumber = 1;
+            }
+            var result = new SortingAndPagingResultDto<TModel>();
+            InitPagedModel(query, pagingFilterDto, result);
+            result.Sorting = pagingFilterDto.Sorting;
             return result;
         }
 

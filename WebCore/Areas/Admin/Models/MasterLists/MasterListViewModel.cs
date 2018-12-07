@@ -6,6 +6,6 @@ namespace WebCore.Areas.Admin.Models.MasterLists
     public class MasterListViewModel : AdminBaseViewModel
     {
         public MasterListFilterInput MasterListFilterInput { get; set; }
-        public PagingResultDto<MasterListDto> PagingResult { get; set; }
+        public SortingAndPagingResultDto<MasterListDto> MainListResult { get; set; }
     }
 }

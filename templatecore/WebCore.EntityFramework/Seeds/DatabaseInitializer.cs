@@ -40,6 +40,7 @@ namespace WebCore.EntityFramework.Seeds
             {
                 new LanguageSeeder(),
                 new LanguageDetailSeeder(),
+                new MasterListSeeder(),
                 new SystemConfigSeeder()
             };
         }

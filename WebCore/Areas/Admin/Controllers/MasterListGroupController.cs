@@ -2,11 +2,11 @@
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.Threading.Tasks;
-using WebCore.Areas.Admin.Models.MasterLists;
+using WebCore.Areas.Admin.Models.MasterListGroups;
 using WebCore.Entities;
 using WebCore.EntityFramework.Helper;
-using WebCore.Services.Share.Admins.MasterLists;
-using WebCore.Services.Share.Admins.MasterLists.Dto;
+using WebCore.Services.Share.Admins.MasterListGroups;
+using WebCore.Services.Share.Admins.MasterListGroups.Dto;
 using WebCore.Services.Share.Permissions;
 using WebCore.Utils.Attributes;
 using WebCore.Utils.Config;
@@ -16,79 +16,67 @@ namespace WebCore.Areas.Admin.Controllers
 {
     [Area("Admin")]
     [ClaimRequirement(ConstantConfig.Claims.MasterListManagement)]
-    public class MasterListController : AdminBaseController
+    public class MasterListGroupController : AdminBaseController
     {
-        private readonly IMasterListAdminService masterListAdminService;
+        private readonly IMasterListGroupAdminService masterListGroupAdminService;
         private readonly IPermissionService permissionService;
         private readonly IUnitOfWork unitOfWork;
 
-        public MasterListController(IServiceProvider serviceProvider,
+        public MasterListGroupController(IServiceProvider serviceProvider,
             IPermissionService permissionService,
-            IMasterListAdminService masterListAdminService, IUnitOfWork unitOfWork) : base(serviceProvider)
+            IMasterListGroupAdminService masterListGroupAdminService, IUnitOfWork unitOfWork) : base(serviceProvider)
         {
-            this.masterListAdminService = masterListAdminService;
+            this.masterListGroupAdminService = masterListGroupAdminService;
             this.unitOfWork = unitOfWork;
             this.permissionService = permissionService;
         }
 
-        public IActionResult Index(int page = 0, string group = null)
+        public IActionResult Index(int page = 0)
         {
-            MasterListViewModel viewModel = new MasterListViewModel();
-            MasterListFilterInput filterInput = GetFilterInSession<MasterListFilterInput>(ConstantConfig.SessionName.MasterListSession);
+            MasterListGroupViewModel viewModel = new MasterListGroupViewModel();
+            MasterListGroupFilterInput filterInput = GetFilterInSession<MasterListGroupFilterInput>(ConstantConfig.SessionName.MasterListGroupSession);
             if (filterInput == null)
             {
-                filterInput = new MasterListFilterInput
+                filterInput = new MasterListGroupFilterInput
                 {
                     RecordStatus = ConstantConfig.RecordStatusConfig.Active
                 };
             }
-            filterInput.Group = group;
             filterInput.PageNumber = page;
-            viewModel.MainListResult = masterListAdminService.GetAllByPaging(filterInput);
-            ViewData["group"] = group;
-            viewModel.MasterListFilterInput = filterInput;
+            viewModel.PagingResult = masterListGroupAdminService.GetAllByPaging(filterInput);
+            viewModel.MasterListGroupFilterInput = filterInput;
+
             InitAdminBaseViewModel(viewModel);
             return View(viewModel);
         }
 
         [HttpGet]
-        public IActionResult MainListPartial(string group = null)
+        public IActionResult MainListPartial()
         {
-            MasterListFilterInput filterInput = GetFilterInSession<MasterListFilterInput>(ConstantConfig.SessionName.MasterListSession);
-            filterInput.Group = group;
-            ViewData["group"] = group;
-            PagingResultDto<MasterListDto> pagingResult = masterListAdminService.GetAllByPaging(filterInput);
+            MasterListGroupFilterInput filterInput = GetFilterInSession<MasterListGroupFilterInput>(ConstantConfig.SessionName.MasterListGroupSession);
+            PagingResultDto<MasterListGroupDto> pagingResult = masterListGroupAdminService.GetAllByPaging(filterInput);
             return PartialView(pagingResult);
         }
 
         [HttpGet]
-        public IActionResult SaveSorting(string sorting, string group = null)
+        public IActionResult FilterPartial(MasterListGroupFilterInput filterInput)
         {
-            MasterListFilterInput filterInput = GetFilterInSession<MasterListFilterInput>(ConstantConfig.SessionName.MasterListSession);
-            filterInput.Sorting = sorting;
-            SetFilterToSession(ConstantConfig.SessionName.MasterListSession, filterInput);
-            return RedirectToAction("MainListPartial", new { group = group });
+            SetFilterToSession(ConstantConfig.SessionName.MasterListGroupSession, filterInput);
+            return RedirectToAction("Index", new { page = 1 });
         }
 
         [HttpGet]
-        public IActionResult FilterPartial(MasterListFilterInput filterInput)
-        {
-            SetFilterToSession(ConstantConfig.SessionName.MasterListSession, filterInput);
-            return RedirectToAction("Index", new { page = 1, group = filterInput.Group });
-        }
-
-        [HttpGet]
-        public async Task<IActionResult> InputPartial(EntityId<int> idModel, string group = null)
+        public async Task<IActionResult> InputPartial(EntityId<int> idModel)
         {
             // init input model
-            MasterListInput input = masterListAdminService.GetInputById(idModel);
+            MasterListGroupInput input = masterListGroupAdminService.GetInputById(idModel);
             if (input == null)
             {
                 if (!HasPermission(ConstantConfig.Claims.MasterListManagement_AddMasterList))
                 {
                     return Forbid();
                 }
-                input = new MasterListInput();
+                input = new MasterListGroupInput();
             }
             else
             {
@@ -97,17 +85,16 @@ namespace WebCore.Areas.Admin.Controllers
                     return Forbid();
                 }
             }
-            input.Group = group;
             // init combobox
             ViewBag.PermissionCombobox = await permissionService.GetPermissionCombobox();
             return PartialView(input);
         }
         [HttpPost]
-        public IActionResult InputPartial([Required]MasterListInput inputModel)
+        public IActionResult InputPartial([Required]MasterListGroupInput inputModel)
         {
             try
             {
-                MasterList lastInfo = masterListAdminService.GetById(inputModel);
+                MasterList lastInfo = masterListGroupAdminService.GetById(inputModel);
                 if (lastInfo != null)
                 {
                     // update
@@ -117,7 +104,7 @@ namespace WebCore.Areas.Admin.Controllers
                     }
                     if (lastInfo.UpdateToken.GetValueOrDefault(Guid.Empty).Equals(inputModel.UpdateToken))
                     {
-                        masterListAdminService.Update(inputModel);
+                        masterListGroupAdminService.Update(inputModel);
                         unitOfWork.SaveChanges();
                         return Ok(new { result = ConstantConfig.WebApiStatusCode.Success, message = GetLang(ConstantConfig.WebApiResultMessage.UpdateSuccess) });
                     }
@@ -130,7 +117,7 @@ namespace WebCore.Areas.Admin.Controllers
                     {
                         return Forbid();
                     }
-                    MasterListInput result = masterListAdminService.Add(inputModel);
+                    MasterListGroupInput result = masterListGroupAdminService.Add(inputModel);
                     if (result == null)
                     {
                         return Ok(new { result = ConstantConfig.WebApiStatusCode.Error, message = GetLang(ConstantConfig.WebApiResultMessage.Error) });
@@ -149,14 +136,14 @@ namespace WebCore.Areas.Admin.Controllers
         [ClaimRequirement(ConstantConfig.Claims.MasterListManagement_ActionButton_DeleteMasterList)]
         public IActionResult DeleteModel(UpdateTokenModel<int> deleteInput)
         {
-            MasterList lastInfo = masterListAdminService.GetById(deleteInput);
+            MasterList lastInfo = masterListGroupAdminService.GetById(deleteInput);
             if (lastInfo != null)
             {
                 // update
                 if (lastInfo.UpdateToken.GetValueOrDefault(Guid.Empty).Equals(deleteInput.UpdateToken))
                 {
 
-                    masterListAdminService.Delete(deleteInput);
+                    masterListGroupAdminService.Delete(deleteInput);
                     unitOfWork.SaveChanges();
                     return Ok(new { result = ConstantConfig.WebApiStatusCode.Success, message = GetLang(ConstantConfig.WebApiResultMessage.DeleteSuccess) });
                 }
@@ -172,13 +159,13 @@ namespace WebCore.Areas.Admin.Controllers
         [ClaimRequirement(ConstantConfig.Claims.MasterListManagement_RestoreMasterList)]
         public IActionResult RestoreModel(UpdateTokenModel<int> deleteInput)
         {
-            MasterList lastInfo = masterListAdminService.GetById(deleteInput);
+            MasterList lastInfo = masterListGroupAdminService.GetById(deleteInput);
             if (lastInfo != null)
             {
                 // update
                 if (lastInfo.UpdateToken.GetValueOrDefault(Guid.Empty).Equals(deleteInput.UpdateToken))
                 {
-                    masterListAdminService.Restore(deleteInput);
+                    masterListGroupAdminService.Restore(deleteInput);
                     unitOfWork.SaveChanges();
                     return Ok(new { result = ConstantConfig.WebApiStatusCode.Success, message = GetLang(ConstantConfig.WebApiResultMessage.RestoreSuccess) });
                 }

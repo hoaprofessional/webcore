@@ -1,4 +1,5 @@
-﻿@model WebCore.Services.Share.Admins.MasterLists.Dto.MasterListFilterInput
+﻿@using WebCore.Services.Share.Admins.MasterListGroups.Dto
+@model MasterListGroupFilterInput
 @{
     SelectList recordStatuss = ViewBag.RecordStatusCombobox;
 }
@@ -8,14 +9,12 @@
             <h4 class="card-title">@Html.Lang("LBL_FILTER")</h4>
         </div>
         <div class="card-body">
-            <form id="filter" method="get" asp-action="@nameof(MasterListController.FilterPartial)">
-                <input type="hidden" asp-for="Group" />
+            <form id="filter" method="get" asp-action="@nameof(MasterListGroupController.FilterPartial)">
                 <div class="row">
                     <div class="col-md-6">
                         <div class="form-group bmd-form-group">
-                            <label class="bmd-label-floating">@(Html.LangFor<MasterList>(x => x.Value))</label>
+                            <label class="bmd-label-floating">@(Html.LangFor<MasterListGroupFilterInput>(x => x.Value, "MasterListGroup"))</label>
                             <input asp-for="Value" type="text" class="form-control">
-                            <span asp-validation-for="Value"></span>
                         </div>
                     </div>
                     <div class="col-md-6">

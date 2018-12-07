@@ -1,71 +1,85 @@
 ﻿using AutoMapper;
 using AutoMapper.QueryableExtensions;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using System.Linq;
 using WebCore.Entities;
 using WebCore.EntityFramework.Repositories;
-using WebCore.Services.Share.Admins.MasterLists;
-using WebCore.Services.Share.Admins.MasterLists.Dto;
+using WebCore.Services.Share.Admins.MasterListGroups;
+using WebCore.Services.Share.Admins.MasterListGroups.Dto;
 using WebCore.Services.Share.Languages;
 using WebCore.Utils.CollectionHelper;
-using WebCore.Utils.Commons;
 using WebCore.Utils.Config;
 using WebCore.Utils.FilterHelper;
 using WebCore.Utils.ModelHelper;
-using System.Linq.Dynamic.Core;
 
-namespace WebCore.Services.Impl.Admins.MasterLists
+namespace WebCore.Services.Impl.Admins.MasterListGroups
 {
-    public class MasterListAdminService : BaseService, IMasterListAdminService
+    public class MasterListGroupAdminService : BaseService, IMasterListGroupAdminService
     {
-        private readonly IMapper mapper;
         private readonly IRepository<MasterList, int> masterListRepository;
-        public MasterListAdminService(IServiceProvider serviceProvider,
+        private readonly ILanguageProviderService languageProviderService;
+        private readonly IMapper mapper;
+        public MasterListGroupAdminService(IServiceProvider serviceProvider,
             IMapper mapper,
+            ILanguageProviderService languageProviderService,
             IRepository<MasterList, int> masterListRepository) : base(serviceProvider)
         {
             this.masterListRepository = masterListRepository;
             this.mapper = mapper;
+            this.languageProviderService = languageProviderService;
         }
-        
 
-        public SortingAndPagingResultDto<MasterListDto> GetAllByPaging(MasterListFilterInput masterListFilterInput)
+        //public SelectList GetMasterListGroupsCombobox()
+        //{
+        //    return masterListRepository.GetAll().Select(x => new ComboboxResult<int, string>()
+        //    {
+        //        Value = x.Id,
+        //        Display = $"{x.Name} - {languageProviderService.GetlangByKey($"LBL_ADMINMENUITEM_{x.Name}")}"
+        //    }).ToList().ToSelectList();
+        //}
+
+        public PagingResultDto<MasterListGroupDto> GetAllByPaging(MasterListGroupFilterInput masterListFilterInput)
         {
             // neu khong truyen page size thi lay pagesize mac dinh trong bang appparameter
             SetDefaultPageSize(masterListFilterInput);
 
-            if(masterListFilterInput.Sorting==null)
-            {
-                masterListFilterInput.Sorting = "ModifiedDate desc";
-            }
-
-            IQueryable<MasterListDto> query = masterListRepository.GetAll()
+            IQueryable<MasterListGroupDto> query = masterListRepository.GetAll()
+                                                    .Where(x => x.Group == ConstantConfig.MasterListMasterGroup)
                                                     .Filter(masterListFilterInput)
-                                                    .OrderBy(masterListFilterInput.Sorting)
-                                                    .ProjectTo<MasterListDto>(mapper.ConfigurationProvider);
+                                                    .OrderBy(x => x.OrderNo)
+                                                    .ProjectTo<MasterListGroupDto>(mapper.ConfigurationProvider);
 
-            return query.PagedAndSortingQuery(masterListFilterInput);
+            return query.PagedQuery(masterListFilterInput);
         }
 
         public MasterList GetById(EntityId<int> idModel)
         {
-            if(idModel==null)
+            if (idModel == null)
             {
                 return null;
             }
             return masterListRepository.GetById(idModel.Id);
         }
 
-        public MasterListInput GetInputById(EntityId<int> idModel)
+        public MasterListGroupInput GetInputById(EntityId<int> idModel)
         {
-            MasterList entity = GetById(idModel);
-            return mapper.Map<MasterListInput>(entity);
+            if(idModel==null)
+            {
+                return null;
+            }
+            MasterList entity = masterListRepository.GetAll()
+                               .Where(x => x.Group == ConstantConfig.MasterListMasterGroup && x.Id == idModel.Id).SingleOrDefault();
+            if(entity==null)
+            {
+                return null;
+            }
+            return mapper.Map<MasterListGroupInput>(entity);
         }
 
-        public MasterListInput Add(MasterListInput inputModel)
+        public MasterListGroupInput Add(MasterListGroupInput inputModel)
         {
-            var entity = mapper.Map<MasterList>(inputModel);
+            MasterList entity = mapper.Map<MasterList>(inputModel);
+            entity.Group = ConstantConfig.MasterListMasterGroup;
             entity.CreatedBy = GetCurrentUserLogin();
             entity.CreatedDate = DateTime.Now;
             entity.ModifiedDate = DateTime.Now;
@@ -73,17 +87,18 @@ namespace WebCore.Services.Impl.Admins.MasterLists
             entity.RecordStatus = ConstantConfig.RecordStatusConfig.Active;
             entity.UpdateToken = Guid.NewGuid();
             masterListRepository.Add(entity);
-            return mapper.Map<MasterListInput>(entity);
+            return mapper.Map<MasterListGroupInput>(entity);
         }
 
-        public bool Update(MasterListInput inputModel)
+        public bool Update(MasterListGroupInput inputModel)
         {
-            var entity = GetById(inputModel);
+            MasterList entity = GetById(inputModel);
             if (entity == null)
             {
                 return false;
             }
             mapper.Map(inputModel, entity);
+            entity.Group = ConstantConfig.MasterListMasterGroup;
             entity.ModifiedDate = DateTime.Now;
             entity.ModifiedBy = GetCurrentUserLogin();
             entity.UpdateToken = Guid.NewGuid();
@@ -93,7 +108,7 @@ namespace WebCore.Services.Impl.Admins.MasterLists
 
         public bool Delete(EntityId<int> idModel)
         {
-            var entity = GetById(idModel);
+            MasterList entity = GetById(idModel);
             if (entity == null)
             {
                 return false;
@@ -110,7 +125,7 @@ namespace WebCore.Services.Impl.Admins.MasterLists
 
         public bool Restore(EntityId<int> idModel)
         {
-            var entity = GetById(idModel);
+            MasterList entity = GetById(idModel);
             if (entity == null)
             {
                 return false;
