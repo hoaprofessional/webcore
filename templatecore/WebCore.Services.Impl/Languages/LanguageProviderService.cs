@@ -2,6 +2,7 @@
 using AutoMapper.QueryableExtensions;
 using Microsoft.Extensions.Caching.Memory;
 using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using WebCore.Entities;
@@ -51,8 +52,8 @@ namespace WebCore.Services.Impl.Languages
 
             string langCode = CultureInfo.CurrentCulture.Name;
             string langValue = "[" + key + "]";
-            ListResult<LanguageDetailDto> langsInCache = GetLanguageInCache();
-            LanguageDetailDto langDetailDto = langsInCache.GetFirstByCondition(x => x.LanguageCode == langCode && x.LanguageKey == key);
+            List<LanguageDetailDto> langsInCache = GetLanguageInCache();
+            LanguageDetailDto langDetailDto = langsInCache.FirstOrDefault(x => x.LanguageCode == langCode && x.LanguageKey == key);
             if (langDetailDto == null)
             {
                 string[] allLangCodes = languageRepository.GetAll().Select(x => x.LangCode).ToArray();
@@ -83,7 +84,7 @@ namespace WebCore.Services.Impl.Languages
 
         public void UpdateLanguage(string code, string key, string value)
         {
-            ListResult<LanguageDetailDto> langsInCache = GetLanguageInCache();
+            List<LanguageDetailDto> langsInCache = GetLanguageInCache();
             LanguageDetail langDetail = languageDetailRepository.GetFirstByCondition(x => x.LanguageCode == code && x.LanguageKey == key);
             if (langDetail != null)
             {
@@ -99,16 +100,16 @@ namespace WebCore.Services.Impl.Languages
         }
 
 
-        private ListResult<LanguageDetailDto> GetLanguageInCache()
+        private List<LanguageDetailDto> GetLanguageInCache()
         {
-            ListResult<LanguageDetailDto> languageInCache = memoryCache.Get<ListResult<LanguageDetailDto>>(ConstantConfig.MemoryCacheConfig.LanguageCache);
+            List<LanguageDetailDto> languageInCache = memoryCache.Get<List<LanguageDetailDto>>(ConstantConfig.MemoryCacheConfig.LanguageCache);
             string currentCode = CultureInfo.CurrentCulture.Name;
-            if (languageInCache == null || (languageInCache.DataList.Count == 0 || !languageInCache.DataList.First().LanguageCode.Equals(currentCode)))
+            if (languageInCache == null || (languageInCache.Count == 0 || !languageInCache.First().LanguageCode.Equals(currentCode)))
             {
                 System.Linq.IQueryable<LanguageDetailDto> dtoQuery = languageDetailRepository
                     .GetByCondition(x => x.LanguageCode == currentCode)
                     .ProjectTo<LanguageDetailDto>(mapper.ConfigurationProvider);
-                languageInCache = dtoQuery.ToListResult();
+                languageInCache = dtoQuery.ToList();
                 memoryCache.Set(ConstantConfig.MemoryCacheConfig.LanguageCache, languageInCache);
             }
             return languageInCache;
@@ -117,11 +118,11 @@ namespace WebCore.Services.Impl.Languages
         {
             if (languageDetailDto.LanguageCode == CultureInfo.CurrentCulture.Name)
             {
-                ListResult<LanguageDetailDto> languagesInCache = GetLanguageInCache();
-                LanguageDetailDto lang = languagesInCache.DataList.Where(x => x.LanguageKey == languageDetailDto.LanguageKey).FirstOrDefault();
+                List<LanguageDetailDto> languagesInCache = GetLanguageInCache();
+                LanguageDetailDto lang = languagesInCache.Where(x => x.LanguageKey == languageDetailDto.LanguageKey).FirstOrDefault();
                 if (lang == null)
                 {
-                    languagesInCache.DataList.Add(languageDetailDto);
+                    languagesInCache.Add(languageDetailDto);
                     memoryCache.Set(ConstantConfig.MemoryCacheConfig.LanguageCache, languagesInCache);
                 }
                 else
@@ -130,14 +131,10 @@ namespace WebCore.Services.Impl.Languages
                 }
             }
         }
-        public ListResult<LanguageDetailDto> GetLanguagesByCode(string code)
+        public List<LanguageDetailDto> GetLanguagesByCode(string code)
         {
-            ListResult<LanguageDetailDto> langsInCache = GetLanguageInCache();
-            return
-                new ListResult<LanguageDetailDto>()
-                {
-                    DataList = langsInCache.GetByCondition(x => x.LanguageCode.ToLower().Equals(code.ToLower()))
-                };
+            List<LanguageDetailDto> langsInCache = GetLanguageInCache();
+            return langsInCache.Where(x => x.LanguageCode.ToLower().Equals(code.ToLower())).ToList();
         }
 
 

@@ -9,14 +9,6 @@ namespace WebCore.Utils.CollectionHelper
 {
     public static class IQueryableExtension
     {
-        public static ListResult<TModel> ToListResult<TModel>(this IQueryable<TModel> query)
-        {
-            List<TModel> listResult = query.ToList();
-            return new ListResult<TModel>()
-            {
-                DataList = listResult
-            };
-        }
 
         private static void InitPagedModel<TModel>(this IQueryable<TModel> query, IPagingFilterDto pagingFilterDto, PagingResultDto<TModel> pagingModel)
         {

@@ -51,12 +51,11 @@
                       treeview-partialview-child="~/Areas/Admin/Views/Shared/MenuTreeViewItemPartial.cshtml">
             </treeview>
         </div>
-
-        <div class="align-top-right">
+        @*<div class="align-top-right">
             <select onchange="changeLanguage(value)" asp-for="CurrentLanguage" class="select2-with-search" asp-items="languages">
                 <option>@Html.Lang("LBL_LANGUAGE_SELECT")</option>
             </select>
-        </div>
+        </div>*@
         @RenderBody()
     </div>
     <environment include="Development">

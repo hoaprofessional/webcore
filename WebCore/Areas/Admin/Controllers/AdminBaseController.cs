@@ -38,9 +38,9 @@ namespace WebCore.Areas.Admin.Controllers
         {
             var permissions = GetAllPermissions();
             adminBaseViewModel.CurrentLanguage = CultureInfo.CurrentCulture.Name;
-            List<LanguageDto> languages = languageAdminService.GetAllLanguages();
-            SelectList languagesSelectList = new SelectList(languages, nameof(LanguageDto.LangCode), nameof(LanguageDto.LangName));
-            ViewBag.Languages = languagesSelectList;
+            //List<LanguageDto> languages = languageAdminService.GetAllLanguages();
+            //SelectList languagesSelectList = new SelectList(languages, nameof(LanguageDto.LangCode), nameof(LanguageDto.LangName));
+            //ViewBag.Languages = languagesSelectList;
             ViewBag.RecordStatusCombobox = recordStatusHelper.GetRecordStatusCombobox();
             string currentLink = Request.Path.ToString();
             adminBaseViewModel.Menus = adminMenuProvider.GetAdminMenuTreeView(permissions, currentLink);

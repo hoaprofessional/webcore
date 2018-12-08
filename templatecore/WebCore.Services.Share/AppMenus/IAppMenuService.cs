@@ -8,6 +8,6 @@ namespace WebCore.Services.Share.AppMenus
 {
     public interface IAppMenuService
     {
-        ListResult<AppMenuDto> GetAllMenuByPermission(List<string> permissions);
+        List<AppMenuDto> GetAllMenuByPermission(List<string> permissions);
     }
 }

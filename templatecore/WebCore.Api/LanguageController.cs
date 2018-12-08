@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Collections.Generic;
 using WebCore.Services.Share.Languages;
 using WebCore.Services.Share.Languages.Dto;
 using WebCore.Utils.ModelHelper;
@@ -18,7 +19,7 @@ namespace WebCore.Api
         }
 
         [HttpGet("{code}")]
-        public ListResult<LanguageDetailDto> GetLanguageByCode(string code)
+        public List<LanguageDetailDto> GetLanguageByCode(string code)
         {
             return languageService.GetLanguagesByCode(code);
         }

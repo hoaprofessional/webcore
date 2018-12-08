@@ -23,7 +23,7 @@ namespace WebCore.Services.Impl.AppMenus
             this.mapper = mapper;
         }
 
-        public ListResult<AppMenuDto> GetAllMenuByPermission(List<string> permissions)
+        public List<AppMenuDto> GetAllMenuByPermission(List<string> permissions)
         {
             var menuQuery = appMenuRepository.GetByCondition(x => x.RecordStatus == ConstantConfig.RecordStatusConfig.Active && permissions.Contains(x.Permission));
             var menuResult = menuQuery
@@ -43,10 +43,7 @@ namespace WebCore.Services.Impl.AppMenus
             }
             menuResult = menuResult.Where(x => x.ParentId == 0).ToList();
 
-            return new ListResult<AppMenuDto>()
-            {
-                DataList = menuResult
-            };
+            return menuResult;
         }
     }
 }

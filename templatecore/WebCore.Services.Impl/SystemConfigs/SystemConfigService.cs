@@ -3,6 +3,8 @@ using AutoMapper.QueryableExtensions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Caching.Memory;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using WebCore.Entities;
 using WebCore.EntityFramework.Helper;
@@ -43,8 +45,8 @@ namespace WebCore.Services.Impl.SystemConfigs
         public decimal GetValueNumber(string key)
         {
             Thread ct = Thread.CurrentThread;
-            ListResult<SystemConfigDto> systemConfigsInCache = GetSystemConfigInCache();
-            SystemConfigDto systemConfigDto = systemConfigsInCache.GetFirstByCondition(x => x.Key == key);
+            List<SystemConfigDto> systemConfigsInCache = GetSystemConfigInCache();
+            SystemConfigDto systemConfigDto = systemConfigsInCache.FirstOrDefault(x => x.Key == key);
             if (systemConfigDto == null)
             {
                 SystemConfig systemConfig = new SystemConfig()
@@ -66,8 +68,8 @@ namespace WebCore.Services.Impl.SystemConfigs
 
         public string GetValueString(string key)
         {
-            ListResult<SystemConfigDto> systemConfigsInCache = GetSystemConfigInCache();
-            SystemConfigDto systemConfigDto = systemConfigsInCache.GetFirstByCondition(x => x.Key == key);
+            List<SystemConfigDto> systemConfigsInCache = GetSystemConfigInCache();
+            SystemConfigDto systemConfigDto = systemConfigsInCache.FirstOrDefault(x => x.Key == key);
             if (systemConfigDto == null)
             {
                 SystemConfig systemConfig = new SystemConfig()
@@ -87,16 +89,16 @@ namespace WebCore.Services.Impl.SystemConfigs
             return systemConfigDto.ValueString;
         }
 
-        private ListResult<SystemConfigDto> GetSystemConfigInCache()
+        private List<SystemConfigDto> GetSystemConfigInCache()
         {
-            ListResult<SystemConfigDto> sysConfigDtoInCache = memoryCache.Get<ListResult<SystemConfigDto>>(ConstantConfig.MemoryCacheConfig.SystemConfigCache);
+            List<SystemConfigDto> sysConfigDtoInCache = memoryCache.Get<List<SystemConfigDto>>(ConstantConfig.MemoryCacheConfig.SystemConfigCache);
             if (sysConfigDtoInCache == null)
             {
                 System.Linq.IQueryable<SystemConfigDto> dtoQuery = systemConfigRepository
                     .GetAll()
                     .ProjectTo<SystemConfigDto>(mapper.ConfigurationProvider);
 
-                sysConfigDtoInCache = dtoQuery.ToListResult();
+                sysConfigDtoInCache = dtoQuery.ToList();
                 memoryCache.Set(ConstantConfig.MemoryCacheConfig.SystemConfigCache, sysConfigDtoInCache);
             }
             return sysConfigDtoInCache;
@@ -104,8 +106,8 @@ namespace WebCore.Services.Impl.SystemConfigs
 
         private void AddSystemConfigToCache(SystemConfigDto systemConfigDto)
         {
-            ListResult<SystemConfigDto> sysConfigsInCache = GetSystemConfigInCache();
-            sysConfigsInCache.DataList.Add(systemConfigDto);
+            List<SystemConfigDto> sysConfigsInCache = GetSystemConfigInCache();
+            sysConfigsInCache.Add(systemConfigDto);
             memoryCache.Set(ConstantConfig.MemoryCacheConfig.SystemConfigCache, systemConfigDto);
         }
     }

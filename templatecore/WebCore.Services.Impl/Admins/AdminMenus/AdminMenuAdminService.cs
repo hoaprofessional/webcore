@@ -19,7 +19,7 @@ namespace WebCore.Services.Impl.Admins.AdminMenus
     public class AdminMenuAdminService : BaseService, IAdminMenuAdminService
     {
         private readonly IRepository<AdminMenu, int> adminMenuRepository;
-        readonly ILanguageProviderService languageProviderService;
+        private readonly ILanguageProviderService languageProviderService;
         private readonly IMapper mapper;
         public AdminMenuAdminService(IServiceProvider serviceProvider,
             IMapper mapper,
@@ -33,11 +33,16 @@ namespace WebCore.Services.Impl.Admins.AdminMenus
 
         public SelectList GetAdminMenusCombobox()
         {
-            return adminMenuRepository.GetAll().Select(x => new ComboboxResult<int, string>()
+            System.Collections.Generic.List<ComboboxResult<int, string>> result = adminMenuRepository.GetAll().Select(x => new ComboboxResult<int, string>()
             {
                 Value = x.Id,
-                Display = $"{x.Name} - {languageProviderService.GetlangByKey($"LBL_ADMINMENUITEM_{x.Name}")}"
-            }).ToList().ToSelectList();
+                Display = $"{x.Name} - "
+            }).ToList();
+            result.ForEach(x =>
+            {
+                x.Display += languageProviderService.GetlangByKey($"LBL_ADMINMENUITEM_{x.Display}");
+            });
+            return result.ToSelectList();
         }
 
         public PagingResultDto<AdminMenuDto> GetAllByPaging(AdminMenuFilterInput adminMenuFilterInput)

@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using System.Collections.Generic;
 using WebCore.Entities;
 using WebCore.Services.Share.Admins.Languages.Dto;
 using WebCore.Services.Share.Admins.Users.Dto;
@@ -13,15 +14,13 @@ namespace WebCore.Services.Share.Helper
         public MappingProfile()
         {
             CreateMap<LanguageDetail, Languages.Dto.LanguageDetailDto>();
-            CreateMap<ListResult<LanguageDetail>, ListResult<Languages.Dto.LanguageDetailDto>>();
+            CreateMap<List<LanguageDetail>, List<Languages.Dto.LanguageDetailDto>>();
 
             CreateMap<SystemConfig, SystemConfigDto>();
-            CreateMap<ListResult<SystemConfig>, ListResult<SystemConfigDto>>();
-
+            CreateMap<List<SystemConfig>, List<SystemConfigDto>>();
 
             CreateMap<LanguageDetail, LanguageInsertUpdateInput>();
             CreateMap<LanguageInsertUpdateInput, LanguageDetail>();
-
 
             CreateMap<WebCoreUser, UserDto>();
             CreateMap<WebCoreUser, WebCore.Services.Share.Admins.Users.Dto.UserInfoInput>();
@@ -52,8 +51,6 @@ namespace WebCore.Services.Share.Helper
             CreateMap<WebCore.Services.Share.Admins.MasterLists.Dto.MasterListInput, MasterList>();
 
             CreateMap<AdminMenu, AdminMenus.Dto.AdminMenuTreeViewDto>();
-
-
         }
     }
 }
