@@ -42,7 +42,8 @@ namespace WebCore.Areas.Admin.Controllers
             SelectList languagesSelectList = new SelectList(languages, nameof(LanguageDto.LangCode), nameof(LanguageDto.LangName));
             ViewBag.Languages = languagesSelectList;
             ViewBag.RecordStatusCombobox = recordStatusHelper.GetRecordStatusCombobox();
-            adminBaseViewModel.Menus = adminMenuProvider.GetAdminMenuTreeView(permissions);
+            string currentLink = Request.Path.ToString();
+            adminBaseViewModel.Menus = adminMenuProvider.GetAdminMenuTreeView(permissions, currentLink);
         }
 
         protected string[] GetAllPermissions()

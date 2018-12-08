@@ -4,7 +4,7 @@
 }
 @if (Model.Childs.Count == 0)
 {
-    <a class="nav-link" href="@Model.Link">
+    <a class="nav-link" data-active="@Model.IsActive" href="@Model.Link">
         <i class="material-icons">@itemIcon</i>
         <p>@Html.Lang($"LBL_ADMINMENUITEM_{Model.Name}")</p>
     </a>

@@ -7,6 +7,6 @@ namespace WebCore.Services.Share.AdminMenus
     using Dto;
     public interface IAdminMenuProvider
     {
-        AdminMenuTreeViewDto GetAdminMenuTreeView(string[] permissions);
+        AdminMenuTreeViewDto GetAdminMenuTreeView(string[] permissions, string currentLink);
     }
 }

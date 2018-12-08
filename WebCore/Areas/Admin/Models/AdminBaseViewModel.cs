@@ -11,5 +11,6 @@ namespace WebCore.Areas.Admin.Models
     {
         public string CurrentLanguage { get; set; }
         public AdminMenuTreeViewDto Menus { get; set; }
+        
     }
 }

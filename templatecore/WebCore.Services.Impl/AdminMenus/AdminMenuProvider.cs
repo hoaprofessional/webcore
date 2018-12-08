@@ -22,15 +22,17 @@ namespace WebCore.Services.Impl.AdminMenus
             this.mapper = mapper;
         }
 
-        public AdminMenuTreeViewDto GetAdminMenuTreeView(string[] permissions)
+        public AdminMenuTreeViewDto GetAdminMenuTreeView(string[] permissions, string currentLink)
         {
-            string permissionsFinder = $",{string.Join(",", permissions)},";
             List<AdminMenuTreeViewDto> adminMenus = adminMenuRepository
-                .GetByCondition(x => x.RecordStatus == ConstantConfig.RecordStatusConfig.Active && string.IsNullOrEmpty(x.Permission) || (permissionsFinder.Contains($",{x.Permission},")))
+                .GetByCondition(x => x.RecordStatus == ConstantConfig.RecordStatusConfig.Active && string.IsNullOrEmpty(x.Permission) || (permissions.Contains(x.Permission)))
                 .OrderBy(x => x.OrderNo)
                 .ProjectTo<AdminMenuTreeViewDto>(mapper.ConfigurationProvider)
                 .ToList();
-
+            adminMenus.ForEach(x =>
+            {
+                x.IsActive = (x.Link == currentLink);
+            });
             return adminMenus.ToTreeView(0);
         }
     }

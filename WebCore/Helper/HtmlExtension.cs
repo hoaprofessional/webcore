@@ -102,8 +102,7 @@ namespace WebCore.Helper
             }
             return value.Text;
         }
-
-
+        
         private static string GetCorrectPropertyName<T>(Expression<Func<T, object>> expression)
         {
             if (expression.Body is MemberExpression)

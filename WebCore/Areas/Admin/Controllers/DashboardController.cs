@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using WebCore.Areas.Admin.Models;
 
 namespace WebCore.Areas.Admin.Controllers
 {
@@ -15,7 +16,9 @@ namespace WebCore.Areas.Admin.Controllers
         }
         public IActionResult Index()
         {
-            return View();
+            AdminBaseViewModel viewModel = new AdminBaseViewModel();
+            InitAdminBaseViewModel(viewModel);
+            return View(viewModel);
         }
     }
 }

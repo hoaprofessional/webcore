@@ -12,6 +12,7 @@ namespace WebCore.Services.Share.AdminMenus.Dto
         public string Icon { get; set; }
         public string Link { get; set; }
         public int? ParentMenuId { get; set; }
+        public bool IsActive { get; set; }
         public object Key
         {
             get { return Id; }

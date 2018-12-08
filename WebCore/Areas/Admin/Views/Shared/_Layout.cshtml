@@ -50,76 +50,6 @@
                       treeview-isrenderrootnode="false"
                       treeview-partialview-child="~/Areas/Admin/Views/Shared/MenuTreeViewItemPartial.cshtml">
             </treeview>
-            <div class="sidebar-wrapper">
-                <ul class="nav">
-                    <li class="nav-item active  ">
-                        <a class="nav-link" href="/Admin/Dashboard">
-                            <i class="material-icons">dashboard</i>
-                            <p>Dashboard</p>
-                        </a>
-                    </li>
-                    <li class="nav-item ">
-                        <a class="nav-link" href="/Admin/User">
-                            <i class="material-icons">person</i>
-                            <p>User Profile</p>
-                        </a>
-                    </li>
-                    <li class="nav-item ">
-                        <a class="nav-link" href="/Admin/Language">
-                            <i class="material-icons">content_paste</i>
-                            <p>Language</p>
-                        </a>
-                    </li>
-                    <li class="nav-item ">
-                        <a class="nav-link" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
-                            <i class="material-icons">library_books</i>
-                            <p>Typography</p>
-                            <span class="open-icon">
-                                <i class="material-icons open-nav">expand_less</i>
-                                <i class="material-icons close-nav">expand_more</i>
-                            </span>
-                        </a>
-                        <ul class="collapse" id="collapseExample">
-                            <li class="nav-item ">
-                                <a class="nav-link" href="./icons.html">
-                                    <i class="material-icons">bubble_chart</i>
-                                    <p>Icons</p>
-                                </a>
-                            </li>
-                            <li class="nav-item ">
-                                <a class="nav-link" href="./map.html">
-                                    <i class="material-icons">location_ons</i>
-                                    <p>Maps</p>
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li class="nav-item ">
-                        <a class="nav-link" href="./icons.html">
-                            <i class="material-icons">bubble_chart</i>
-                            <p>Icons</p>
-                        </a>
-                    </li>
-                    <li class="nav-item ">
-                        <a class="nav-link" href="./map.html">
-                            <i class="material-icons">location_ons</i>
-                            <p>Maps</p>
-                        </a>
-                    </li>
-                    <li class="nav-item ">
-                        <a class="nav-link" href="./notifications.html">
-                            <i class="material-icons">notifications</i>
-                            <p>Notifications</p>
-                        </a>
-                    </li>
-                    <!-- <li class="nav-item active-pro ">
-                <a class="nav-link" href="./upgrade.html">
-                    <i class="material-icons">unarchive</i>
-                    <p>Upgrade to PRO</p>
-                </a>
-            </li> -->
-                </ul>
-            </div>
         </div>
 
         <div class="align-top-right">
@@ -143,18 +73,11 @@
         <!--  Notifications Plugin    -->
         <script src="/admin/js/plugins/bootstrap-notify.js"></script>
         <!-- Control Center for Material Dashboard: parallax effects, scripts for the example pages etc -->
-        <script src="/admin/js/material-dashboard.min.js?v=2.1.0" type="text/javascript"></script>
         <script src="~/lib/select2/dist/js/select2.js"></script>
         <script src="~/admin/js/pages/common.js"></script>
         <script src="~/lib/momentjs/min/moment.min.js"></script>
         <script src="~/lib/bootstrap-material-datetimepicker/js/bootstrap-material-datetimepicker.js"></script>
-        <script>
-            $(document).ready(function () {
-                // Javascript method's body can be found in assets/js/demos.js
-                md.initDashboardPageCharts();
-
-            });
-        </script>
+        
     </environment>
 
     <environment exclude="Development">
@@ -167,6 +90,10 @@
                 });
             </script>*@
     </environment>
+
+    <script>
+        $('.treeview-item>a[data-active="True"]').parents().addClass('active');
+    </script>
 
     @RenderSection("Scripts", required: false)
 </body>
