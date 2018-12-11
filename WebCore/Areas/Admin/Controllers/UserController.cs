@@ -64,6 +64,7 @@ namespace WebCore.Areas.Admin.Controllers
         }
 
         [HttpGet]
+        [ClaimRequirement(ConstantConfig.Claims.UserManagement_AssignPermission)]
         public async Task<IActionResult> AssignPermissionPartial(EntityId<string> idModel = null)
         {
             WebCoreUser user = userService.GetById(idModel);
@@ -94,7 +95,7 @@ namespace WebCore.Areas.Admin.Controllers
                 return Ok(new { result = ConstantConfig.WebApiStatusCode.Error, message = GetLang(ConstantConfig.WebApiResultMessage.Error) });
             }
             bool success = await userService.UpdatePermissionsAsync(assignPermissionInput);
-            if(success)
+            if (success)
             {
                 return Ok(new { result = ConstantConfig.WebApiStatusCode.Success, message = GetLang(ConstantConfig.WebApiResultMessage.UpdateSuccess) });
             }

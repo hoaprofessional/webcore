@@ -8,12 +8,14 @@ using WebCore.Entities;
 using WebCore.Services.Share.Admins.Roles;
 using WebCore.Services.Share.Admins.Roles.Dto;
 using WebCore.Services.Share.Permissions;
+using WebCore.Utils.Attributes;
 using WebCore.Utils.Config;
 using WebCore.Utils.ModelHelper;
 
 namespace WebCore.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [ClaimRequirement(ConstantConfig.Claims.UserManagement_AssignPermission)]
     public class RoleController : AdminBaseController
     {
         private readonly IRoleService roleService;

@@ -33,14 +33,16 @@ namespace WebCore.Services.Impl.Admins.AdminMenus
 
         public SelectList GetAdminMenusCombobox()
         {
-            System.Collections.Generic.List<ComboboxResult<int, string>> result = adminMenuRepository.GetAll().Select(x => new ComboboxResult<int, string>()
-            {
-                Value = x.Id,
-                Display = $"{x.Name} - "
-            }).ToList();
+            System.Collections.Generic.List<ComboboxResult<int, string>> result = adminMenuRepository
+                .GetByCondition(x => x.RecordStatus == ConstantConfig.RecordStatusConfig.Active)
+                .Select(x => new ComboboxResult<int, string>()
+                {
+                    Value = x.Id,
+                    Display = x.Name
+                }).ToList();
             result.ForEach(x =>
             {
-                x.Display += languageProviderService.GetlangByKey($"LBL_ADMINMENUITEM_{x.Display}");
+                x.Display = $"{x.Display} - {languageProviderService.GetlangByKey($"LBL_ADMINMENUITEM_{x.Display}")}";
             });
             return result.ToSelectList();
         }

@@ -25,8 +25,7 @@
         <link href="~/lib/bootstrap-material-datetimepicker/css/bootstrap-material-datetimepicker.css" rel="stylesheet" />
     </environment>
     <environment exclude="Development">
-        <link href="~/admin/css/material-dashboard.min.css" rel="stylesheet" />
-        <link href="~/plugins/select2/css/select2.min.css" rel="stylesheet" />
+        <link href="~/css/bundle.css" rel="stylesheet" />
     </environment>
 </head>
 <body class="">
@@ -80,14 +79,7 @@
     </environment>
 
     <environment exclude="Development">
-        <script src="~/admin/js/core/bundle.min.js"></script>
-        @*<script>
-                $(document).ready(function () {
-                    // Javascript method's body can be found in assets/js/demos.js
-                    md.initDashboardPageCharts();
-
-                });
-            </script>*@
+        <script src="~/js/bundle.min.js"></script>
     </environment>
 
     <script>

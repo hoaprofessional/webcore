@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -66,6 +67,8 @@ namespace WebCore
                 .AddEntityFrameworkStores<WebCoreDbContext>()
                 .AddDefaultTokenProviders();
 
+
+
             services.AddTransient<WebCoreUserStore>();
             services.AddTransient<WebCoreRoleStore>();
 
@@ -82,6 +85,7 @@ namespace WebCore
             services.AddScoped<ILanguageDetailAdminService, LanguageDetailAdminService>();
             services.AddScoped<Services.Share.Admins.AdminMenus.IAdminMenuAdminService, Services.Impl.Admins.AdminMenus.AdminMenuAdminService>();
             services.AddScoped<Services.Share.Admins.MasterLists.IMasterListAdminService, Services.Impl.Admins.MasterLists.MasterListAdminService>();
+            services.AddScoped<Services.Share.Admins.MetaDescriptions.IMetaDescriptionAdminService, Services.Impl.Admins.MetaDescriptions.MetaDescriptionAdminService>();
             services.AddScoped<Services.Share.Admins.MasterListGroups.IMasterListGroupAdminService, Services.Impl.Admins.MasterListGroups.MasterListGroupAdminService>();
             services.AddScoped<Services.Share.RecordStatuss.IRecordStatusHelper, Services.Impl.RecordStatuss.RecordStatusHelper>();
             services.AddScoped<Services.Share.AdminMenus.IAdminMenuProvider, Services.Impl.AdminMenus.AdminMenuProvider>();
@@ -94,6 +98,19 @@ namespace WebCore
             services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.TryAddSingleton<IActionContextAccessor, ActionContextAccessor>();
             services.TryAddSingleton<IUrlHelperFactory, UrlHelperFactory>();
+
+            services.ConfigureApplicationCookie(options => {
+                options.Cookie.HttpOnly = true;
+                options.ExpireTimeSpan = TimeSpan.FromMinutes(30);
+                options.AccessDeniedPath = "/Identity/Account/AccessDenied";
+                options.SlidingExpiration = true;
+
+            });
+
+            services.Configure<CookieAuthenticationOptions>(options =>
+            {
+                options.AccessDeniedPath = new PathString("/Identity/Account/AccessDenied");
+            });
 
 
             MapperConfiguration mapperConfig = new MapperConfiguration(mc =>
@@ -160,6 +177,17 @@ namespace WebCore
                     {
                         controller = "Home",
                         action = "Index"
+                    });
+            });
+
+            app.UseMvc(routes =>
+            {
+                routes.MapRoute(
+                    name: "AccessDenied",
+                    template: "access-denied.html",
+                    new
+                    {
+                        url= "/Identity/Account/AccessDenied"
                     });
             });
 

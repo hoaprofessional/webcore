@@ -206,6 +206,41 @@ namespace WebCore.EntityFramework.Migrations
                     b.ToTable("MasterLists");
                 });
 
+            modelBuilder.Entity("WebCore.Entities.MetaDescription", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Alias");
+
+                    b.Property<string>("Content");
+
+                    b.Property<string>("CreatedBy")
+                        .HasMaxLength(256);
+
+                    b.Property<DateTime?>("CreatedDate");
+
+                    b.Property<string>("DeletedBy");
+
+                    b.Property<DateTime?>("DeletedDate");
+
+                    b.Property<string>("ModifiedBy")
+                        .HasMaxLength(256);
+
+                    b.Property<DateTime?>("ModifiedDate");
+
+                    b.Property<string>("Name");
+
+                    b.Property<long?>("RecordStatus");
+
+                    b.Property<Guid?>("UpdateToken");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("MetaDescriptions");
+                });
+
             modelBuilder.Entity("WebCore.Entities.SystemConfig", b =>
                 {
                     b.Property<int>("Id")

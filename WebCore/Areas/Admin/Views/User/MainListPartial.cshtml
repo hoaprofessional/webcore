@@ -48,12 +48,15 @@
                                             @Html.Lang("LBL_WEBUSER_RESET_PASSWORD")
                                         </p>
                                     </div>
-                                    <div onclick="openAssignPermissionModal('@item.Id')" class="dropdown-item">
-                                        <i class="material-icons">create</i>
-                                        <p>
-                                            @Html.Lang("LBL_WEBROLE_ASSIGN_PERMISSION")
-                                        </p>
-                                    </div>
+                                    @if (Html.HasPermission(ConstantConfig.Claims.UserManagement_AssignPermission))
+                                    {
+                                        <div onclick="openAssignPermissionModal('@item.Id')" class="dropdown-item">
+                                            <i class="material-icons">create</i>
+                                            <p>
+                                                @Html.Lang("LBL_WEBROLE_ASSIGN_PERMISSION")
+                                            </p>
+                                        </div>
+                                    }
                                     @if (Html.HasPermission(ConstantConfig.Claims.UserManagement_BlockUser))
                                     {
                                         <div onclick="lockUser('@item.Id')" class="dropdown-item">

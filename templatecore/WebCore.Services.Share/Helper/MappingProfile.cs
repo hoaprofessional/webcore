@@ -50,6 +50,10 @@ namespace WebCore.Services.Share.Helper
             CreateMap<MasterList, WebCore.Services.Share.Admins.MasterLists.Dto.MasterListInput>();
             CreateMap<WebCore.Services.Share.Admins.MasterLists.Dto.MasterListInput, MasterList>();
 
+            CreateMap<MetaDescription, Admins.MetaDescriptions.Dto.MetaDescriptionDto>();
+            CreateMap<MetaDescription, WebCore.Services.Share.Admins.MetaDescriptions.Dto.MetaDescriptionInput>();
+            CreateMap<WebCore.Services.Share.Admins.MetaDescriptions.Dto.MetaDescriptionInput, MetaDescription>();
+
             CreateMap<AdminMenu, AdminMenus.Dto.AdminMenuTreeViewDto>();
         }
     }

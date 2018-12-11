@@ -1,5 +1,4 @@
-﻿
-function showSuccessNotification(message) {
+﻿function showSuccessNotification(message) {
 
     $.notify({
         icon: "check_circle",

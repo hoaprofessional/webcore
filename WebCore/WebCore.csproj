@@ -53,6 +53,21 @@
     <None Include="bundleconfig.json" />
   </ItemGroup>
   <ItemGroup>
+    <Content Update="Areas\Admin\Views\MetaDescription\FilterPartial.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Areas\Admin\Views\MetaDescription\Index.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Areas\Admin\Views\MetaDescription\InputPartial.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Areas\Admin\Views\MetaDescription\JsPartial.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Areas\Admin\Views\MetaDescription\MainListPartial.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
     <Content Update="Areas\Admin\Views\MasterListGroup\FilterPartial.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>

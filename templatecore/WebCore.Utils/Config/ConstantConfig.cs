@@ -32,6 +32,13 @@
             public const string MasterListManagement_ActionButton = "MasterListManagement.ActionButton";
             public const string MasterListManagement_ActionButton_UpdateMasterList = "MasterListManagement.ActionButton.UpdateMasterList";
             public const string MasterListManagement_ActionButton_DeleteMasterList = "MasterListManagement.ActionButton.DeleteMasterList";
+
+            public const string MetaDescriptionManagement = "MetaDescriptionManagement";
+            public const string MetaDescriptionManagement_AddMetaDescription = "MetaDescriptionManagement.AddMetaDescription";
+            public const string MetaDescriptionManagement_RestoreMetaDescription = "MetaDescriptionManagement.RestoreMetaDescription";
+            public const string MetaDescriptionManagement_ActionButton = "MetaDescriptionManagement.ActionButton";
+            public const string MetaDescriptionManagement_ActionButton_UpdateMetaDescription = "MetaDescriptionManagement.ActionButton.UpdateMetaDescription";
+            public const string MetaDescriptionManagement_ActionButton_DeleteMetaDescription = "MetaDescriptionManagement.ActionButton.DeleteMetaDescription";
         }
         public static class WebApiStatusCode
         {
@@ -84,6 +91,7 @@
             public const string AdminMenuSession = "AdminMenuSession";
             public const string MasterListSession = "MasterListSession";
             public const string MasterListGroupSession = "MasterListGroupSession";
+            public const string MetaDescriptionSession = "MetaDescriptionSession";
         }
         public const string MasterListMasterGroup = "Master";
     }

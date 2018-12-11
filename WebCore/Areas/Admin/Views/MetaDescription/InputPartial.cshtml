@@ -1,0 +1,63 @@
+﻿@model WebCore.Services.Share.Admins.MetaDescriptions.Dto.MetaDescriptionInput
+@{
+    SelectList adminMenusCombobox = ViewBag.MetaDescriptionCombobox;
+    SelectList permissionCombobox = ViewBag.PermissionCombobox;
+}
+<div class="modal-dialog" role="document">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLongTitle">@Html.Lang($"LBL_METADESCRIPTION_TITLE")</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+
+        <div class="card-body">
+            <form data-noreload="true"
+                  data-on-submit-done="onInputSubmitDone"
+                  data-on-submit-fail="onInputSubmitFail"
+                  method="post"
+                  asp-action="@nameof(MetaDescriptionController.InputPartial)"
+                  id="saveInputForm">
+                <input asp-for="Id" type="hidden" class="form-control">
+                <input asp-for="UpdateToken" type="hidden" class="form-control">
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group bmd-form-group">
+                            <label class="bmd-label-floating">@(Html.LangFor<MetaDescription>(x => x.Alias))</label>
+                            <input language-support="true" asp-for="Alias" type="text" class="form-control">
+                            <span asp-validation-for="Alias"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group bmd-form-group">
+                            <label class="bmd-label-floating">@(Html.LangFor<MetaDescription>(x => x.Name))</label>
+                            <input language-support="true" asp-for="Name" type="text" class="form-control">
+                            <span asp-validation-for="Name"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group bmd-form-group">
+                            <label class="bmd-label-floating">@(Html.LangFor<MetaDescription>(x => x.Content))</label>
+                            <textarea rows="8" asp-for="Content" class="form-control"></textarea>
+                            <span asp-validation-for="Content"></span>
+                        </div>
+                    </div>
+                </div>
+                <button type="submit" hidden></button>
+            </form>
+        </div>
+
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">@Html.Lang("LBL_CLOSE")</button>
+            <button type="button" onclick="$('#saveInputForm').submit()" class="btn btn-primary">@Html.Lang("LBL_SAVE")</button>
+        </div>
+    </div>
+</div>
+<partial name="_ValidationScriptsPartial" />
+<script>
+</script>

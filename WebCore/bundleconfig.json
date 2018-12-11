@@ -1,22 +1,26 @@
 [
   {
-    "outputFileName": "wwwroot/admin/css/material-dashboard.min.css",
+    "outputFileName": "wwwroot/css/bundle.css",
     "inputFiles": [
-      "wwwroot/admin/css/material-dashboard.css"
+      "wwwroot/admin/css/material-dashboard.css",
+      "wwwroot/lib/select2/dist/css/select2.css",
+      "/lib/bootstrap-checkbox/bootstrap-checkbox.css",
+      "/lib/bootstrap-material-datetimepicker/css/bootstrap-material-datetimepicker.css"
     ]
   },
   {
-    "outputFileName": "wwwroot/admin/js/core/bundle.js",
+    "outputFileName": "wwwroot/js/bundle.js",
     "inputFiles": [
       "wwwroot/admin/js/core/jquery.min.js",
+      "wwwroot/lib/momentjs/min/moment.min.js",
       "wwwroot/admin/js/core/popper.min.js",
       "wwwroot/admin/js/core/bootstrap-material-design.min.js",
       "wwwroot/admin/js/plugins/perfect-scrollbar.jquery.min.js",
       "wwwroot/admin/js/plugins/chartist.min.js",
       "wwwroot/admin/js/plugins/bootstrap-notify.js",
-      "wwwroot/admin/js/material-dashboard.min.js",
-      "wwwroot/plugins/select2/js/select2.min.js",
-      "~/admin/js/pages/common.js"
+      "wwwroot/lib/select2/dist/js/select2.js",
+      "wwwroot/lib/bootstrap-material-datetimepicker/js/bootstrap-material-datetimepicker.js",
+      "wwwroot/admin/js/pages/common.js"
     ]
   }
 ]
