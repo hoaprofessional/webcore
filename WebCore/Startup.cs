@@ -55,6 +55,7 @@ namespace WebCore
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
+            var connectionString = "Server=localhost; Database=WebcoreDbTest_" + Guid.NewGuid().ToString("N") + "; Trusted_Connection=True;";
             services.AddDbContext<WebCoreDbContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));

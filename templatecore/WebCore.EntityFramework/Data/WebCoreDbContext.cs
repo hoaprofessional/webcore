@@ -17,6 +17,7 @@ namespace WebCore.EntityFramework.Data
         public WebCoreDbContext(DbContextOptions<WebCoreDbContext> options)
             : base(options)
         {
+
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

@@ -21,6 +21,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "api", "api", "{254A895F-6A6
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebCore.Api", "templatecore\WebCore.Api\WebCore.Api.csproj", "{82FD60F0-EA6F-4EFD-BA4D-B16AD92F9CA5}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Webcore.Tests", "Webcore.Tests\Webcore.Tests.csproj", "{4F139144-42D7-4A42-B5E5-DA22FB5AE30F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -85,6 +87,14 @@ Global
 		{82FD60F0-EA6F-4EFD-BA4D-B16AD92F9CA5}.Release|Any CPU.Build.0 = Release|Any CPU
 		{82FD60F0-EA6F-4EFD-BA4D-B16AD92F9CA5}.Release|x86.ActiveCfg = Release|x86
 		{82FD60F0-EA6F-4EFD-BA4D-B16AD92F9CA5}.Release|x86.Build.0 = Release|x86
+		{4F139144-42D7-4A42-B5E5-DA22FB5AE30F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4F139144-42D7-4A42-B5E5-DA22FB5AE30F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4F139144-42D7-4A42-B5E5-DA22FB5AE30F}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{4F139144-42D7-4A42-B5E5-DA22FB5AE30F}.Debug|x86.Build.0 = Debug|Any CPU
+		{4F139144-42D7-4A42-B5E5-DA22FB5AE30F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4F139144-42D7-4A42-B5E5-DA22FB5AE30F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4F139144-42D7-4A42-B5E5-DA22FB5AE30F}.Release|x86.ActiveCfg = Release|Any CPU
+		{4F139144-42D7-4A42-B5E5-DA22FB5AE30F}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
