@@ -41,6 +41,7 @@ namespace WebCore.EntityFramework.Data
         public DbSet<AdminMenu> AdminMenus { get; set; }
         public DbSet<MasterList> MasterLists { get; set; }
         public DbSet<MetaDescription> MetaDescriptions { get; set; }
+        public DbSet<Featured> Features { get; set; }
         #endregion
     }
 }

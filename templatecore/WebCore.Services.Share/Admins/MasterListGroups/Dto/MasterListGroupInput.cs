@@ -11,7 +11,6 @@ namespace WebCore.Services.Share.Admins.MasterListGroups.Dto
     {
         [Required(ErrorMessage = "LBL_MASTER_LIST_GROUP_VALUE_REQUIRED")]
         public string Value { get; set; }
-        [Required(ErrorMessage = "LBL_MASTER_LIST_GROUP_ORDER_NO_REQUIRED")]
         public int? OrderNo { get; set; }
     }
 }

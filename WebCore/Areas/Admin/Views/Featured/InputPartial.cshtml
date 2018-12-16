@@ -1,0 +1,190 @@
+﻿@using WebCore.Services.Share.Admins.Featureds.Dto
+@model FeaturedInput
+@{
+    SelectList featuredCombobox = ViewBag.FeaturedCombobox;
+}
+
+<div class="modal-dialog" role="document">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLongTitle">@Html.Lang($"LBL_FEATURED_TITLE")</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+
+        <div class="card-body">
+            <form data-noreload="true"
+                  data-on-submit-done="onInputSubmitDone"
+                  data-on-submit-fail="onInputSubmitFail"
+                  method="post"
+                  asp-action="@nameof(FeaturedController.InputPartial)"
+                  id="saveInputForm">
+                <input language-support="true" asp-for="Id" type="hidden" class="form-control">
+                <input language-support="true" asp-for="UpdateToken" type="hidden" class="form-control">
+
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-group bmd-form-group">
+                            <label class="bmd-label-floating">@(Html.LangFor<Featured>(x => x.Text))</label>
+                            <input language-support="true" asp-for="Text" class="form-control">
+                            <span asp-validation-for="Text"></span>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="form-group bmd-form-group">
+                            <label class="bmd-label-floating">@(Html.LangFor<Featured>(x => x.NoValidateText))</label>
+                            <input language-support="true" asp-for="NoValidateText" class="form-control">
+                            <span asp-validation-for="NoValidateText"></span>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="form-group bmd-form-group">
+                            <label class="bmd-label-floating">@(Html.LangFor<Featured>(x => x.Between10To20Character))</label>
+                            <input language-support="true" asp-for="Between10To20Character" class="form-control">
+                            <span asp-validation-for="Between10To20Character"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-group bmd-form-group">
+                            <label class="bmd-label-floating">@(Html.LangFor<Featured>(x => x.Number))</label>
+                            <input step="0.01" language-support="true" asp-for="Number" class="form-control">
+                            <span asp-validation-for="Number"></span>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="form-group bmd-form-group">
+                            <label class="bmd-label-floating">@(Html.LangFor<Featured>(x => x.Beetween10To20))</label>
+                            <input language-support="true" asp-for="Beetween10To20" class="form-control">
+                            <span asp-validation-for="Beetween10To20"></span>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="form-group bmd-form-group">
+                            <label class="bmd-label-floating">@(Html.LangFor<Featured>(x => x.Date))</label>
+                            <input class="form-control datepicker-date" language-support="true" asp-for="Date">
+                            <span asp-validation-for="Date"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group bmd-form-group">
+                            <label class="bmd-label-floating">@(Html.LangFor<Featured>(x => x.FullDateAndTime))</label>
+                            <input language-support="true" class="form-control datepicker-full-datetime" asp-for="FullDateAndTime">
+                            <span asp-validation-for="FullDateAndTime"></span>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group bmd-form-group">
+                            <label class="bmd-label-floating">@(Html.LangFor<Featured>(x => x.Time))</label>
+                            <input class="form-control datepicker-time" language-support="true" asp-for="Time">
+                            <span asp-validation-for="Time"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-group bmd-form-group">
+                            <label class="bmd-label-floating">@(Html.LangFor<Featured>(x => x.Money))</label>
+                            <input language-support="true" asp-for="Money" class="form-control currency" id="c2">
+                            <span asp-validation-for="Money"></span>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="form-group bmd-form-group">
+                            <label class="bmd-label-floating">@(Html.LangFor<Featured>(x => x.Combobox))</label>
+                            <select language-support="true" asp-for="Combobox"  asp-items="featuredCombobox" class="form-control select2">
+                                <option value="">@Html.Lang("LBL_FEATURED_SELECT")</option>
+                            </select>
+                            <span asp-validation-for="Combobox"></span>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="form-group bmd-form-group">
+                            <label class="bmd-label-floating">@(Html.LangFor<Featured>(x => x.MultiSelect))</label>
+                            <select language-support="true" multiple asp-for="MultiSelect" asp-items="featuredCombobox" class="form-control select2">
+                                <option value="">@Html.Lang("LBL_FEATURED_SELECT")</option>
+                            </select>
+                            <span asp-validation-for="MultiSelect"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-group bmd-form-group">
+                            <label class="bmd-label-floating">@(Html.LangFor<Featured>(x => x.FromDate))</label>
+                            <input class="datepicker-date form-control" language-support="true" asp-for="FromDate">
+                            <span asp-validation-for="FromDate"></span>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="form-group bmd-form-group">
+                            <label class="bmd-label-floating">@(Html.LangFor<Featured>(x => x.ToDate))</label>
+                            <input class="datepicker-date form-control" language-support="true" asp-for="ToDate">
+                            <span asp-validation-for="ToDate"></span>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="form-group bmd-form-group">
+                            <label class="bmd-label-floating">@(Html.LangFor<Featured>(x => x.LessThanToday))</label>
+                            <input language-support="true" asp-for="LessThanToday" class="form-control datepicker-date">
+                            <span class="datepicker-date" asp-validation-for="LessThanToday"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group bmd-form-group">
+                            <label class="bmd-label-floating">@(Html.LangFor<Featured>(x => x.GreaterThanToday))</label>
+                            <input language-support="true" asp-for="GreaterThanToday" class="form-control datepicker-date">
+                            <span class="datepicker-date" asp-validation-for="GreaterThanToday"></span>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group bmd-form-group">
+                            <label class="bmd-label-floating">@(Html.LangFor<Featured>(x => x.TextArea))</label>
+                            <textarea language-support="true" class="form-control" asp-for="TextArea"></textarea>
+                            <span asp-validation-for="TextArea"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group bmd-form-group">
+                            <label class="bmd-label-floating">@(Html.LangFor<Featured>(x => x.TextEditor))</label>
+                            <textarea language-support="true" class="form-control texteditor" asp-for="TextEditor"></textarea>
+                            <span asp-validation-for="TextEditor"></span>
+                        </div>
+                    </div>
+                </div>
+                <button type="submit" hidden></button>
+            </form>
+        </div>
+
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">@Html.Lang("LBL_CLOSE")</button>
+            <button type="button" onclick="$('#saveInputForm').submit()" class="btn btn-primary">@Html.Lang("LBL_SAVE")</button>
+        </div>
+    </div>
+</div>
+<partial name="_ValidationScriptsPartial" />
+<script>
+</script>

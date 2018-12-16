@@ -97,6 +97,81 @@ namespace WebCore.EntityFramework.Migrations
                     b.ToTable("AppMenus");
                 });
 
+            modelBuilder.Entity("WebCore.Entities.Featured", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int?>("Beetween10To20");
+
+                    b.Property<string>("Between10To20Character");
+
+                    b.Property<string>("Combobox");
+
+                    b.Property<string>("CreatedBy")
+                        .HasMaxLength(256);
+
+                    b.Property<DateTime?>("CreatedDate");
+
+                    b.Property<DateTime?>("Date");
+
+                    b.Property<string>("DeletedBy");
+
+                    b.Property<DateTime?>("DeletedDate");
+
+                    b.Property<string>("Email");
+
+                    b.Property<string>("File");
+
+                    b.Property<DateTime?>("FromDate");
+
+                    b.Property<DateTime?>("FullDateAndTime");
+
+                    b.Property<DateTime?>("GreaterThanToday");
+
+                    b.Property<string>("Image");
+
+                    b.Property<DateTime?>("LessThanToday");
+
+                    b.Property<string>("ModifiedBy")
+                        .HasMaxLength(256);
+
+                    b.Property<DateTime?>("ModifiedDate");
+
+                    b.Property<decimal?>("Money");
+
+                    b.Property<string>("MultiFile");
+
+                    b.Property<string>("MultiImage");
+
+                    b.Property<string>("MultiSelect");
+
+                    b.Property<string>("NoValidateText");
+
+                    b.Property<int?>("Number");
+
+                    b.Property<string>("PhoneNumber");
+
+                    b.Property<long?>("RecordStatus");
+
+                    b.Property<string>("Text");
+
+                    b.Property<string>("TextArea");
+
+                    b.Property<string>("TextEditor");
+
+                    b.Property<DateTime?>("Time");
+
+                    b.Property<DateTime?>("ToDate");
+
+                    b.Property<Guid?>("UpdateToken");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Features");
+                });
+
             modelBuilder.Entity("WebCore.Entities.Language", b =>
                 {
                     b.Property<int>("Id")
@@ -172,6 +247,8 @@ namespace WebCore.EntityFramework.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Attribute");
 
                     b.Property<string>("CreatedBy")
                         .HasMaxLength(256);

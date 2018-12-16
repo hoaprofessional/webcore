@@ -25,6 +25,9 @@
                 <th>
                     @(Html.Lang("LBL_MASTERLIST_VALUE_DISPLAY"))
                 </th>
+                <th>
+                    @(Html.LangFor<MasterList>(x => x.Attribute))
+                </th>
                 <th @(Html.SortingFor<MasterListDto>(Model, x => x.OrderNo)) onclick="onSorting(this,dataset.property)">
                     @(Html.LangFor<MasterList>(x => x.OrderNo))
                 </th>
@@ -33,72 +36,75 @@
         <tbody>
             @foreach (var item in Model.Items)
             {
-                <tr>
-                    @if (item.RecordStatus == ConstantConfig.RecordStatusConfig.Active)
-                    {
+            <tr>
+                @if (item.RecordStatus == ConstantConfig.RecordStatusConfig.Active)
+                {
 
-                        @if (Html.HasPermission(ConstantConfig.Claims.MasterListManagement_ActionButton))
-                        {
-                            <td class="nav-item dropdown">
-                                <div class="dropdown">
-                                    <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        <i class="material-icons">settings</i>
-                                        <p class="d-lg-none d-md-block">
-                                            @Html.Lang("LBL_ACTION")
-                                        </p>
-                                    </button>
-                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                        @if (Html.HasPermission(ConstantConfig.Claims.MasterListManagement_ActionButton_UpdateMasterList))
-                                        {
-                                            <div onclick="openInputModal(@item.Id)" class="dropdown-item">
-                                                <i class="material-icons">create</i>
-                                                <p>
-                                                    @Html.Lang("LBL_UPDATE")
-                                                </p>
-                                            </div>
-                                        }
-                                        @if (Html.HasPermission(ConstantConfig.Claims.MasterListManagement_ActionButton_DeleteMasterList))
-                                        {
-                                            <div onclick="deleteItem(@item.Id,'@item.UpdateToken')" class="dropdown-item">
-                                                <i class="material-icons">delete_forever</i>
-                                                <p>
-                                                    @Html.Lang("LBL_DELETE")
-                                                </p>
-                                            </div>
-                                        }
-                                    </div>
-                                </div>
-                            </td>
-                        }
-                    }
-                    else
+                    @if (Html.HasPermission(ConstantConfig.Claims.MasterListManagement_ActionButton))
                     {
-                        if (Html.HasPermission(ConstantConfig.Claims.MasterListManagement_RestoreMasterList))
-                        {
-                            <td>
-                                <button onclick="restoreItem('@item.Id','@item.UpdateToken')" type="button" class="btn btn-danger">
-                                    <i class="material-icons">lock_open</i>
-                                    @Html.Lang("LBL_RESTORE")
+                        <td class="nav-item dropdown">
+                            <div class="dropdown">
+                                <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <i class="material-icons">settings</i>
+                                    <p class="d-lg-none d-md-block">
+                                        @Html.Lang("LBL_ACTION")
+                                    </p>
                                 </button>
-                            </td>
-                        }
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                    @if (Html.HasPermission(ConstantConfig.Claims.MasterListManagement_ActionButton_UpdateMasterList))
+                                    {
+                                        <div onclick="openInputModal(@item.Id)" class="dropdown-item">
+                                            <i class="material-icons">create</i>
+                                            <p>
+                                                @Html.Lang("LBL_UPDATE")
+                                            </p>
+                                        </div>
+                                    }
+                                    @if (Html.HasPermission(ConstantConfig.Claims.MasterListManagement_ActionButton_DeleteMasterList))
+                                    {
+                                        <div onclick="deleteItem(@item.Id,'@item.UpdateToken')" class="dropdown-item">
+                                            <i class="material-icons">delete_forever</i>
+                                            <p>
+                                                @Html.Lang("LBL_DELETE")
+                                            </p>
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+                        </td>
                     }
-                    <td>
-                        @item.Group
-                    </td>
-                    <td>
-                        @Html.Lang($"LBL_MASTERLISTGROUP_{item.Group}")
-                    </td>
-                    <td>
-                        @item.Value
-                    </td>
-                    <td>
-                        @Html.Lang($"LBL_MASTERLISTVALUE_{item.Value}")
-                    </td>
-                    <td>
-                        @item.OrderNo
-                    </td>
-                </tr>
+                }
+                else
+                {
+                    if (Html.HasPermission(ConstantConfig.Claims.MasterListManagement_RestoreMasterList))
+                    {
+                        <td>
+                            <button onclick="restoreItem('@item.Id','@item.UpdateToken')" type="button" class="btn btn-danger">
+                                <i class="material-icons">lock_open</i>
+                                @Html.Lang("LBL_RESTORE")
+                            </button>
+                        </td>
+                    }
+                }
+                <td>
+                    @item.Group
+                </td>
+                <td>
+                    @Html.Lang($"LBL_MASTERLISTGROUP_{item.Group}")
+                </td>
+                <td>
+                    @item.Value
+                </td>
+                <td>
+                    @Html.Lang($"LBL_MASTERLISTVALUE_{item.Value}")
+                </td>
+                <td>
+                    @item.Attribute
+                </td>
+                <td>
+                    @item.OrderNo
+                </td>
+            </tr>
             }
         </tbody>
 

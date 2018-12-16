@@ -17,15 +17,17 @@
     <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
     <!-- CSS Files -->
-    <link href="~/admin/css/custom.css" rel="stylesheet" />
     <environment include="Development">
         <link href="/admin/css/material-dashboard.css?v=2.1.0" rel="stylesheet" />
         <link href="~/lib/select2/dist/css/select2.css" rel="stylesheet" />
         <link href="~/lib/bootstrap-checkbox/bootstrap-checkbox.css" rel="stylesheet" />
         <link href="~/lib/bootstrap-material-datetimepicker/css/bootstrap-material-datetimepicker.css" rel="stylesheet" />
+
+        <link href="~/admin/css/custom.css" rel="stylesheet" />
     </environment>
     <environment exclude="Development">
         <link href="~/css/bundle.css" rel="stylesheet" />
+        <link href="~/admin/css/custom.min.css" rel="stylesheet" />
     </environment>
 </head>
 <body class="">
@@ -72,10 +74,12 @@
         <script src="/admin/js/plugins/bootstrap-notify.js"></script>
         <!-- Control Center for Material Dashboard: parallax effects, scripts for the example pages etc -->
         <script src="~/lib/select2/dist/js/select2.js"></script>
-        <script src="~/admin/js/pages/common.js"></script>
         <script src="~/lib/momentjs/min/moment.min.js"></script>
         <script src="~/lib/bootstrap-material-datetimepicker/js/bootstrap-material-datetimepicker.js"></script>
-        
+        <script src="~/lib/momentjs/locale/vi.js"></script>
+        <script src="~/lib/cleave.js/dist/cleave.js"></script>
+        <script src="~/lib/tinymce/tinymce.js"></script>
+        <script src="~/admin/js/pages/common.js"></script>
     </environment>
 
     <environment exclude="Development">

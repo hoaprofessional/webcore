@@ -42,6 +42,8 @@ namespace WebCore.Services.Share.Helper
             CreateMap<AdminMenu, WebCore.Services.Share.Admins.AdminMenus.Dto.AdminMenuInput>();
             CreateMap<WebCore.Services.Share.Admins.AdminMenus.Dto.AdminMenuInput, AdminMenu>();
 
+            CreateMap<AdminMenu, AdminMenus.Dto.AdminMenuTreeViewDto>();
+
             CreateMap<MasterList, Admins.MasterListGroups.Dto.MasterListGroupDto>();
             CreateMap<MasterList, WebCore.Services.Share.Admins.MasterListGroups.Dto.MasterListGroupInput>();
             CreateMap<WebCore.Services.Share.Admins.MasterListGroups.Dto.MasterListGroupInput, MasterList>();
@@ -54,7 +56,10 @@ namespace WebCore.Services.Share.Helper
             CreateMap<MetaDescription, WebCore.Services.Share.Admins.MetaDescriptions.Dto.MetaDescriptionInput>();
             CreateMap<WebCore.Services.Share.Admins.MetaDescriptions.Dto.MetaDescriptionInput, MetaDescription>();
 
-            CreateMap<AdminMenu, AdminMenus.Dto.AdminMenuTreeViewDto>();
+            CreateMap<Featured, Admins.Featureds.Dto.FeaturedDto>();
+            CreateMap<Featured, WebCore.Services.Share.Admins.Featureds.Dto.FeaturedInput>();
+            CreateMap<WebCore.Services.Share.Admins.Featureds.Dto.FeaturedInput, Featured>();
+
         }
     }
 }

@@ -1,0 +1,41 @@
+﻿@model WebCore.Areas.Admin.Models.Featureds.FeaturedViewModel
+
+<div class="main-panel">
+    <div class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <partial name="FilterPartial" model="@Model.FeaturedFilterInput" />
+                @if (Html.HasPermission(ConstantConfig.Claims.FeaturedManagement_AddFeatured))
+                {
+                    <div class="action-area">
+                        <button onclick="openInputModal()" type="submit" class="btn btn-primary default-align">
+                            <i class="material-icons">create</i>
+                            <p>
+                                @Html.Lang("LBL_ADD_NEW")
+                            </p>
+                        </button>
+                    </div>
+                }
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-header card-header-primary">
+                            <h4 class="card-title">@Html.Lang($"LBL_FEATURED_TITLE")</h4>
+                        </div>
+                        <div id="mainList" class="card-body">
+                            <partial name="@nameof(FeaturedController.MainListPartial)" model="@Model.MainListResult" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Input Modal -->
+<div class="modal fade bd-example-modal-sm" id="input-area" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+</div>
+
+@section scripts{
+    <partial name="JsPartial" />
+}

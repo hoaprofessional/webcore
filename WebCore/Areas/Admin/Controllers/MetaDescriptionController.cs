@@ -74,7 +74,7 @@ namespace WebCore.Areas.Admin.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> InputPartial(EntityId<int> idModel)
+        public IActionResult InputPartial(EntityId<int> idModel)
         {
             // init input model
             MetaDescriptionInput input = masterListAdminService.GetInputById(idModel);
@@ -94,7 +94,6 @@ namespace WebCore.Areas.Admin.Controllers
                 }
             }
             // init combobox
-            ViewBag.PermissionCombobox = await permissionService.GetPermissionCombobox();
             return PartialView(input);
         }
         [HttpPost]

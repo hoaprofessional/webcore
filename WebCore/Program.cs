@@ -21,7 +21,7 @@ namespace WebCore
                     var databaseInitializer = services.GetRequiredService<IDatabaseInitializer>();
                     databaseInitializer.SeedAsync().Wait();
                 }
-                catch (Exception ex)
+                catch
                 {
                     var logger = services.GetRequiredService<ILogger<Program>>();
                 }

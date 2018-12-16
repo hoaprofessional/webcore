@@ -12,6 +12,7 @@ namespace WebCore.Entities
         public string Group { get; set; }
         [MaxLength(450)]
         public string Value { get; set; }
+        public string Attribute { get; set; }
         public int? OrderNo { get; set; }
     }
 }

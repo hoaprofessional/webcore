@@ -1,0 +1,196 @@
+﻿@using  WebCore.Services.Share.Admins.Featureds.Dto
+@model SortingAndPagingResultDto<FeaturedDto>
+@{
+    SelectList adminMenuCombobox = ViewBag.FeaturedCombobox;
+}
+<div class="table-responsive">
+    <table class="table">
+        <thead class=" text-primary">
+            <tr>
+                @if (Html.HasPermission(ConstantConfig.Claims.FeaturedManagement_ActionButton) || (Html.HasPermission(ConstantConfig.Claims.FeaturedManagement_RestoreFeatured)))
+                {
+                    <th>
+                        @Html.Lang("LBL_ACTION")
+                    </th>
+                }
+                <th>@Html.Lang("LBL_NO")</th>
+                <th @(Html.SortingFor<FeaturedDto>(Model, x => x.Text)) onclick="onSorting(this,dataset.property)">
+                    @(Html.LangFor<Featured>(x => x.Text))
+                </th>
+                <th @(Html.SortingFor<FeaturedDto>(Model, x => x.NoValidateText)) onclick="onSorting(this,dataset.property)">
+                    @(Html.LangFor<Featured>(x => x.NoValidateText))
+                </th>
+                <th @(Html.SortingFor<FeaturedDto>(Model, x => x.Between10To20Character)) onclick="onSorting(this,dataset.property)">
+                    @(Html.LangFor<Featured>(x => x.Between10To20Character))
+                </th>
+                <th @(Html.SortingFor<FeaturedDto>(Model, x => x.Number)) onclick="onSorting(this,dataset.property)">
+                    @(Html.LangFor<Featured>(x => x.Number))
+                </th>
+                <th @(Html.SortingFor<FeaturedDto>(Model, x => x.Beetween10To20)) onclick="onSorting(this,dataset.property)">
+                    @(Html.LangFor<Featured>(x => x.Beetween10To20))
+                </th>
+                <th @(Html.SortingFor<FeaturedDto>(Model, x => x.Date)) onclick="onSorting(this,dataset.property)">
+                    @(Html.LangFor<Featured>(x => x.Date))
+                </th>
+                <th @(Html.SortingFor<FeaturedDto>(Model, x => x.Money)) onclick="onSorting(this,dataset.property)">
+                    @(Html.LangFor<Featured>(x => x.Money))
+                </th>
+                <th @(Html.SortingFor<FeaturedDto>(Model, x => x.Combobox)) onclick="onSorting(this,dataset.property)">
+                    @(Html.LangFor<Featured>(x => x.Combobox))
+                </th>
+                <th @(Html.SortingFor<FeaturedDto>(Model, x => x.MultiSelect)) onclick="onSorting(this,dataset.property)">
+                    @(Html.LangFor<Featured>(x => x.MultiSelect))
+                </th>
+                <th @(Html.SortingFor<FeaturedDto>(Model, x => x.FromDate)) onclick="onSorting(this,dataset.property)">
+                    @(Html.LangFor<Featured>(x => x.FromDate))
+                </th>
+                <th @(Html.SortingFor<FeaturedDto>(Model, x => x.ToDate)) onclick="onSorting(this,dataset.property)">
+                    @(Html.LangFor<Featured>(x => x.ToDate))
+                </th>
+                <th @(Html.SortingFor<FeaturedDto>(Model, x => x.LessThanToday)) onclick="onSorting(this,dataset.property)">
+                    @(Html.LangFor<Featured>(x => x.LessThanToday))
+                </th>
+                <th @(Html.SortingFor<FeaturedDto>(Model, x => x.GreaterThanToday)) onclick="onSorting(this,dataset.property)">
+                    @(Html.LangFor<Featured>(x => x.GreaterThanToday))
+                </th>
+                <th @(Html.SortingFor<FeaturedDto>(Model, x => x.TextArea)) onclick="onSorting(this,dataset.property)">
+                    @(Html.LangFor<Featured>(x => x.TextArea))
+                </th>
+                <th @(Html.SortingFor<FeaturedDto>(Model, x => x.TextEditor)) onclick="onSorting(this,dataset.property)">
+                    @(Html.LangFor<Featured>(x => x.TextEditor))
+                </th>
+                <th>
+                    @(Html.LangFor<Featured>(x => x.Image))
+                </th>
+                <th>
+                    @(Html.LangFor<Featured>(x => x.MultiImage))
+                </th>
+                <th>
+                    @(Html.LangFor<Featured>(x => x.File))
+                </th>
+                <th>
+                    @(Html.LangFor<Featured>(x => x.MultiFile))
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Items)
+            {
+                <tr>
+                    @if (item.RecordStatus == ConstantConfig.RecordStatusConfig.Active)
+                    {
+
+                        @if (Html.HasPermission(ConstantConfig.Claims.FeaturedManagement_ActionButton))
+                        {
+                            <td class="nav-item dropdown">
+                                <div class="dropdown">
+                                    <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <i class="material-icons">settings</i>
+                                        <p class="d-lg-none d-md-block">
+                                            @Html.Lang("LBL_ACTION")
+                                        </p>
+                                    </button>
+                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                        @if (Html.HasPermission(ConstantConfig.Claims.FeaturedManagement_ActionButton_UpdateFeatured))
+                                        {
+                                            <div onclick="openInputModal(@item.Id)" class="dropdown-item">
+                                                <i class="material-icons">create</i>
+                                                <p>
+                                                    @Html.Lang("LBL_UPDATE")
+                                                </p>
+                                            </div>
+                                        }
+                                        @if (Html.HasPermission(ConstantConfig.Claims.FeaturedManagement_ActionButton_DeleteFeatured))
+                                        {
+                                            <div onclick="deleteItem(@item.Id,'@item.UpdateToken')" class="dropdown-item">
+                                                <i class="material-icons">delete_forever</i>
+                                                <p>
+                                                    @Html.Lang("LBL_DELETE")
+                                                </p>
+                                            </div>
+                                        }
+                                    </div>
+                                </div>
+                            </td>
+                        }
+                    }
+                    else
+                    {
+                        if (Html.HasPermission(ConstantConfig.Claims.FeaturedManagement_RestoreFeatured))
+                        {
+                            <td>
+                                <button onclick="restoreItem('@item.Id','@item.UpdateToken')" type="button" class="btn btn-danger">
+                                    <i class="material-icons">lock_open</i>
+                                    @Html.Lang("LBL_RESTORE")
+                                </button>
+                            </td>
+                        }
+                    }
+                    <td>1</td>
+                    <td>
+                        @item.Text
+                    </td>
+                    <th>
+                        @item.Text
+                    </th>
+                    <th>
+                        @item.Between10To20Character
+                    </th>
+                    <th>
+                        @item.Number
+                    </th>
+                    <th>
+                        @item.Beetween10To20
+                    </th>
+                    <th>
+                        @item.Date.ToDateString()
+                    </th>
+                    <td>
+                        @item.Money.ToCurrencyString()
+                    </td>
+                    <td>
+                        @item.Combobox
+                    </td>
+                    <td>
+                        @item.MultiSelect
+                    </td>
+                    <td>
+                        @item.FromDate.ToDateString()
+                    </td>
+                    <td>
+                        @item.ToDate.ToDateString()
+                    </td>
+                    <td>
+                        @item.LessThanToday.ToDateString()
+                    </td>
+                    <td>
+                        @item.GreaterThanToday.ToDateString()
+                    </td>
+                    <td>
+                        @item.TextArea
+                    </td>
+                    <td>
+                        @item.TextEditor
+                    </td>
+                    <td>
+                        <img src="@item.Image" />
+                    </td>
+                    <td>
+                        @foreach (var image in item.MultiImage)
+                        {
+                            <img src="@image" />
+                        }
+                    </td>
+                    <td>
+                        @item.File
+                    </td>
+                    <td>
+                        @item.MultiFile
+                    </td>
+                </tr>
+            }
+        </tbody>
+
+    </table>
+    <custompager pager-model="@Model" pager-link="/Admin/Featured" />
+</div>

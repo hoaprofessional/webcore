@@ -1,0 +1,127 @@
+﻿@using WebCore.Services.Share.Admins.Featureds.Dto
+@model FeaturedFilterInput
+@{
+    SelectList recordStatuss = ViewBag.RecordStatusCombobox;
+}
+<div class="col-md-12">
+    <div class="card">
+        <div class="card-header card-header-primary">
+            <h4 class="card-title">@Html.Lang("LBL_FILTER")</h4>
+        </div>
+        <div class="card-body">
+            <form id="filter" method="get" asp-action="@nameof(FeaturedController.FilterPartial)">
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-group bmd-form-group">
+                            <label class="bmd-label-floating">@(Html.LangFor<FeaturedFilterInput>(x => x.TextContains, "Featured"))</label>
+                            <input asp-for="TextContains" class="form-control">
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="form-group bmd-form-group">
+                            <label class="bmd-label-floating">@(Html.LangFor<FeaturedFilterInput>(x => x.TextEqual, "Featured"))</label>
+                            <input asp-for="TextEqual" class="form-control">
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="form-group bmd-form-group">
+                            <label class="bmd-label-floating">@(Html.LangFor<FeaturedFilterInput>(x => x.NumberEqual, "Featured"))</label>
+                            <input asp-for="NumberEqual" class="form-control">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-group bmd-form-group">
+                            <label class="bmd-label-floating">@(Html.LangFor<FeaturedFilterInput>(x => x.NumberLessThan, "Featured"))</label>
+                            <input asp-for="NumberLessThan" class="form-control">
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="form-group bmd-form-group">
+                            <label class="bmd-label-floating">@(Html.LangFor<FeaturedFilterInput>(x => x.NumbeGreaterThan, "Featured"))</label>
+                            <input asp-for="NumbeGreaterThan" class="form-control">
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="form-group bmd-form-group">
+                            <label class="bmd-label-floating">@(Html.LangFor<FeaturedFilterInput>(x => x.DateEqual, "Featured"))</label>
+                            <input asp-for="DateEqual" class="form-control">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-group bmd-form-group">
+                            <label class="bmd-label-floating">@(Html.LangFor<FeaturedFilterInput>(x => x.DateLessThan, "Featured"))</label>
+                            <input asp-for="DateLessThan" class="form-control">
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="form-group bmd-form-group">
+                            <label class="bmd-label-floating">@(Html.LangFor<FeaturedFilterInput>(x => x.DateGreaterThan, "Featured"))</label>
+                            <input asp-for="DateGreaterThan" class="form-control">
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="form-group bmd-form-group">
+                            <label class="bmd-label-floating">@(Html.LangFor<FeaturedFilterInput>(x => x.MoneyEqual, "Featured"))</label>
+                            <input asp-for="MoneyEqual" class="form-control">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-group bmd-form-group">
+                            <label class="bmd-label-floating">@(Html.LangFor<FeaturedFilterInput>(x => x.DateLessThan, "Featured"))</label>
+                            <input asp-for="MoneyLessThan" class="form-control">
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="form-group bmd-form-group">
+                            <label class="bmd-label-floating">@(Html.LangFor<FeaturedFilterInput>(x => x.DateGreaterThan, "Featured"))</label>
+                            <input asp-for="MoneyGreaterThan" class="form-control">
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="form-group bmd-form-group">
+                            <label class="bmd-label-floating">@(Html.LangFor<FeaturedFilterInput>(x => x.MoneyEqual, "Featured"))</label>
+                            <input asp-for="Combobox" class="form-control">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group bmd-form-group">
+                            <label class="bmd-label-floating">@(Html.LangFor<FeaturedFilterInput>(x => x.DateLessThan, "Featured"))</label>
+                            <input asp-for="MultiSelect" class="form-control">
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group bmd-form-group">
+                            <select asp-for="RecordStatus" class="select2" asp-items="recordStatuss">
+                                <option value="">@Html.Lang("LBL_RECORDSTATUS_SELECT")</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn btn-primary pull-right">@Html.Lang("LBL_FILTER_BUTTON")</button>
+                <button type="button" class="btn btn-primary pull-right reset-button">@Html.Lang("LBL_FILTER_RESET")</button>
+            </form>
+        </div>
+    </div>
+</div>

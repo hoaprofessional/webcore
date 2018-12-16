@@ -3,7 +3,9 @@
   "private": true,
   "dependencies": {
     "select2": "4.0.5",
-    "bootstrap-material-datetimepicker": "2.7.1"
+    "bootstrap-material-datetimepicker": "2.7.1",
+    "cleave.js": "cleave-js#v1.4.4",
+    "tinymce": "4.9.1"
   },
   "resolutions": {
     "jquery": ">= 1.7.2"

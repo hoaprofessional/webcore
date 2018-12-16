@@ -29,10 +29,10 @@ namespace WebCore.TagHelpers
                 { "PhoneNumber", "tel" },
                 { "Url", "url" },
                 { "EmailAddress", "email" },
-                { "Date", "date" },
+                { "Date", "datetime" },
                 { "DateTime", "datetime" },
-                { "DateTime-local", "datetime-local" },
-                { "Time", "time" },
+                { "DateTime-local", "datetime" },
+                { "Time", "datetime" },
                 { "Submit", "submit" },
                 { nameof(Byte), "number" },
                 { nameof(SByte), "number" },
@@ -141,7 +141,7 @@ namespace WebCore.TagHelpers
                 throw new ArgumentNullException(nameof(output));
             }
 
-            TagHelperAttribute[] validations = output.Attributes.Where(x => x.Name.ToString().Contains("data-val-")).ToArray();
+            TagHelperAttribute[] validations = output.Attributes.Where(x => x.Name.Contains("data-val-") && x.Name.Count(c => c == '-') == 2).ToArray();
             if (LanguageSupport && validations.Any())
             {
                 foreach (TagHelperAttribute validation in validations)
@@ -160,7 +160,7 @@ namespace WebCore.TagHelpers
                 output.CopyHtmlAttribute("type", context);
             }
 
-            if(InputChecked)
+            if (InputChecked)
             {
                 output.Attributes.Add("checked", "checked");
             }
@@ -199,10 +199,8 @@ namespace WebCore.TagHelpers
             }
 
             // inputType may be more specific than default the generator chooses below.
-            if (!output.Attributes.ContainsName("type"))
-            {
-                output.Attributes.SetAttribute("type", inputType);
-            }
+            output.Attributes.SetAttribute("type", inputType);
+
 
             TagBuilder tagBuilder;
             switch (inputType)

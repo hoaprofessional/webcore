@@ -11,6 +11,7 @@ namespace WebCore.Services.Share.Admins.MasterLists.Dto
         public string Value { get; set; }
         public string Group { get; set; }
         public int? OrderNo { get; set; }
+        public string Attribute { get; set; }
         public long? RecordStatus { get; set; }
     }
 }

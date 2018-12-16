@@ -86,6 +86,15 @@ namespace WebCore.Services.Impl.Admins.MasterListGroups
             entity.ModifiedBy = GetCurrentUserLogin();
             entity.RecordStatus = ConstantConfig.RecordStatusConfig.Active;
             entity.UpdateToken = Guid.NewGuid();
+
+            if (entity.OrderNo == null)
+            {
+                entity.OrderNo = masterListRepository
+                                .GetByCondition(x => x.Group == ConstantConfig.MasterListMasterGroup)
+                                .OrderByDescending(x => x.OrderNo)
+                                .Select(x => x.OrderNo).FirstOrDefault().GetValueOrDefault(0)+1;
+            }
+
             masterListRepository.Add(entity);
             return mapper.Map<MasterListGroupInput>(entity);
         }

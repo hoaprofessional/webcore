@@ -20,7 +20,20 @@
       "wwwroot/admin/js/plugins/bootstrap-notify.js",
       "wwwroot/lib/select2/dist/js/select2.js",
       "wwwroot/lib/bootstrap-material-datetimepicker/js/bootstrap-material-datetimepicker.js",
+      "wwwroot/lib/cleave.js/dist/cleave.js",
       "wwwroot/admin/js/pages/common.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/js/custom-client-validation.min.js",
+    "inputFiles": [
+      "wwwroot/js/custom-client-validation.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/admin/css/custom.min.css",
+    "inputFiles": [
+      "wwwroot/admin/css/custom.css"
     ]
   }
 ]

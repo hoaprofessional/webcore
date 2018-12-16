@@ -24,18 +24,25 @@
                 <input asp-for="Group" type="hidden" class="form-control">
 
                 <div class="row">
-                    <div class="col-md-6">
+                    <div class="col-md-4">
                         <div class="form-group bmd-form-group">
                             <label class="bmd-label-floating">@(Html.LangFor<MasterList>(x => x.Value))</label>
                             <input language-support="true" asp-for="Value" type="text" class="form-control">
                             <span asp-validation-for="Value"></span>
                         </div>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-4">
                         <div class="form-group bmd-form-group">
                             <label class="bmd-label-floating">@(Html.LangFor<MasterList>(x => x.OrderNo))</label>
                             <input language-support="true" asp-for="OrderNo" type="text" class="form-control">
                             <span asp-validation-for="OrderNo"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group bmd-form-group">
+                            <label class="bmd-label-floating">@(Html.LangFor<MasterList>(x => x.Attribute))</label>
+                            <input language-support="true" asp-for="Attribute" type="text" class="form-control">
+                            <span asp-validation-for="Attribute"></span>
                         </div>
                     </div>
                 </div>

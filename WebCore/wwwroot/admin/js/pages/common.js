@@ -46,6 +46,7 @@ function showWarningMessage(message) {
         });
 }
 
+
 (function ($) {
     $.fn.navigate = function (url, object, success, fail) {
         $.get(url, object).done(function (response) {
@@ -150,8 +151,12 @@ var confimation = function (title, content, confirmButtonText, cancelButtonText,
 
 
 function resetSelect2(parent) {
-    $(parent).find('.select2-with-search').select2({ width: "100%" });
-    $(parent).find('.select2').select2({ width: "100%" });
+    $(parent).find('.select2-with-search').select2({ width: "100%" }).on('change.select2', function (e) {
+        $(e.target).focusout();
+    });
+    $(parent).find('.select2').select2({ width: "100%" }).on('change.select2', function (e) {
+        $(e.target).focusout();
+    });
 }
 resetSelect2($('body'));
 
@@ -159,5 +164,97 @@ resetSelect2($('body'));
 function changeLanguage(langCode) {
     $.get('/Resource/ChangeLanguage?langCode=' + langCode).done(function () {
         location.reload();
+    });
+}
+
+function runValidator(element) {
+    var methods = $.validator.methods;
+    $.each(methods, function (key, funct) {
+        if ($(element).attr('data-val-' + key)) {
+            funct.call($.data($(element).closest('form')[0], "validator"), element.value, element);
+        }
+    });
+}
+
+// create datepicker
+
+function createDatepicker(formElement, dateSelector, timeSelector, fullDateSelector) {
+    if (!formElement) {
+        return;
+    }
+
+    // bootstrap datepicker for date
+    if (dateSelector) {
+        $(formElement).find(dateSelector).bootstrapMaterialDatePicker({
+            time: false,
+            nowButton: true,
+            format: 'DD/MM/YYYY',
+            lang: 'vi-VN',
+            clearText: "Xóa giá trị",
+            nowText: 'Hiện tại',
+            cancelText: 'Hủy bỏ',
+            clearButton: true
+        }).on('change', function (e, date) {
+            runValidator(e.target);
+            $(e.target).focusout();
+        });
+    }
+
+    // bootstrap datepicker for time
+    if (timeSelector) {
+        $(formElement).find(timeSelector).bootstrapMaterialDatePicker({
+            date: false,
+            nowButton: true,
+            nowText: 'Hiện tại',
+            format: 'HH:mm', lang: 'vi-VN', clearText: "Xóa giá trị", cancelText: 'Hủy bỏ', clearButton: true
+        }).on('change', function (e, date) {
+            runValidator(e.target);
+        });
+    }
+
+    // bootstrap datepicker for full date
+    if (timeSelector) {
+        $(formElement).find(fullDateSelector).bootstrapMaterialDatePicker({
+            format: 'DD/MM/YYYY HH:mm',
+            nowButton: true,
+            nowText: 'Hiện tại',
+            lang: 'vi-VN', clearText: "Xóa giá trị", cancelText: 'Hủy bỏ', clearButton: true
+        }).on('change', function (e, date) {
+            runValidator(e.target);
+        });
+    }
+}
+
+// create texteditor
+
+function createTextEditor(selector) {
+    tinymce.init({
+        selector: selector,
+        setup: function (editor) {
+            editor.on('change', function (e) {
+                editor.save();
+                $(e.originalEvent.element).focusout();
+            });
+        }
+    });
+
+    $.validator.setDefaults({
+        ignore: []
+    });
+}
+
+function destroyTextEditor(selector) {
+    tinymce.EditorManager.remove(selector);
+}
+
+// create money
+
+function createMoney(selector) {
+    if ($(selector).length === 0) {
+        return;
+    }
+    var cleave = new Cleave(selector, {
+        numeral: true,
+        numeralThousandsGroupStyle: 'thousand'
     });
 }

@@ -7,4 +7,5 @@
             return s == null || s.Trim().Equals(string.Empty);
         }
     }
+
 }

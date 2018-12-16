@@ -213,3 +213,53 @@ ul#treeview-childs-15 {
     box-shadow: 0 4px 20px 0px rgba(0, 0, 0, 0.14), 0 7px 10px -5px rgba(156, 39, 176, 0.4) !important;
     color:white !important;
 }
+
+@media(min-width:1500px) {
+    .dtp-content {
+        max-width: 1200px!important;
+    }
+}
+
+@media(max-width:1500px) {
+    .dtp-content {
+        max-width: 70% !important;
+    }
+}
+
+.dtp > .dtp-content > .dtp-date-view > header.dtp-header {
+    background: #83389f;
+}
+
+.dtp div.dtp-date, .dtp div.dtp-time {
+    background: #924ac3;
+}
+
+.dtp .p10 > a {
+    color: #5e389f;
+}
+
+.dtp .dtp-actual-meridien a.selected {
+    background: #4e389f;
+}
+
+.dtp table.dtp-picker-days tr > td > a.selected {
+    background: #544ac3;
+}
+
+
+circle.dtp-select-hour[fill="#8BC34A"], circle.dtp-select-minute[fill="#8BC34A"] {
+    fill: #ab61be !important;
+}
+
+line.hour-hand, line.minute-hand {
+    stroke: #b98fd9 !important;
+}
+
+
+div#dtp-svg-clock {
+    height: 250px;
+}
+
+svg.svg-clock {
+    height: 100%;
+}

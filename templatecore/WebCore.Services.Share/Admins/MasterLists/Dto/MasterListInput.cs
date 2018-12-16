@@ -12,7 +12,7 @@ namespace WebCore.Services.Share.Admins.MasterLists.Dto
         public string Group { get; set; }
         [Required(ErrorMessage = "LBL_MASTERLIST_VALUE_REQUIRED")]
         public string Value { get; set; }
-        [Required(ErrorMessage = "LBL_MASTERLIST_ORDER_NO_REQUIRED")]
+        public string Attribute { get; set; }
         public int? OrderNo { get; set; }
     }
 }

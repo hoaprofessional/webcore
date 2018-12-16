@@ -53,7 +53,7 @@
                     </div>
                     <div class="col-md-6">
                         <div class="form-group bmd-form-group">
-                            <select asp-for="Permission" class="select2" asp-items="permissionCombobox">
+                            <select language-support="true" asp-for="Permission" class="select2" asp-items="permissionCombobox">
                                 <option value="">@Html.Lang("LBL_PERMISSION_SELECT")</option>
                             </select>
                             <span asp-validation-for="Permission"></span>
@@ -61,7 +61,7 @@
                     </div>
                     <div class="col-md-6">
                         <div class="form-group bmd-form-group">
-                            <select asp-for="ParentMenuId" class="select2" asp-items="adminMenusCombobox">
+                            <select language-support="true" asp-for="ParentMenuId" class="select2" asp-items="adminMenusCombobox">
                                 <option value="0">@Html.Lang("LBL_ADMIN_MENU_PARENT_SELECT")</option>
                             </select>
                             <span asp-validation-for="ParentMenuId"></span>

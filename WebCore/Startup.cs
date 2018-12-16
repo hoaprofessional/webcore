@@ -88,8 +88,10 @@ namespace WebCore
             services.AddScoped<Services.Share.Admins.MasterLists.IMasterListAdminService, Services.Impl.Admins.MasterLists.MasterListAdminService>();
             services.AddScoped<Services.Share.Admins.MetaDescriptions.IMetaDescriptionAdminService, Services.Impl.Admins.MetaDescriptions.MetaDescriptionAdminService>();
             services.AddScoped<Services.Share.Admins.MasterListGroups.IMasterListGroupAdminService, Services.Impl.Admins.MasterListGroups.MasterListGroupAdminService>();
+            services.AddScoped<Services.Share.Admins.Featureds.IFeaturedAdminService, Services.Impl.Admins.Featureds.FeaturedAdminService>();
             services.AddScoped<Services.Share.RecordStatuss.IRecordStatusHelper, Services.Impl.RecordStatuss.RecordStatusHelper>();
             services.AddScoped<Services.Share.AdminMenus.IAdminMenuProvider, Services.Impl.AdminMenus.AdminMenuProvider>();
+            services.AddScoped<Services.Share.MasterLists.IMasterListProvider, Services.Impl.MasterLists.MasterListProvider>();
             services.AddScoped<ISystemConfigService, SystemConfigService>();
             services.AddScoped<IAppMenuService, AppMenuService>();
             services.AddScoped<IUserService, UserService>();

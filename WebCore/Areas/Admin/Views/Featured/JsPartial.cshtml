@@ -1,0 +1,126 @@
+﻿@{
+    string areaName = "Admin";
+    string controllerName = "Featured";
+}
+
+<script>
+    @if (Html.HasPermission(ConstantConfig.Claims.FeaturedManagement_ActionButton_UpdateFeatured)
+        || Html.HasPermission(ConstantConfig.Claims.FeaturedManagement_AddFeatured)) {
+        <text>
+
+            // open update popup
+            function openInputModal(id) {
+        if(!id){
+                id = 0;
+            }
+        $.get('/@areaName/@controllerName/@nameof(FeaturedController.InputPartial)', "idModel.Id="+id).done(function (response) {
+            $('#input-area').html(response);
+            $('#saveInputForm').bootstrapMaterialDesign();
+            resetSelect2($('#input-area'));
+            createDatepicker($('#input-area'),'.datepicker-date','.datepicker-time','.datepicker-full-datetime');
+            createMoney('#input-area .currency');
+            createTextEditor('#input-area .texteditor');
+            
+            $('#input-area').modal().on('hidden.bs.modal',function () {
+                destroyTextEditor('#input-area .texteditor');
+            });
+        });
+    }
+
+        </text>
+    }
+
+    @if (Html.HasPermission(ConstantConfig.Claims.FeaturedManagement_ActionButton_DeleteFeatured)) {
+        <text>
+
+            // delete item
+            function deleteItem(id, updateToken) {
+                confimation('@Html.Lang("LBL_COMFIRM_DELETE_TITLE")', '@Html.Lang("LBL_COMFIRM_DELETE")', '@Html.Lang("LBL_OK")', '@Html.Lang("LBL_CLOSE")', function () {
+                    $.post('/@areaName/@controllerName/@nameof(FeaturedController.DeleteModel)', { Id: id, UpdateToken: updateToken }).done(function (response) {
+                        switch (response.result) {
+                            case @ConstantConfig.WebApiStatusCode.Success:
+            showSuccessNotification(response.message);
+            break;
+        case @ConstantConfig.WebApiStatusCode.Warning:
+            showWarningMessage(response.message);
+            break;
+        case @ConstantConfig.WebApiStatusCode.Error:
+            showErrorNotification(response.message);
+            break;
+    }
+$('#confirmModal').modal('hide');
+    reloadMainList();
+});
+});
+}
+
+            </text>
+    }
+
+    @if (Html.HasPermission(ConstantConfig.Claims.FeaturedManagement_RestoreFeatured)) {
+        <text>
+
+            // restore item
+            function restoreItem(id, updateToken) {
+                confimation('@Html.Lang("LBL_COMFIRM_RESTORE_TITLE")', '@Html.Lang("LBL_COMFIRM_RESTORE")', '@Html.Lang("LBL_OK")', '@Html.Lang("LBL_CLOSE")', function () {
+                    $.post('/@areaName/@controllerName/@nameof(FeaturedController.RestoreModel)', { Id: id, UpdateToken: updateToken }).done(function (response) {
+                        switch (response.result) {
+                            case @ConstantConfig.WebApiStatusCode.Success:
+            showSuccessNotification(response.message);
+            break;
+        case @ConstantConfig.WebApiStatusCode.Warning:
+            showWarningMessage(response.message);
+            break;
+        case @ConstantConfig.WebApiStatusCode.Error:
+            showErrorNotification(response.message);
+            break;
+    }
+    $('#confirmModal').modal('hide');
+    reloadMainList();
+});
+});
+}
+
+        </text>
+    }
+
+    // resetAllFilter
+    $('#filter .reset-button').click(function () {
+        $('#filter input:not(:hidden),#filter select:not(:hidden)').val('');
+        $('#filter').submit();
+    });
+
+    // reload table
+    function reloadMainList() {
+        $('#mainList').load('/@areaName/@controllerName/@nameof(FeaturedController.MainListPartial)');
+    }
+
+    // sorting
+    function onSorting(th, property) {
+        var action = "asc";
+        if ($(th).hasClass('sort-asc')) {
+            action = "desc";
+        }
+        $('#mainList').load('/@areaName/@controllerName/@nameof(FeaturedController.SaveSorting)?sorting=' + encodeURIComponent(property + " " + action));
+    }
+
+    // on input submit finish
+    function onInputSubmitDone(response) {
+        switch (response.result) {
+            case @ConstantConfig.WebApiStatusCode.Success:
+                showSuccessNotification(response.message);
+                break;
+            case @ConstantConfig.WebApiStatusCode.Warning:
+                showWarningMessage(response.message);
+                break;
+            case @ConstantConfig.WebApiStatusCode.Error:
+                showErrorNotification(response.message);
+                break;
+        }
+        $('#input-area').modal('hide');
+        reloadMainList();
+    }
+    function onInputSubmitFail(response) {
+        console.log(response.responseText);
+    }
+</script>
